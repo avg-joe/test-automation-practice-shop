@@ -1,9 +1,10 @@
 /**
  * Returns a test ID for use as a data-testid attribute.
  *
- * When PUBLIC_BREAKING_CHANGE is 'true', returns an unpredictable string
- * (or undefined) to simulate a regression/breaking change scenario.
- * When 'false' (the default), returns the stable ID provided.
+ * When PUBLIC_BREAKING_CHANGE is 'true', returns a deterministic but
+ * unrecognisable string (or undefined) to simulate a regression/breaking
+ * change scenario. When 'false' (the default), returns the stable ID
+ * provided.
  */
 export function getTestId(stableId: string): string | undefined {
   const breakingChange = import.meta.env.PUBLIC_BREAKING_CHANGE;

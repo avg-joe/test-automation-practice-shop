@@ -30,8 +30,8 @@ export default function LoginModal() {
 
     const form = e.currentTarget;
     const formData = new FormData(form);
-    const username = formData.get('username') as string;
-    const password = formData.get('password') as string;
+    const username = (formData.get('username') ?? formData.get('email') ?? '') as string;
+    const password = (formData.get('password') ?? '') as string;
 
     try {
       const res = await fetch('/api/login', {
