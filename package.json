@@ -1,0 +1,43 @@
+{
+  "name": "test-automation-practice-shop",
+  "version": "1.0.0",
+  "description": "Practice shop website for automation testing workshop and practice",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/avg-joe/test-automation-practice-shop.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/avg-joe/test-automation-practice-shop/issues"
+  },
+  "homepage": "https://github.com/avg-joe/test-automation-practice-shop#readme",
+  "dependencies": {
+    "@astrojs/react": "^4.4.2",
+    "@nanostores/react": "^1.0.0",
+    "astro": "^5.18.0",
+    "msw": "^2.12.10",
+    "nanostores": "^1.1.1",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "tailwindcss": "^4.2.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.2.1",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^5.9.3"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
+  }
+}
