@@ -45,12 +45,13 @@ const products = [
         >
           Shop Now
         </a>
-        <button
+        <a
+          href="#featured-products"
           data-testid={getTestId('hero-explore-btn')}
-          style="padding:0.8rem 2rem;font-size:1rem;font-weight:600;background:transparent;color:#fff;border:2px solid rgba(255,255,255,0.5);border-radius:6px;cursor:pointer;"
+          style="display:inline-block;padding:0.8rem 2rem;font-size:1rem;font-weight:600;background:transparent;color:#fff;border:2px solid rgba(255,255,255,0.5);border-radius:6px;cursor:pointer;text-decoration:none;text-align:center;"
         >
           Explore Deals
-        </button>
+        </a>
       </div>
     </div>
     <div
@@ -90,7 +91,7 @@ const products = [
   </div>
 
   <!-- FEATURED PRODUCTS -->
-  <section data-testid={getTestId('featured-products')} style="padding:4rem 2rem;">
+  <section id="featured-products" data-testid={getTestId('featured-products')} style="padding:4rem 2rem;">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;">
       <h2 style="font-size:1.8rem;font-weight:700;margin:0;">Featured Products</h2>
       <a
