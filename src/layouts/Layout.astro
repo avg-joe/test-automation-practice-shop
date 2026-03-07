@@ -1,0 +1,43 @@
+---
+import '../styles/global.css';
+import NavBar from '../components/NavBar.astro';
+import LoginModal from '../components/LoginModal';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Test Automation Practice Shop',
+  description = 'Curated collections of top-quality items delivered straight to your door.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <NavBar />
+    <slot />
+    <LoginModal client:load />
+
+    <script>
+      // Initialize MSW only in the browser (never in SSR/build)
+      async function initMSW() {
+        if (typeof window === 'undefined') return;
+        const { worker } = await import('../mocks/browser');
+        await worker.start({
+          onUnhandledRequest: 'bypass',
+        });
+      }
+      initMSW();
+    </script>
+  </body>
+</html>

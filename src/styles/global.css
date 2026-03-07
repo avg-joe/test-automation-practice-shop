@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+:root {
+  --navy: #1a1a2e;
+  --coral: #e94560;
+  --light: #f8f8f8;
+  --gray: #666;
+  --border: #e0e0e0;
+  --white: #fff;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: var(--white);
+  color: var(--navy);
+  margin: 0;
+  padding: 0;
+}

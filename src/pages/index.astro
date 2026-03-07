@@ -1,0 +1,315 @@
+---
+import Layout from '../layouts/Layout.astro';
+import AddToCart from '../components/AddToCart';
+import { getTestId } from '../utils/testId';
+
+const products = [
+  { id: '1', name: 'Air Runner Pro', price: 89, emoji: '👟', category: 'Footwear', badge: 'Sale', originalPrice: 120 },
+  { id: '2', name: 'SoundMax Headphones', price: 149, emoji: '🎧', category: 'Electronics', badge: null, originalPrice: null },
+  { id: '3', name: 'Urban Tote Bag', price: 65, emoji: '👜', category: 'Accessories', badge: 'New', originalPrice: null },
+  { id: '4', name: 'SmartWatch Series 5', price: 199, emoji: '⌚', category: 'Electronics', badge: null, originalPrice: null },
+];
+---
+
+<Layout title="Test Automation Practice Shop – Home">
+
+  <!-- HERO -->
+  <section
+    data-testid={getTestId('hero-section')}
+    style="display:flex;align-items:center;justify-content:space-between;padding:5rem 2rem;background:linear-gradient(135deg,#1a1a2e 60%,#16213e 100%);color:#fff;min-height:520px;"
+  >
+    <div style="max-width:560px;">
+      <span
+        data-testid={getTestId('hero-badge')}
+        style="display:inline-block;background:#e94560;color:#fff;font-size:0.75rem;font-weight:700;padding:0.3rem 0.8rem;border-radius:20px;margin-bottom:1.2rem;letter-spacing:1px;text-transform:uppercase;"
+      >
+        New Season 2026
+      </span>
+      <h1
+        data-testid={getTestId('hero-title')}
+        style="font-size:3rem;font-weight:800;line-height:1.15;margin-bottom:1.2rem;"
+      >
+        Discover Products You&apos;ll <span style="color:#e94560;">Love</span>
+      </h1>
+      <p
+        data-testid={getTestId('hero-subtitle')}
+        style="color:#b0b8d0;font-size:1.1rem;line-height:1.7;margin-bottom:2rem;"
+      >
+        Curated collections of top-quality items delivered straight to your door. Shop with confidence.
+      </p>
+      <div style="display:flex;gap:1rem;">
+        <a href="/shop">
+          <button
+            data-testid={getTestId('hero-shop-btn')}
+            style="padding:0.8rem 2rem;font-size:1rem;font-weight:600;background:#e94560;color:#fff;border:none;border-radius:6px;cursor:pointer;"
+          >
+            Shop Now
+          </button>
+        </a>
+        <button
+          data-testid={getTestId('hero-explore-btn')}
+          style="padding:0.8rem 2rem;font-size:1rem;font-weight:600;background:transparent;color:#fff;border:2px solid rgba(255,255,255,0.5);border-radius:6px;cursor:pointer;"
+        >
+          Explore Deals
+        </button>
+      </div>
+    </div>
+    <div
+      data-testid={getTestId('hero-image')}
+      style="width:380px;height:320px;background:rgba(255,255,255,0.07);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:6rem;"
+    >
+      🛍️
+    </div>
+  </section>
+
+  <!-- FEATURES BAR -->
+  <div
+    data-testid={getTestId('features-bar')}
+    style="display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid #e0e0e0;"
+  >
+    <div
+      data-testid={getTestId('feature-shipping')}
+      style="display:flex;align-items:center;gap:1rem;padding:1.5rem 2rem;border-right:1px solid #e0e0e0;"
+    >
+      <span style="font-size:2rem;">🚚</span>
+      <div><h4 style="font-size:0.95rem;font-weight:700;margin:0 0 0.2rem;">Free Shipping</h4><p style="font-size:0.82rem;color:#666;margin:0;">On orders over $50</p></div>
+    </div>
+    <div
+      data-testid={getTestId('feature-returns')}
+      style="display:flex;align-items:center;gap:1rem;padding:1.5rem 2rem;border-right:1px solid #e0e0e0;"
+    >
+      <span style="font-size:2rem;">↩️</span>
+      <div><h4 style="font-size:0.95rem;font-weight:700;margin:0 0 0.2rem;">Easy Returns</h4><p style="font-size:0.82rem;color:#666;margin:0;">30-day return policy</p></div>
+    </div>
+    <div
+      data-testid={getTestId('feature-support')}
+      style="display:flex;align-items:center;gap:1rem;padding:1.5rem 2rem;"
+    >
+      <span style="font-size:2rem;">💬</span>
+      <div><h4 style="font-size:0.95rem;font-weight:700;margin:0 0 0.2rem;">24/7 Support</h4><p style="font-size:0.82rem;color:#666;margin:0;">We're always here for you</p></div>
+    </div>
+  </div>
+
+  <!-- FEATURED PRODUCTS -->
+  <section data-testid={getTestId('featured-products')} style="padding:4rem 2rem;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;">
+      <h2 style="font-size:1.8rem;font-weight:700;margin:0;">Featured Products</h2>
+      <a
+        href="/shop"
+        data-testid={getTestId('view-all-products')}
+        style="color:#e94560;text-decoration:none;font-size:0.9rem;font-weight:600;"
+      >
+        View All →
+      </a>
+    </div>
+
+    <div data-testid={getTestId('product-grid')} style="display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;">
+      {products.map((product) => (
+        <div
+          data-testid={getTestId(`product-card-${product.id}`)}
+          style="border:1px solid #e0e0e0;border-radius:12px;overflow:hidden;background:#fff;transition:box-shadow 0.2s,transform 0.2s;cursor:pointer;"
+        >
+          <div style="height:200px;background:#f8f8f8;display:flex;align-items:center;justify-content:center;font-size:4rem;position:relative;">
+            {product.emoji}
+            {product.badge && (
+              <span style="position:absolute;top:10px;left:10px;background:#e94560;color:#fff;font-size:0.7rem;font-weight:700;padding:0.2rem 0.6rem;border-radius:4px;">
+                {product.badge}
+              </span>
+            )}
+          </div>
+          <div style="padding:1rem;">
+            <p style="font-size:0.75rem;color:#666;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 0.4rem;">{product.category}</p>
+            <h3 style="font-size:1rem;font-weight:600;margin:0 0 0.5rem;">{product.name}</h3>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-top:0.8rem;">
+              <span
+                data-testid={getTestId(`product-price-${product.id}`)}
+                style="font-size:1.15rem;font-weight:700;color:#e94560;"
+              >
+                ${product.price}
+                {product.originalPrice && (
+                  <del style="font-size:0.85rem;color:#666;margin-left:6px;font-weight:400;">${product.originalPrice}</del>
+                )}
+              </span>
+              <AddToCart
+                client:visible
+                productId={product.id}
+                productName={product.name}
+                price={product.price}
+                emoji={product.emoji}
+                testIdSuffix={product.id}
+              />
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section
+    data-testid={getTestId('categories-section')}
+    style="background:#f8f8f8;padding:4rem 2rem;"
+  >
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;">
+      <h2 style="font-size:1.8rem;font-weight:700;margin:0;">Shop by Category</h2>
+      <a
+        href="/shop"
+        data-testid={getTestId('view-all-categories')}
+        style="color:#e94560;text-decoration:none;font-size:0.9rem;font-weight:600;"
+      >
+        Browse All →
+      </a>
+    </div>
+    <div data-testid={getTestId('category-grid')} style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;">
+      <div
+        data-testid={getTestId('category-electronics')}
+        style="border-radius:12px;padding:2rem 1.5rem;text-align:center;cursor:pointer;background:#fff;border:1px solid #e0e0e0;"
+      >
+        <span style="font-size:2.5rem;display:block;margin-bottom:0.8rem;">📱</span>
+        <h3 style="font-size:1rem;font-weight:700;margin:0 0 0.3rem;">Electronics</h3>
+        <p style="font-size:0.8rem;color:#666;margin:0;">120+ items</p>
+      </div>
+      <div
+        data-testid={getTestId('category-fashion')}
+        style="border-radius:12px;padding:2rem 1.5rem;text-align:center;cursor:pointer;background:#fff;border:1px solid #e0e0e0;"
+      >
+        <span style="font-size:2.5rem;display:block;margin-bottom:0.8rem;">👗</span>
+        <h3 style="font-size:1rem;font-weight:700;margin:0 0 0.3rem;">Fashion</h3>
+        <p style="font-size:0.8rem;color:#666;margin:0;">340+ items</p>
+      </div>
+      <div
+        data-testid={getTestId('category-home')}
+        style="border-radius:12px;padding:2rem 1.5rem;text-align:center;cursor:pointer;background:#fff;border:1px solid #e0e0e0;"
+      >
+        <span style="font-size:2.5rem;display:block;margin-bottom:0.8rem;">🏠</span>
+        <h3 style="font-size:1rem;font-weight:700;margin:0 0 0.3rem;">Home &amp; Living</h3>
+        <p style="font-size:0.8rem;color:#666;margin:0;">210+ items</p>
+      </div>
+      <div
+        data-testid={getTestId('category-sports')}
+        style="border-radius:12px;padding:2rem 1.5rem;text-align:center;cursor:pointer;background:#fff;border:1px solid #e0e0e0;"
+      >
+        <span style="font-size:2.5rem;display:block;margin-bottom:0.8rem;">⚽</span>
+        <h3 style="font-size:1rem;font-weight:700;margin:0 0 0.3rem;">Sports</h3>
+        <p style="font-size:0.8rem;color:#666;margin:0;">95+ items</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROMO BANNER -->
+  <section style="padding:4rem 2rem;">
+    <div
+      data-testid={getTestId('promo-banner')}
+      style="background:#1a1a2e;color:#fff;border-radius:16px;padding:3rem 4rem;display:flex;align-items:center;justify-content:space-between;"
+    >
+      <div>
+        <h2 style="font-size:2rem;font-weight:700;margin:0 0 0.5rem;">Summer Sale — Up to 40% Off!</h2>
+        <p style="color:#b0b8d0;margin:0 0 1.5rem;">Deals refreshed daily. Don&apos;t miss out on limited stock.</p>
+        <a href="/shop">
+          <button
+            data-testid={getTestId('banner-shop-btn')}
+            style="padding:0.8rem 2rem;font-size:1rem;font-weight:600;background:#e94560;color:#fff;border:none;border-radius:6px;cursor:pointer;"
+          >
+            Shop the Sale
+          </button>
+        </a>
+      </div>
+      <div style="font-size:5rem;">🏷️</div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section
+    data-testid={getTestId('testimonials-section')}
+    style="background:#f8f8f8;padding:4rem 2rem;"
+  >
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;">
+      <h2 style="font-size:1.8rem;font-weight:700;margin:0;">What Our Customers Say</h2>
+    </div>
+    <div data-testid={getTestId('testimonial-grid')} style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;">
+      <div
+        data-testid={getTestId('testimonial-1')}
+        style="background:#fff;border-radius:12px;padding:1.5rem;border:1px solid #e0e0e0;"
+      >
+        <div style="color:#ffc107;font-size:1rem;margin-bottom:0.8rem;">★★★★★</div>
+        <p style="font-size:0.9rem;color:#666;line-height:1.6;margin-bottom:1rem;">"Test Automation Practice Shop has the best deals and the checkout is so quick. I've ordered 10 times this year alone!"</p>
+        <div style="display:flex;align-items:center;gap:0.8rem;">
+          <div style="width:40px;height:40px;border-radius:50%;background:#1a1a2e;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.9rem;">JD</div>
+          <div><h4 style="font-size:0.9rem;font-weight:700;margin:0;">Jane D.</h4><p style="font-size:0.78rem;color:#666;margin:0;">Verified Buyer</p></div>
+        </div>
+      </div>
+      <div
+        data-testid={getTestId('testimonial-2')}
+        style="background:#fff;border-radius:12px;padding:1.5rem;border:1px solid #e0e0e0;"
+      >
+        <div style="color:#ffc107;font-size:1rem;margin-bottom:0.8rem;">★★★★★</div>
+        <p style="font-size:0.9rem;color:#666;line-height:1.6;margin-bottom:1rem;">"Incredible product quality. Returns are seamless and customer support responds within minutes."</p>
+        <div style="display:flex;align-items:center;gap:0.8rem;">
+          <div style="width:40px;height:40px;border-radius:50%;background:#1a1a2e;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.9rem;">MK</div>
+          <div><h4 style="font-size:0.9rem;font-weight:700;margin:0;">Mark K.</h4><p style="font-size:0.78rem;color:#666;margin:0;">Verified Buyer</p></div>
+        </div>
+      </div>
+      <div
+        data-testid={getTestId('testimonial-3')}
+        style="background:#fff;border-radius:12px;padding:1.5rem;border:1px solid #e0e0e0;"
+      >
+        <div style="color:#ffc107;font-size:1rem;margin-bottom:0.8rem;">★★★★☆</div>
+        <p style="font-size:0.9rem;color:#666;line-height:1.6;margin-bottom:1rem;">"Love the variety. Everything arrived fast and well-packaged. Highly recommend Test Automation Practice Shop!"</p>
+        <div style="display:flex;align-items:center;gap:0.8rem;">
+          <div style="width:40px;height:40px;border-radius:50%;background:#1a1a2e;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.9rem;">SP</div>
+          <div><h4 style="font-size:0.9rem;font-weight:700;margin:0;">Sara P.</h4><p style="font-size:0.78rem;color:#666;margin:0;">Verified Buyer</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer data-testid={getTestId('footer')} style="background:#1a1a2e;color:#b0b8d0;padding:3rem 2rem 1.5rem;">
+    <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem;margin-bottom:2rem;">
+      <div>
+        <h3 style="color:#fff;font-size:1.4rem;margin:0 0 0.8rem;">Test Automation Practice <span style="color:#e94560;">Shop</span></h3>
+        <p style="font-size:0.85rem;line-height:1.6;margin:0;">Your one-stop destination for quality products at unbeatable prices.</p>
+      </div>
+      <div>
+        <h4 style="color:#fff;margin:0 0 1rem;font-size:0.95rem;">Shop</h4>
+        <ul style="list-style:none;padding:0;margin:0;">
+          <li style="margin-bottom:0.5rem;"><a href="/shop" style="color:#b0b8d0;text-decoration:none;font-size:0.85rem;">All Products</a></li>
+          <li style="margin-bottom:0.5rem;"><a href="#" style="color:#b0b8d0;text-decoration:none;font-size:0.85rem;">Electronics</a></li>
+          <li style="margin-bottom:0.5rem;"><a href="#" style="color:#b0b8d0;text-decoration:none;font-size:0.85rem;">Fashion</a></li>
+          <li style="margin-bottom:0.5rem;"><a href="#" style="color:#b0b8d0;text-decoration:none;font-size:0.85rem;">Sale</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color:#fff;margin:0 0 1rem;font-size:0.95rem;">Support</h4>
+        <ul style="list-style:none;padding:0;margin:0;">
+          <li style="margin-bottom:0.5rem;"><a href="/contact" style="color:#b0b8d0;text-decoration:none;font-size:0.85rem;">Contact Us</a></li>
+          <li style="margin-bottom:0.5rem;"><a href="#" style="color:#b0b8d0;text-decoration:none;font-size:0.85rem;">FAQ</a></li>
+          <li style="margin-bottom:0.5rem;"><a href="#" style="color:#b0b8d0;text-decoration:none;font-size:0.85rem;">Returns</a></li>
+          <li style="margin-bottom:0.5rem;"><a href="#" style="color:#b0b8d0;text-decoration:none;font-size:0.85rem;">Shipping</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color:#fff;margin:0 0 1rem;font-size:0.95rem;">Account</h4>
+        <ul style="list-style:none;padding:0;margin:0;">
+          <li style="margin-bottom:0.5rem;"><a href="#" id="footer-login-link" style="color:#b0b8d0;text-decoration:none;font-size:0.85rem;">Login</a></li>
+          <li style="margin-bottom:0.5rem;"><a href="#" style="color:#b0b8d0;text-decoration:none;font-size:0.85rem;">Register</a></li>
+          <li style="margin-bottom:0.5rem;"><a href="#" style="color:#b0b8d0;text-decoration:none;font-size:0.85rem;">My Orders</a></li>
+          <li style="margin-bottom:0.5rem;"><a href="#" style="color:#b0b8d0;text-decoration:none;font-size:0.85rem;">Wishlist</a></li>
+        </ul>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,0.1);padding-top:1.5rem;display:flex;justify-content:space-between;font-size:0.82rem;align-items:center;">
+      <span>© 2026 Test Automation Practice Shop. All rights reserved.</span>
+      <span>Privacy Policy · Terms of Service</span>
+    </div>
+  </footer>
+
+  <script>
+    // Allow footer login link to open the login modal
+    document.getElementById('footer-login-link')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      document.getElementById('open-login-modal')?.click();
+    });
+  </script>
+
+</Layout>

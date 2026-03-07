@@ -1,0 +1,64 @@
+---
+import CartIcon from './CartIcon';
+import { getTestId } from '../utils/testId';
+---
+
+<nav
+  data-testid={getTestId('navbar')}
+  style="display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:64px;background:#fff;border-bottom:1px solid #e0e0e0;position:sticky;top:0;z-index:100;"
+>
+  <a
+    href="/"
+    data-testid={getTestId('nav-logo')}
+    style="font-size:1.5rem;font-weight:700;color:#1a1a2e;text-decoration:none;"
+  >
+    Test Automation Practice <span style="color:#e94560;">Shop</span>
+  </a>
+
+  <ul style="display:flex;gap:2rem;list-style:none;margin:0;padding:0;">
+    <li>
+      <a
+        href="/"
+        data-testid={getTestId('nav-home')}
+        style="text-decoration:none;color:#1a1a2e;font-weight:500;font-size:0.95rem;"
+      >
+        Home
+      </a>
+    </li>
+    <li>
+      <a
+        href="/shop"
+        data-testid={getTestId('nav-shop')}
+        style="text-decoration:none;color:#1a1a2e;font-weight:500;font-size:0.95rem;"
+      >
+        Shop
+      </a>
+    </li>
+    <li>
+      <a
+        href="/contact"
+        data-testid={getTestId('nav-contact')}
+        style="text-decoration:none;color:#1a1a2e;font-weight:500;font-size:0.95rem;"
+      >
+        Contact
+      </a>
+    </li>
+  </ul>
+
+  <div style="display:flex;gap:1rem;align-items:center;">
+    <CartIcon client:load />
+    <button
+      id="open-login-modal"
+      data-testid={getTestId('nav-login-btn')}
+      style="padding:0.5rem 1.25rem;border-radius:6px;font-size:0.9rem;font-weight:600;cursor:pointer;border:2px solid #1a1a2e;background:transparent;color:#1a1a2e;"
+    >
+      Login
+    </button>
+    <button
+      data-testid={getTestId('nav-signup-btn')}
+      style="padding:0.5rem 1.25rem;border-radius:6px;font-size:0.9rem;font-weight:600;cursor:pointer;border:none;background:#e94560;color:#fff;"
+    >
+      Sign Up
+    </button>
+  </div>
+</nav>
