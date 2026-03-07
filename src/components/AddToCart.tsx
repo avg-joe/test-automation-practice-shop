@@ -24,12 +24,17 @@ export default function AddToCart({
     setIsLoading(true);
 
     try {
-      await fetch('/api/cart/add', {
+      const res = await fetch('/api/cart/add', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: productId, name: productName, price, emoji }),
       });
 
+      if (!res.ok) {
+        throw new Error(
+          `[AddToCart] Failed to add item to cart: ${res.status} ${res.statusText}`,
+        );
+      }
       addToCart({ id: productId, name: productName, price, emoji });
       setAdded(true);
       setTimeout(() => setAdded(false), 1500);

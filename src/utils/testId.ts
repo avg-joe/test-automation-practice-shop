@@ -19,7 +19,7 @@ export function getTestId(stableId: string): string | undefined {
       .split('')
       .reduce((acc, char) => acc + char.charCodeAt(0), 0);
     const suffix = (hash * 31 + stableId.length * 17).toString(16).padStart(4, '0').slice(-4);
-    return `btn_x${hash.toString(16)}_${suffix}`;
+    return `el_x${hash.toString(16)}_${suffix}`;
   }
 
   return stableId;

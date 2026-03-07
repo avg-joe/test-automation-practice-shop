@@ -30,7 +30,7 @@ export default function LoginModal() {
 
     const form = e.currentTarget;
     const formData = new FormData(form);
-    const username = formData.get('email') as string;
+    const username = formData.get('username') as string;
     const password = formData.get('password') as string;
 
     try {
