@@ -20,7 +20,7 @@
 }
 
 .page-header__subtitle {
-  color: #b0b8d0;
+  color: var(--muted);
   font-size: 1.1rem;
   max-width: 500px;
   margin: 0 auto;

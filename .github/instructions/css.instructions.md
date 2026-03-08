@@ -409,7 +409,7 @@ For truly dynamic values (e.g., colors from props), CSS custom properties can be
 2. **Don't create overly specific selectors** — keep specificity low
 3. **Don't use `!important`** — fix specificity issues instead
 4. **Don't duplicate styles** — create reusable classes
-5. **Don't use IDs for styling** — use classes instead (IDs are for `data-testid` only)
+5. **Don't use IDs for styling** — use classes instead. Reserve IDs for JS hooks/anchors; use `data-testid` for tests.
 6. **Don't mix CSS methodologies** — stick to the BEM-inspired approach
 
 ---

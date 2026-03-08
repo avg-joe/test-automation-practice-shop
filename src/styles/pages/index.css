@@ -45,7 +45,7 @@
 }
 
 .hero__subtitle {
-  color: #b0b8d0;
+  color: var(--muted);
   font-size: 1.1rem;
   line-height: 1.7;
   margin-bottom: 2rem;
@@ -316,7 +316,7 @@
 }
 
 .promo-banner__content p {
-  color: #b0b8d0;
+  color: var(--muted);
   margin: 0 0 1.5rem;
 }
 
@@ -401,72 +401,4 @@
   font-size: 0.78rem;
   color: var(--gray);
   margin: 0;
-}
-
-/* --------------------------------------------------------------------------
-   Footer
-   -------------------------------------------------------------------------- */
-
-.footer {
-  background: var(--navy);
-  color: #b0b8d0;
-  padding: 3rem 2rem 1.5rem;
-}
-
-.footer__grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 2rem;
-  margin-bottom: 2rem;
-}
-
-.footer__brand-title {
-  color: var(--white);
-  font-size: 1.4rem;
-  margin: 0 0 0.8rem;
-}
-
-.footer__brand-accent {
-  color: var(--coral);
-}
-
-.footer__brand-desc {
-  font-size: 0.85rem;
-  line-height: 1.6;
-  margin: 0;
-}
-
-.footer__column-title {
-  color: var(--white);
-  margin: 0 0 1rem;
-  font-size: 0.95rem;
-}
-
-.footer__list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.footer__list-item {
-  margin-bottom: 0.5rem;
-}
-
-.footer__link {
-  color: #b0b8d0;
-  text-decoration: none;
-  font-size: 0.85rem;
-}
-
-.footer__link:hover {
-  color: var(--white);
-}
-
-.footer__bottom {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding-top: 1.5rem;
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.82rem;
-  align-items: center;
 }
