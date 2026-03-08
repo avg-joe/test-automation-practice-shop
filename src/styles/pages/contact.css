@@ -240,9 +240,18 @@
   list-style: none;
 }
 
+.faq-item__question::-webkit-details-marker {
+  display: none;
+}
+
 .faq-item__toggle {
-  font-size: 0.9rem;
+  font-size: 1.2rem;
   color: var(--gray);
+  transition: transform 0.2s ease;
+}
+
+.faq-item[open] .faq-item__toggle {
+  transform: rotate(45deg);
 }
 
 .faq-item__answer {
