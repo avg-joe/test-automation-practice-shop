@@ -91,4 +91,30 @@ export const handlers = [
       { status: 200 }
     );
   }),
+
+  /**
+   * POST /api/contact
+   * Accepts contact form data. Returns 200 with success message. Delays 600ms.
+   */
+  http.post('/api/contact', async ({ request }) => {
+    await delay(600);
+
+    const body = await request.json() as {
+      firstName?: string;
+      lastName?: string;
+      email?: string;
+      phone?: string;
+      subject?: string;
+      message?: string;
+    };
+
+    return HttpResponse.json(
+      {
+        success: true,
+        message: `Thank you ${body.firstName ?? 'for contacting us'}! We'll get back to you within 24 hours.`,
+        ticketId: `TICKET-${Date.now()}`,
+      },
+      { status: 200 }
+    );
+  }),
 ];
