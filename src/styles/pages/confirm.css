@@ -1,0 +1,268 @@
+/* ==========================================================================
+   Page: Confirm (Order Confirmation)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Layout
+   -------------------------------------------------------------------------- */
+
+.confirm-layout {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+/* --------------------------------------------------------------------------
+   Success Banner
+   -------------------------------------------------------------------------- */
+
+.confirm-banner {
+  text-align: center;
+  background: var(--white);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  padding: 3rem 2rem;
+  margin-bottom: 2rem;
+}
+
+.confirm-banner__icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.confirm-banner__title {
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 0 0 0.5rem;
+  color: var(--navy);
+}
+
+.confirm-banner__subtitle {
+  font-size: 1rem;
+  color: var(--gray);
+  margin: 0 0 1.5rem;
+}
+
+.confirm-banner__order-id {
+  display: inline-block;
+  background: var(--light);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 1rem;
+}
+
+.confirm-banner__message {
+  font-size: 0.9rem;
+  color: var(--gray);
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Order Details Card
+   -------------------------------------------------------------------------- */
+
+.confirm-details {
+  background: var(--white);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.confirm-details__header {
+  padding: 1.2rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.confirm-details__item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.confirm-details__item:last-child {
+  border-bottom: none;
+}
+
+.confirm-details__item-img {
+  font-size: 1.8rem;
+  width: 52px;
+  height: 52px;
+  background: var(--light);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.confirm-details__item-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  flex: 1;
+  margin: 0;
+}
+
+.confirm-details__item-qty {
+  font-size: 0.82rem;
+  color: var(--gray);
+  margin-top: 0.2rem;
+}
+
+.confirm-details__item-price {
+  font-size: 0.95rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Totals
+   -------------------------------------------------------------------------- */
+
+.confirm-totals {
+  padding: 1rem 1.5rem;
+  border-top: 2px solid var(--border);
+  background: var(--light);
+}
+
+.confirm-totals__row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.confirm-totals__label {
+  color: var(--gray);
+}
+
+.confirm-totals__row--total {
+  font-weight: 700;
+  font-size: 1.05rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+  margin-top: 0.2rem;
+  margin-bottom: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Info Grid (Shipping + Payment)
+   -------------------------------------------------------------------------- */
+
+.confirm-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.confirm-info-card {
+  background: var(--white);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+}
+
+.confirm-info-card__title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 0.8rem;
+}
+
+.confirm-info-card__name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.confirm-info-card__text {
+  font-size: 0.85rem;
+  color: var(--gray);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Actions
+   -------------------------------------------------------------------------- */
+
+.confirm-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.confirm-actions__primary {
+  display: inline-block;
+  padding: 0.9rem 2.5rem;
+  background: var(--coral);
+  color: var(--white);
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+  transition: opacity 0.2s ease;
+}
+
+.confirm-actions__primary:hover {
+  opacity: 0.9;
+}
+
+.confirm-actions__secondary {
+  display: inline-block;
+  padding: 0.9rem 2.5rem;
+  background: transparent;
+  color: var(--navy);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 0.2s ease;
+}
+
+.confirm-actions__secondary:hover {
+  border-color: var(--navy);
+}
+
+/* --------------------------------------------------------------------------
+   Empty / No Order state
+   -------------------------------------------------------------------------- */
+
+.confirm-no-order {
+  text-align: center;
+  padding: 5rem 2rem;
+}
+
+.confirm-no-order__icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.confirm-no-order__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.confirm-no-order__subtitle {
+  color: var(--gray);
+  margin-bottom: 2rem;
+}

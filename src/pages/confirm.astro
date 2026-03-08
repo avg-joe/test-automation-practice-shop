@@ -1,0 +1,22 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CheckoutSteps from '../components/CheckoutSteps.astro';
+import OrderConfirm from '../components/OrderConfirm';
+import Footer from '../components/Footer.astro';
+import { getTestId } from '../utils/testId';
+---
+
+<Layout title="Order Confirmed – Test Automation Practice Shop">
+  <div class="cart-header" data-testid={getTestId('page-header')}>
+    <p class="cart-header__breadcrumb">
+      <a href="/">Home</a> › Order Confirmation
+    </p>
+    <h1 class="cart-header__title">Order Confirmation</h1>
+  </div>
+
+  <CheckoutSteps activeStep="confirm" />
+
+  <OrderConfirm client:only="react" />
+
+  <Footer />
+</Layout>

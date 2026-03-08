@@ -8,6 +8,9 @@
   --border: #e0e0e0;
   --white: #fff;
   --muted: #b0b8d0;
+  --green: #22c55e;
+  --success: #16a34a;
+  --error: #dc2626;
 }
 
 *, *::before, *::after {

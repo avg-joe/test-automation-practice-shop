@@ -1,0 +1,308 @@
+/* ==========================================================================
+   Page: Shipping
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Layout
+   -------------------------------------------------------------------------- */
+
+.shipping-layout {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* --------------------------------------------------------------------------
+   Shipping Form Card
+   -------------------------------------------------------------------------- */
+
+.shipping-form-card {
+  background: var(--white);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  padding: 2rem;
+}
+
+.shipping-form-card__title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0 0 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+/* --------------------------------------------------------------------------
+   Form Elements
+   -------------------------------------------------------------------------- */
+
+.shipping-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.shipping-form__group {
+  margin-bottom: 1.2rem;
+}
+
+.shipping-form__label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: var(--navy);
+}
+
+.shipping-form__required {
+  color: var(--coral);
+  margin-left: 2px;
+}
+
+.shipping-form__input,
+.shipping-form__select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  outline: none;
+  background: var(--white);
+  color: var(--navy);
+  transition: border-color 0.2s ease;
+}
+
+.shipping-form__input:focus,
+.shipping-form__select:focus {
+  border-color: var(--coral);
+}
+
+.shipping-form__input--error,
+.shipping-form__select--error {
+  border-color: var(--error);
+}
+
+.shipping-form__error {
+  color: var(--error);
+  font-size: 0.8rem;
+  margin-top: 0.3rem;
+}
+
+/* --------------------------------------------------------------------------
+   Shipping Methods
+   -------------------------------------------------------------------------- */
+
+.shipping-form__section-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 1.5rem 0 1rem;
+}
+
+.shipping-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.shipping-method {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.2rem;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.shipping-method:hover {
+  border-color: var(--coral);
+}
+
+.shipping-method--selected {
+  border-color: var(--coral);
+  background: #fff5f6;
+}
+
+.shipping-method__left {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.shipping-method__radio {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--coral);
+  flex-shrink: 0;
+}
+
+.shipping-method__icon {
+  font-size: 1.4rem;
+}
+
+.shipping-method__name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0.15rem;
+}
+
+.shipping-method__desc {
+  font-size: 0.8rem;
+  color: var(--gray);
+  margin: 0;
+}
+
+.shipping-method__price {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--navy);
+}
+
+.shipping-method__price--free {
+  color: var(--success);
+}
+
+/* --------------------------------------------------------------------------
+   Submit Button
+   -------------------------------------------------------------------------- */
+
+.shipping-form__submit {
+  width: 100%;
+  padding: 1rem;
+  background: var(--coral);
+  color: var(--white);
+  border: none;
+  border-radius: 10px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: opacity 0.2s ease;
+}
+
+.shipping-form__submit:hover {
+  opacity: 0.9;
+}
+
+.shipping-form__submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.shipping-form__optional {
+  color: var(--gray);
+  font-weight: 400;
+}
+
+.shipping-form__back {
+  display: block;
+  text-align: center;
+  margin-top: 0.8rem;
+  padding: 0.75rem;
+  background: transparent;
+  border: 2px solid var(--border);
+  color: var(--navy);
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: inherit;
+}
+
+.shipping-form__back:hover {
+  border-color: var(--navy);
+}
+
+/* --------------------------------------------------------------------------
+   Order Summary Sidebar
+   -------------------------------------------------------------------------- */
+
+.shipping-summary__card {
+  background: var(--white);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+  position: sticky;
+  top: 80px;
+}
+
+.shipping-summary__title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 1.2rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.shipping-summary__item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.shipping-summary__item:last-of-type {
+  border-bottom: none;
+}
+
+.shipping-summary__item-img {
+  font-size: 1.6rem;
+  width: 44px;
+  height: 44px;
+  background: var(--light);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.shipping-summary__item-name {
+  font-size: 0.88rem;
+  font-weight: 600;
+  flex: 1;
+}
+
+.shipping-summary__item-qty {
+  font-size: 0.78rem;
+  color: var(--gray);
+}
+
+.shipping-summary__item-price {
+  font-size: 0.88rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.shipping-summary__totals {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.shipping-summary__row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  margin-bottom: 0.6rem;
+}
+
+.shipping-summary__row-label {
+  color: var(--gray);
+}
+
+.shipping-summary__row--total {
+  font-weight: 700;
+  font-size: 1rem;
+  padding-top: 0.5rem;
+  border-top: 1.5px solid var(--border);
+  margin-top: 0.3rem;
+  margin-bottom: 0;
+}

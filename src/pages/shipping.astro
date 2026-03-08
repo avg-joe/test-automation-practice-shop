@@ -1,0 +1,22 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CheckoutSteps from '../components/CheckoutSteps.astro';
+import ShippingForm from '../components/ShippingForm';
+import Footer from '../components/Footer.astro';
+import { getTestId } from '../utils/testId';
+---
+
+<Layout title="Shipping – Test Automation Practice Shop">
+  <div class="cart-header" data-testid={getTestId('page-header')}>
+    <p class="cart-header__breadcrumb">
+      <a href="/">Home</a> › <a href="/cart">Cart</a> › Shipping
+    </p>
+    <h1 class="cart-header__title">Shipping Details</h1>
+  </div>
+
+  <CheckoutSteps activeStep="shipping" />
+
+  <ShippingForm client:only="react" />
+
+  <Footer />
+</Layout>

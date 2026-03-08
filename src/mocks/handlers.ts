@@ -61,6 +61,125 @@ export const handlers = [
   }),
 
   /**
+   * POST /api/cart/remove
+   * Removes an item from the in-memory cart by id. Delays 300ms.
+   */
+  http.post('/api/cart/remove', async ({ request }) => {
+    await delay(300);
+
+    const body = await request.json() as { id: string };
+    const index = memoryCart.findIndex((i) => i.id === body.id);
+    if (index !== -1) {
+      memoryCart.splice(index, 1);
+    }
+
+    return HttpResponse.json(
+      { success: true, cart: memoryCart, itemCount: memoryCart.reduce((t, i) => t + i.quantity, 0) },
+      { status: 200 }
+    );
+  }),
+
+  /**
+   * POST /api/cart/update
+   * Updates quantity of an item in the in-memory cart. Delays 300ms.
+   */
+  http.post('/api/cart/update', async ({ request }) => {
+    await delay(300);
+
+    const body = await request.json() as { id: string; quantity: number };
+    const item = memoryCart.find((i) => i.id === body.id);
+    if (item) {
+      item.quantity = body.quantity;
+    }
+
+    return HttpResponse.json(
+      { success: true, cart: memoryCart, itemCount: memoryCart.reduce((t, i) => t + i.quantity, 0) },
+      { status: 200 }
+    );
+  }),
+
+  /**
+   * POST /api/cart/clear
+   * Clears all items from the in-memory cart. Delays 300ms.
+   */
+  http.post('/api/cart/clear', async () => {
+    await delay(300);
+
+    memoryCart.length = 0;
+
+    return HttpResponse.json(
+      { success: true, cart: [], itemCount: 0 },
+      { status: 200 }
+    );
+  }),
+
+  /**
+   * POST /api/coupon/apply
+   * Validates a coupon code. Returns discount info. Delays 500ms.
+   * Valid codes: SAVE10 (10%), SUMMER20 (20%), FREESHIP (free shipping).
+   */
+  http.post('/api/coupon/apply', async ({ request }) => {
+    await delay(500);
+
+    const body = await request.json() as { code: string };
+    const code = (body.code ?? '').trim().toUpperCase();
+
+    const coupons: Record<string, { discountPercent: number; freeShipping: boolean; label: string }> = {
+      SAVE10: { discountPercent: 10, freeShipping: false, label: '10% off your order' },
+      SUMMER20: { discountPercent: 20, freeShipping: false, label: '20% off your order' },
+      FREESHIP: { discountPercent: 0, freeShipping: true, label: 'Free shipping on your order' },
+    };
+
+    const coupon = coupons[code];
+    if (!coupon) {
+      return HttpResponse.json(
+        { success: false, message: 'Invalid coupon code' },
+        { status: 400 }
+      );
+    }
+
+    return HttpResponse.json(
+      {
+        success: true,
+        code,
+        discountPercent: coupon.discountPercent,
+        freeShipping: coupon.freeShipping,
+        label: coupon.label,
+      },
+      { status: 200 }
+    );
+  }),
+
+  /**
+   * POST /api/shipping
+   * Saves shipping information. Returns 200. Delays 500ms.
+   */
+  http.post('/api/shipping', async ({ request }) => {
+    await delay(500);
+
+    const body = await request.json() as {
+      firstName?: string;
+      lastName?: string;
+      email?: string;
+      address?: string;
+      city?: string;
+      state?: string;
+      zip?: string;
+      country?: string;
+      method?: string;
+    };
+
+    return HttpResponse.json(
+      {
+        success: true,
+        message: `Shipping details saved for ${body.firstName ?? 'Customer'} ${body.lastName ?? ''}`.trim(),
+        method: body.method ?? 'standard',
+      },
+      { status: 200 }
+    );
+  }),
+
+  /**
    * POST /api/checkout
    * Randomly fails 10% of requests with 500 error (to teach flaky test handling).
    * Deterministic failure can be triggered via X-Force-Failure: true header.
