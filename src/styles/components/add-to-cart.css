@@ -1,0 +1,28 @@
+/* ==========================================================================
+   Component: AddToCart Button
+   ========================================================================== */
+
+.add-to-cart-btn {
+  padding: 0.45rem 1rem;
+  background: var(--navy);
+  color: var(--white);
+  border: none;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  min-width: 90px;
+}
+
+.add-to-cart-btn:hover {
+  opacity: 0.9;
+}
+
+.add-to-cart-btn--loading {
+  cursor: not-allowed;
+}
+
+.add-to-cart-btn--added {
+  background: #16a34a;
+}

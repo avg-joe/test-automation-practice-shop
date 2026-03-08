@@ -1,0 +1,262 @@
+/* ==========================================================================
+   Page: Contact
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Page Header
+   -------------------------------------------------------------------------- */
+
+.page-header {
+  background: linear-gradient(135deg, var(--navy) 60%, #16213e);
+  color: var(--white);
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.page-header__title {
+  font-size: 2.8rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.page-header__subtitle {
+  color: var(--muted);
+  font-size: 1.1rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* --------------------------------------------------------------------------
+   Contact Cards
+   -------------------------------------------------------------------------- */
+
+.contact-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  padding: 3rem 2rem;
+}
+
+.contact-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  background: var(--white);
+}
+
+.contact-card__icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.contact-card__title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.contact-card__desc {
+  color: var(--gray);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.contact-card__link {
+  display: inline-block;
+  margin-top: 1rem;
+  color: var(--coral);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.contact-card__link:hover {
+  text-decoration: underline;
+}
+
+/* --------------------------------------------------------------------------
+   Contact Main Layout
+   -------------------------------------------------------------------------- */
+
+.contact-main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  padding: 2rem 2rem 4rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* --------------------------------------------------------------------------
+   Contact Info Section
+   -------------------------------------------------------------------------- */
+
+.contact-info__title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.contact-info__subtitle {
+  color: var(--gray);
+  margin-bottom: 2rem;
+}
+
+.contact-info__item {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  align-items: flex-start;
+}
+
+.contact-info__icon-box {
+  width: 48px;
+  height: 48px;
+  background: #fff0f3;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.contact-info__label {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+.contact-info__text {
+  color: var(--gray);
+  font-size: 0.88rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Map Placeholder */
+.contact-info__map {
+  background: var(--light);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  height: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: var(--gray);
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.contact-info__map-icon {
+  font-size: 2.5rem;
+}
+
+.contact-info__map-text {
+  margin: 0;
+}
+
+/* Social Section */
+.contact-info__social {
+  margin-top: 1.5rem;
+}
+
+.contact-info__social-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.contact-info__social-links {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.contact-info__social-link {
+  width: 42px;
+  height: 42px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  background: var(--white);
+  text-decoration: none;
+}
+
+.contact-info__social-link:hover {
+  background: var(--light);
+}
+
+/* --------------------------------------------------------------------------
+   FAQ Section
+   -------------------------------------------------------------------------- */
+
+.faq-section {
+  background: var(--light);
+  padding: 4rem 2rem;
+}
+
+.faq-section__title {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.faq-item {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.faq-item__question {
+  width: 100%;
+  text-align: left;
+  padding: 1rem 1.2rem;
+  background: none;
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--navy);
+  list-style: none;
+}
+
+.faq-item__question::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item__toggle {
+  font-size: 1.2rem;
+  color: var(--gray);
+  transition: transform 0.2s ease;
+}
+
+.faq-item[open] .faq-item__toggle {
+  transform: rotate(180deg);
+}
+
+.faq-item__answer {
+  padding: 0 1.2rem 1rem;
+  font-size: 0.88rem;
+  color: var(--gray);
+  line-height: 1.6;
+}

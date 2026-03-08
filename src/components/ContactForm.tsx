@@ -94,21 +94,21 @@ export default function ContactForm() {
 
   return (
     <div data-testid={getTestId('contact-form-section')}>
-      <h2 style={{ fontSize: '1.8rem', fontWeight: 700, marginBottom: '0.5rem' }}>
+      <h2 className="contact-form-section__title">
         Send Us a Message
       </h2>
-      <p style={{ color: '#666', marginBottom: '2rem' }}>
+      <p className="contact-form-section__subtitle">
         Fill out the form and we'll respond as soon as possible.
       </p>
 
       <form data-testid={getTestId('contact-form')} onSubmit={handleSubmit}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1.2rem' }}>
+        <div className="contact-form__row">
           <div>
             <label
               htmlFor="contact-first"
-              style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem', color: '#1a1a2e' }}
+              className="contact-form__label"
             >
-              First Name <span style={{ color: '#e94560', marginLeft: '2px' }}>*</span>
+              First Name <span className="contact-form__required">*</span>
             </label>
             <input
               type="text"
@@ -116,23 +116,12 @@ export default function ContactForm() {
               name="firstName"
               placeholder="Jane"
               data-testid={getTestId('contact-first-name')}
-              style={{
-                width: '100%',
-                padding: '0.75rem 1rem',
-                border: '1.5px solid #e0e0e0',
-                borderRadius: '8px',
-                fontSize: '0.95rem',
-                outline: 'none',
-                fontFamily: 'inherit',
-                transition: 'border-color 0.2s',
-              }}
-              onFocus={(e) => (e.target.style.borderColor = '#e94560')}
-              onBlur={(e) => (e.target.style.borderColor = '#e0e0e0')}
+              className="contact-form__input"
             />
             {errors.firstName && (
               <p
                 data-testid={getTestId('contact-first-name-error')}
-                style={{ color: '#dc2626', fontSize: '0.8rem', marginTop: '0.3rem' }}
+                className="contact-form__error"
               >
                 {errors.firstName}
               </p>
@@ -142,9 +131,9 @@ export default function ContactForm() {
           <div>
             <label
               htmlFor="contact-last"
-              style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem', color: '#1a1a2e' }}
+              className="contact-form__label"
             >
-              Last Name <span style={{ color: '#e94560', marginLeft: '2px' }}>*</span>
+              Last Name <span className="contact-form__required">*</span>
             </label>
             <input
               type="text"
@@ -152,23 +141,12 @@ export default function ContactForm() {
               name="lastName"
               placeholder="Doe"
               data-testid={getTestId('contact-last-name')}
-              style={{
-                width: '100%',
-                padding: '0.75rem 1rem',
-                border: '1.5px solid #e0e0e0',
-                borderRadius: '8px',
-                fontSize: '0.95rem',
-                outline: 'none',
-                fontFamily: 'inherit',
-                transition: 'border-color 0.2s',
-              }}
-              onFocus={(e) => (e.target.style.borderColor = '#e94560')}
-              onBlur={(e) => (e.target.style.borderColor = '#e0e0e0')}
+              className="contact-form__input"
             />
             {errors.lastName && (
               <p
                 data-testid={getTestId('contact-last-name-error')}
-                style={{ color: '#dc2626', fontSize: '0.8rem', marginTop: '0.3rem' }}
+                className="contact-form__error"
               >
                 {errors.lastName}
               </p>
@@ -176,12 +154,12 @@ export default function ContactForm() {
           </div>
         </div>
 
-        <div style={{ marginBottom: '1.2rem' }}>
+        <div className="contact-form__group">
           <label
             htmlFor="contact-email"
-            style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem', color: '#1a1a2e' }}
+            className="contact-form__label"
           >
-            Email Address <span style={{ color: '#e94560', marginLeft: '2px' }}>*</span>
+            Email Address <span className="contact-form__required">*</span>
           </label>
           <input
             type="email"
@@ -189,33 +167,22 @@ export default function ContactForm() {
             name="email"
             placeholder="you@example.com"
             data-testid={getTestId('contact-email')}
-            style={{
-              width: '100%',
-              padding: '0.75rem 1rem',
-              border: '1.5px solid #e0e0e0',
-              borderRadius: '8px',
-              fontSize: '0.95rem',
-              outline: 'none',
-              fontFamily: 'inherit',
-              transition: 'border-color 0.2s',
-            }}
-            onFocus={(e) => (e.target.style.borderColor = '#e94560')}
-            onBlur={(e) => (e.target.style.borderColor = '#e0e0e0')}
+            className="contact-form__input"
           />
           {errors.email && (
             <p
               data-testid={getTestId('contact-email-error')}
-              style={{ color: '#dc2626', fontSize: '0.8rem', marginTop: '0.3rem' }}
+              className="contact-form__error"
             >
               {errors.email}
             </p>
           )}
         </div>
 
-        <div style={{ marginBottom: '1.2rem' }}>
+        <div className="contact-form__group">
           <label
             htmlFor="contact-phone"
-            style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem', color: '#1a1a2e' }}
+            className="contact-form__label"
           >
             Phone Number
           </label>
@@ -225,44 +192,22 @@ export default function ContactForm() {
             name="phone"
             placeholder="+61 4XX XXX XXX"
             data-testid={getTestId('contact-phone')}
-            style={{
-              width: '100%',
-              padding: '0.75rem 1rem',
-              border: '1.5px solid #e0e0e0',
-              borderRadius: '8px',
-              fontSize: '0.95rem',
-              outline: 'none',
-              fontFamily: 'inherit',
-              transition: 'border-color 0.2s',
-            }}
-            onFocus={(e) => (e.target.style.borderColor = '#e94560')}
-            onBlur={(e) => (e.target.style.borderColor = '#e0e0e0')}
+            className="contact-form__input"
           />
         </div>
 
-        <div style={{ marginBottom: '1.2rem' }}>
+        <div className="contact-form__group">
           <label
             htmlFor="contact-subject"
-            style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem', color: '#1a1a2e' }}
+            className="contact-form__label"
           >
-            Subject <span style={{ color: '#e94560', marginLeft: '2px' }}>*</span>
+            Subject <span className="contact-form__required">*</span>
           </label>
           <select
             id="contact-subject"
             name="subject"
             data-testid={getTestId('contact-subject')}
-            style={{
-              width: '100%',
-              padding: '0.75rem 1rem',
-              border: '1.5px solid #e0e0e0',
-              borderRadius: '8px',
-              fontSize: '0.95rem',
-              outline: 'none',
-              fontFamily: 'inherit',
-              transition: 'border-color 0.2s',
-            }}
-            onFocus={(e) => (e.target.style.borderColor = '#e94560')}
-            onBlur={(e) => (e.target.style.borderColor = '#e0e0e0')}
+            className="contact-form__select"
           >
             <option value="">Select a topic...</option>
             <option value="order">Order Issue</option>
@@ -275,72 +220,50 @@ export default function ContactForm() {
           {errors.subject && (
             <p
               data-testid={getTestId('contact-subject-error')}
-              style={{ color: '#dc2626', fontSize: '0.8rem', marginTop: '0.3rem' }}
+              className="contact-form__error"
             >
               {errors.subject}
             </p>
           )}
         </div>
 
-        <div style={{ marginBottom: '1.2rem' }}>
+        <div className="contact-form__group">
           <label
             htmlFor="contact-message"
-            style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem', color: '#1a1a2e' }}
+            className="contact-form__label"
           >
-            Message <span style={{ color: '#e94560', marginLeft: '2px' }}>*</span>
+            Message <span className="contact-form__required">*</span>
           </label>
           <textarea
             id="contact-message"
             name="message"
             placeholder="Write your message here..."
             data-testid={getTestId('contact-message')}
-            style={{
-              width: '100%',
-              padding: '0.75rem 1rem',
-              border: '1.5px solid #e0e0e0',
-              borderRadius: '8px',
-              fontSize: '0.95rem',
-              outline: 'none',
-              fontFamily: 'inherit',
-              resize: 'vertical',
-              minHeight: '140px',
-              transition: 'border-color 0.2s',
-            }}
-            onFocus={(e) => (e.target.style.borderColor = '#e94560')}
-            onBlur={(e) => (e.target.style.borderColor = '#e0e0e0')}
+            className="contact-form__textarea"
           />
           {errors.message && (
             <p
               data-testid={getTestId('contact-message-error')}
-              style={{ color: '#dc2626', fontSize: '0.8rem', marginTop: '0.3rem' }}
+              className="contact-form__error"
             >
               {errors.message}
             </p>
           )}
         </div>
 
-        <div style={{ marginBottom: '1.2rem' }}>
-          <label
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              cursor: 'pointer',
-              fontWeight: 400,
-              fontSize: '0.85rem',
-            }}
-          >
+        <div className="contact-form__checkbox-row">
+          <label className="contact-form__checkbox-label">
             <input
               type="checkbox"
               name="consent"
               data-testid={getTestId('contact-consent')}
-              style={{ cursor: 'pointer' }}
+              className="contact-form__checkbox"
             />
             I agree to the{' '}
             <a
               href="#"
               data-testid={getTestId('contact-privacy-policy-link')}
-              style={{ color: '#e94560', textDecoration: 'none' }}
+              className="contact-form__privacy-link"
             >
               Privacy Policy
             </a>
@@ -348,33 +271,23 @@ export default function ContactForm() {
           {errors.consent && (
             <p
               data-testid={getTestId('contact-consent-error')}
-              style={{ color: '#dc2626', fontSize: '0.8rem', marginTop: '0.3rem' }}
+              className="contact-form__error"
             >
               {errors.consent}
             </p>
           )}
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '1.5rem' }}>
+        <div className="contact-form__actions">
           <button
             type="submit"
             data-testid={getTestId('contact-submit-btn')}
             disabled={isLoading}
-            style={{
-              padding: '0.9rem 2.5rem',
-              background: '#e94560',
-              color: '#fff',
-              border: 'none',
-              borderRadius: '8px',
-              fontSize: '1rem',
-              fontWeight: 700,
-              cursor: isLoading ? 'not-allowed' : 'pointer',
-              opacity: isLoading ? 0.7 : 1,
-            }}
+            className={`contact-form__submit ${isLoading ? 'contact-form__submit--loading' : ''}`}
           >
             {isLoading ? 'Sending...' : 'Send Message'}
           </button>
-          <p style={{ fontSize: '0.8rem', color: '#666', margin: 0 }}>
+          <p className="contact-form__note">
             We typically respond within 24 hours.
           </p>
         </div>
@@ -382,16 +295,7 @@ export default function ContactForm() {
         {errors.form && (
           <div
             data-testid={getTestId('contact-error-msg')}
-            style={{
-              background: '#fef2f2',
-              border: '1.5px solid #dc2626',
-              borderRadius: '10px',
-              padding: '1.2rem 1.5rem',
-              marginTop: '1rem',
-              color: '#dc2626',
-              fontSize: '0.9rem',
-              fontWeight: 600,
-            }}
+            className="contact-form__alert contact-form__alert--error"
           >
             ⚠️ {errors.form}
           </div>
@@ -401,16 +305,7 @@ export default function ContactForm() {
       {success && (
         <div
           data-testid={getTestId('contact-success-msg')}
-          style={{
-            background: '#f0fdf4',
-            border: '1.5px solid #22c55e',
-            borderRadius: '10px',
-            padding: '1.2rem 1.5rem',
-            marginTop: '1rem',
-            color: '#166534',
-            fontSize: '0.9rem',
-            fontWeight: 600,
-          }}
+          className="contact-form__alert contact-form__alert--success"
         >
           ✅ {success}
         </div>

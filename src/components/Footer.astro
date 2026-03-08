@@ -1,0 +1,51 @@
+---
+import { getTestId } from '../utils/testId';
+---
+
+<footer data-testid={getTestId('footer')} class="footer">
+  <div class="footer__grid">
+    <div>
+      <h3 class="footer__brand-title">Test Automation Practice <span class="footer__brand-accent">Shop</span></h3>
+      <p class="footer__brand-desc">Your one-stop destination for quality products at unbeatable prices.</p>
+    </div>
+    <div>
+      <h4 class="footer__column-title">Shop</h4>
+      <ul class="footer__list">
+        <li class="footer__list-item"><a href="/shop" data-testid={getTestId('footer-shop-all-products')} class="footer__link">All Products</a></li>
+        <li class="footer__list-item"><a href="#" data-testid={getTestId('footer-shop-electronics')} class="footer__link">Electronics</a></li>
+        <li class="footer__list-item"><a href="#" data-testid={getTestId('footer-shop-fashion')} class="footer__link">Fashion</a></li>
+        <li class="footer__list-item"><a href="#" data-testid={getTestId('footer-shop-sale')} class="footer__link">Sale</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="footer__column-title">Support</h4>
+      <ul class="footer__list">
+        <li class="footer__list-item"><a href="/contact" data-testid={getTestId('footer-support-contact-us')} class="footer__link">Contact Us</a></li>
+        <li class="footer__list-item"><a href="#" data-testid={getTestId('footer-support-faq')} class="footer__link">FAQ</a></li>
+        <li class="footer__list-item"><a href="#" data-testid={getTestId('footer-support-returns')} class="footer__link">Returns</a></li>
+        <li class="footer__list-item"><a href="#" data-testid={getTestId('footer-support-shipping')} class="footer__link">Shipping</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="footer__column-title">Account</h4>
+      <ul class="footer__list">
+        <li class="footer__list-item"><a href="#" id="footer-login-link" data-testid={getTestId('footer-account-login')} class="footer__link">Login</a></li>
+        <li class="footer__list-item"><a href="#" data-testid={getTestId('footer-account-register')} class="footer__link">Register</a></li>
+        <li class="footer__list-item"><a href="#" data-testid={getTestId('footer-account-my-orders')} class="footer__link">My Orders</a></li>
+        <li class="footer__list-item"><a href="#" data-testid={getTestId('footer-account-wishlist')} class="footer__link">Wishlist</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <span>© 2026 Test Automation Practice Shop. All rights reserved.</span>
+    <span>Privacy Policy · Terms of Service</span>
+  </div>
+</footer>
+
+<script>
+  // Allow footer login link to open the login modal
+  document.getElementById('footer-login-link')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.getElementById('open-login-modal')?.click();
+  });
+</script>

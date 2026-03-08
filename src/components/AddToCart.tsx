@@ -46,23 +46,18 @@ export default function AddToCart({
     }
   };
 
+  const buttonClasses = [
+    'add-to-cart-btn',
+    isLoading && 'add-to-cart-btn--loading',
+    added && 'add-to-cart-btn--added',
+  ].filter(Boolean).join(' ');
+
   return (
     <button
       data-testid={getTestId(`add-to-cart-${testIdSuffix}`)}
       onClick={handleAddToCart}
       disabled={isLoading}
-      style={{
-        padding: '0.45rem 1rem',
-        background: added ? '#16a34a' : '#1a1a2e',
-        color: '#fff',
-        border: 'none',
-        borderRadius: '6px',
-        fontSize: '0.82rem',
-        fontWeight: 600,
-        cursor: isLoading ? 'not-allowed' : 'pointer',
-        transition: 'background 0.2s',
-        minWidth: '90px',
-      }}
+      className={buttonClasses}
     >
       {isLoading ? '…' : added ? '✓ Added!' : 'Add to Cart'}
     </button>
