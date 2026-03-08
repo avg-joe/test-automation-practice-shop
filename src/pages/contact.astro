@@ -207,41 +207,41 @@ import { getTestId } from '../utils/testId';
       style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;max-width:900px;margin:0 auto;"
     >
       
-      <div
+      <details
         data-testid={getTestId('faq-1')}
         style="background:#fff;border:1px solid #e0e0e0;border-radius:10px;overflow:hidden;"
       >
-        <button
+        <summary
           data-testid={getTestId('faq-question-1')}
-          style="width:100%;text-align:left;padding:1rem 1.2rem;background:none;border:none;font-size:0.95rem;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:#1a1a2e;"
+          style="width:100%;text-align:left;padding:1rem 1.2rem;background:none;border:none;font-size:0.95rem;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:#1a1a2e;list-style:none;"
         >
           How long does shipping take? <span style="font-size:0.9rem;color:#666;">＋</span>
-        </button>
+        </summary>
         <div
           data-testid={getTestId('faq-answer-1')}
-          style="padding:0 1.2rem 1rem;font-size:0.88rem;color:#666;line-height:1.6;display:none;"
+          style="padding:0 1.2rem 1rem;font-size:0.88rem;color:#666;line-height:1.6;"
         >
           Standard shipping takes 3–5 business days. Express shipping (1–2 days) is available at checkout.
         </div>
-      </div>
+      </details>
 
-      <div
+      <details
         data-testid={getTestId('faq-2')}
         style="background:#fff;border:1px solid #e0e0e0;border-radius:10px;overflow:hidden;"
       >
-        <button
+        <summary
           data-testid={getTestId('faq-question-2')}
-          style="width:100%;text-align:left;padding:1rem 1.2rem;background:none;border:none;font-size:0.95rem;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:#1a1a2e;"
+          style="width:100%;text-align:left;padding:1rem 1.2rem;background:none;border:none;font-size:0.95rem;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:#1a1a2e;list-style:none;"
         >
           What is your return policy? <span style="font-size:0.9rem;color:#666;">＋</span>
-        </button>
+        </summary>
         <div
           data-testid={getTestId('faq-answer-2')}
-          style="padding:0 1.2rem 1rem;font-size:0.88rem;color:#666;line-height:1.6;display:none;"
+          style="padding:0 1.2rem 1rem;font-size:0.88rem;color:#666;line-height:1.6;"
         >
           We offer a 30-day hassle-free return policy. Items must be in original condition.
         </div>
-      </div>
+      </details>
 
       <div
         data-testid={getTestId('faq-3')}
