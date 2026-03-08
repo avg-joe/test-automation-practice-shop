@@ -251,7 +251,7 @@
 }
 
 .faq-item[open] .faq-item__toggle {
-  transform: rotate(45deg);
+  transform: rotate(180deg);
 }
 
 .faq-item__answer {
