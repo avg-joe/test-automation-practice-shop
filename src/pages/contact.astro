@@ -9,10 +9,10 @@ import { getTestId } from '../utils/testId';
   <!-- PAGE HEADER -->
   <div
     data-testid={getTestId('page-header')}
-    style="background:linear-gradient(135deg,#1a1a2e 60%,#16213e);color:#fff;padding:4rem 2rem;text-align:center;"
+    class="page-header"
   >
-    <h1 style="font-size:2.8rem;font-weight:800;margin-bottom:1rem;">Get In Touch</h1>
-    <p style="color:#b0b8d0;font-size:1.1rem;max-width:500px;margin:0 auto;">
+    <h1 class="page-header__title">Get In Touch</h1>
+    <p class="page-header__subtitle">
       Have a question or need help? We're here for you 24/7.
     </p>
   </div>
@@ -20,21 +20,21 @@ import { getTestId } from '../utils/testId';
   <!-- CONTACT CARDS -->
   <div
     data-testid={getTestId('contact-cards')}
-    style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;padding:3rem 2rem;"
+    class="contact-cards"
   >
     <div
       data-testid={getTestId('contact-card-chat')}
-      style="border:1px solid #e0e0e0;border-radius:12px;padding:2rem;text-align:center;background:#fff;"
+      class="contact-card"
     >
-      <div style="font-size:2.5rem;margin-bottom:1rem;">💬</div>
-      <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:0.5rem;">Live Chat</h3>
-      <p style="color:#666;font-size:0.88rem;line-height:1.6;">
+      <div class="contact-card__icon">💬</div>
+      <h3 class="contact-card__title">Live Chat</h3>
+      <p class="contact-card__desc">
         Chat with our support team in real time. Average response: under 2 minutes.
       </p>
       <a
         href="#"
         data-testid={getTestId('start-chat-btn')}
-        style="display:inline-block;margin-top:1rem;color:#e94560;text-decoration:none;font-weight:600;font-size:0.9rem;"
+        class="contact-card__link"
       >
         Start a Chat
       </a>
@@ -42,17 +42,17 @@ import { getTestId } from '../utils/testId';
 
     <div
       data-testid={getTestId('contact-card-email')}
-      style="border:1px solid #e0e0e0;border-radius:12px;padding:2rem;text-align:center;background:#fff;"
+      class="contact-card"
     >
-      <div style="font-size:2.5rem;margin-bottom:1rem;">📧</div>
-      <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:0.5rem;">Email Support</h3>
-      <p style="color:#666;font-size:0.88rem;line-height:1.6;">
+      <div class="contact-card__icon">📧</div>
+      <h3 class="contact-card__title">Email Support</h3>
+      <p class="contact-card__desc">
         Send us an email and we'll get back to you within 24 hours.
       </p>
       <a
         href="mailto:support@testautopracticeshop.com.au"
         data-testid={getTestId('email-link')}
-        style="display:inline-block;margin-top:1rem;color:#e94560;text-decoration:none;font-weight:600;font-size:0.9rem;"
+        class="contact-card__link"
       >
         support@testautopracticeshop.com.au
       </a>
@@ -60,17 +60,17 @@ import { getTestId } from '../utils/testId';
 
     <div
       data-testid={getTestId('contact-card-phone')}
-      style="border:1px solid #e0e0e0;border-radius:12px;padding:2rem;text-align:center;background:#fff;"
+      class="contact-card"
     >
-      <div style="font-size:2.5rem;margin-bottom:1rem;">📞</div>
-      <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:0.5rem;">Phone</h3>
-      <p style="color:#666;font-size:0.88rem;line-height:1.6;">
+      <div class="contact-card__icon">📞</div>
+      <h3 class="contact-card__title">Phone</h3>
+      <p class="contact-card__desc">
         Call us Mon–Fri, 9am–5pm AEDT. We're happy to help!
       </p>
       <a
         href="tel:+61296851234"
         data-testid={getTestId('phone-link')}
-        style="display:inline-block;margin-top:1rem;color:#e94560;text-decoration:none;font-weight:600;font-size:0.9rem;"
+        class="contact-card__link"
       >
         +61 2 9685 1234
       </a>
@@ -78,28 +78,26 @@ import { getTestId } from '../utils/testId';
   </div>
 
   <!-- MAIN CONTACT LAYOUT -->
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:3rem;padding:2rem 2rem 4rem;max-width:1100px;margin:0 auto;">
+  <div class="contact-main">
     
     <!-- CONTACT FORM -->
     <ContactForm client:load />
 
     <!-- CONTACT INFO -->
     <div data-testid={getTestId('contact-info-section')}>
-      <h2 style="font-size:1.8rem;font-weight:700;margin-bottom:0.5rem;">Our Information</h2>
-      <p style="color:#666;margin-bottom:2rem;">You can also find us at the details below.</p>
+      <h2 class="contact-info__title">Our Information</h2>
+      <p class="contact-info__subtitle">You can also find us at the details below.</p>
 
       <div
         data-testid={getTestId('info-address')}
-        style="display:flex;gap:1rem;margin-bottom:1.5rem;align-items:flex-start;"
+        class="contact-info__item"
       >
-        <div
-          style="width:48px;height:48px;background:#fff0f3;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;"
-        >
+        <div class="contact-info__icon-box">
           📍
         </div>
         <div>
-          <h4 style="font-size:0.95rem;font-weight:700;margin-bottom:0.3rem;">Head Office</h4>
-          <p style="color:#666;font-size:0.88rem;line-height:1.5;margin:0;">
+          <h4 class="contact-info__label">Head Office</h4>
+          <p class="contact-info__text">
             123 George Street, Suite 500<br />Sydney, NSW 2000, Australia
           </p>
         </div>
@@ -107,16 +105,14 @@ import { getTestId } from '../utils/testId';
 
       <div
         data-testid={getTestId('info-hours')}
-        style="display:flex;gap:1rem;margin-bottom:1.5rem;align-items:flex-start;"
+        class="contact-info__item"
       >
-        <div
-          style="width:48px;height:48px;background:#fff0f3;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;"
-        >
+        <div class="contact-info__icon-box">
           🕐
         </div>
         <div>
-          <h4 style="font-size:0.95rem;font-weight:700;margin-bottom:0.3rem;">Business Hours</h4>
-          <p style="color:#666;font-size:0.88rem;line-height:1.5;margin:0;">
+          <h4 class="contact-info__label">Business Hours</h4>
+          <p class="contact-info__text">
             Mon – Fri: 9:00 AM – 5:00 PM AEDT<br />
             Sat: 10:00 AM – 2:00 PM AEDT<br />
             Sun: Closed
@@ -126,16 +122,14 @@ import { getTestId } from '../utils/testId';
 
       <div
         data-testid={getTestId('info-support')}
-        style="display:flex;gap:1rem;margin-bottom:1.5rem;align-items:flex-start;"
+        class="contact-info__item"
       >
-        <div
-          style="width:48px;height:48px;background:#fff0f3;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;"
-        >
+        <div class="contact-info__icon-box">
           🛟
         </div>
         <div>
-          <h4 style="font-size:0.95rem;font-weight:700;margin-bottom:0.3rem;">Online Support</h4>
-          <p style="color:#666;font-size:0.88rem;line-height:1.5;margin:0;">
+          <h4 class="contact-info__label">Online Support</h4>
+          <p class="contact-info__text">
             Live chat available 24/7<br />
             Email support: response within 24 hrs
           </p>
@@ -144,23 +138,23 @@ import { getTestId } from '../utils/testId';
 
       <div
         data-testid={getTestId('map-placeholder')}
-        style="background:#f8f8f8;border:1px solid #e0e0e0;border-radius:12px;height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.5rem;color:#666;margin-top:1.5rem;font-size:0.9rem;"
+        class="contact-info__map"
       >
-        <span style="font-size:2.5rem;">🗺️</span>
-        <p style="margin:0;">Map Preview — 123 George St, Sydney, NSW</p>
+        <span class="contact-info__map-icon">🗺️</span>
+        <p class="contact-info__map-text">Map Preview — 123 George St, Sydney, NSW</p>
       </div>
 
       <div
         data-testid={getTestId('social-section')}
-        style="margin-top:1.5rem;"
+        class="contact-info__social"
       >
-        <h4 style="font-size:0.95rem;font-weight:700;margin-bottom:1rem;">Follow Us</h4>
-        <div style="display:flex;gap:0.8rem;">
+        <h4 class="contact-info__social-title">Follow Us</h4>
+        <div class="contact-info__social-links">
           <a
             href="#"
             data-testid={getTestId('social-instagram')}
             aria-label="Instagram"
-            style="width:42px;height:42px;border:1.5px solid #e0e0e0;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;cursor:pointer;background:#fff;text-decoration:none;"
+            class="contact-info__social-link"
           >
             📸
           </a>
@@ -168,7 +162,7 @@ import { getTestId } from '../utils/testId';
             href="#"
             data-testid={getTestId('social-twitter')}
             aria-label="Twitter"
-            style="width:42px;height:42px;border:1.5px solid #e0e0e0;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;cursor:pointer;background:#fff;text-decoration:none;"
+            class="contact-info__social-link"
           >
             🐦
           </a>
@@ -176,7 +170,7 @@ import { getTestId } from '../utils/testId';
             href="#"
             data-testid={getTestId('social-facebook')}
             aria-label="Facebook"
-            style="width:42px;height:42px;border:1.5px solid #e0e0e0;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;cursor:pointer;background:#fff;text-decoration:none;"
+            class="contact-info__social-link"
           >
             📘
           </a>
@@ -184,7 +178,7 @@ import { getTestId } from '../utils/testId';
             href="#"
             data-testid={getTestId('social-youtube')}
             aria-label="YouTube"
-            style="width:42px;height:42px;border:1.5px solid #e0e0e0;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;cursor:pointer;background:#fff;text-decoration:none;"
+            class="contact-info__social-link"
           >
             ▶️
           </a>
@@ -197,29 +191,29 @@ import { getTestId } from '../utils/testId';
   <!-- FAQ -->
   <div
     data-testid={getTestId('faq-section')}
-    style="background:#f8f8f8;padding:4rem 2rem;"
+    class="faq-section"
   >
-    <h2 style="text-align:center;font-size:1.8rem;font-weight:700;margin-bottom:2rem;">
+    <h2 class="faq-section__title">
       Frequently Asked Questions
     </h2>
     <div
       data-testid={getTestId('faq-grid')}
-      style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;max-width:900px;margin:0 auto;"
+      class="faq-grid"
     >
       
       <details
         data-testid={getTestId('faq-1')}
-        style="background:#fff;border:1px solid #e0e0e0;border-radius:10px;overflow:hidden;"
+        class="faq-item"
       >
         <summary
           data-testid={getTestId('faq-question-1')}
-          style="width:100%;text-align:left;padding:1rem 1.2rem;background:none;border:none;font-size:0.95rem;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:#1a1a2e;list-style:none;"
+          class="faq-item__question"
         >
-          How long does shipping take? <span style="font-size:0.9rem;color:#666;">＋</span>
+          How long does shipping take? <span class="faq-item__toggle">＋</span>
         </summary>
         <div
           data-testid={getTestId('faq-answer-1')}
-          style="padding:0 1.2rem 1rem;font-size:0.88rem;color:#666;line-height:1.6;"
+          class="faq-item__answer"
         >
           Standard shipping takes 3–5 business days. Express shipping (1–2 days) is available at checkout.
         </div>
@@ -227,17 +221,17 @@ import { getTestId } from '../utils/testId';
 
       <details
         data-testid={getTestId('faq-2')}
-        style="background:#fff;border:1px solid #e0e0e0;border-radius:10px;overflow:hidden;"
+        class="faq-item"
       >
         <summary
           data-testid={getTestId('faq-question-2')}
-          style="width:100%;text-align:left;padding:1rem 1.2rem;background:none;border:none;font-size:0.95rem;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:#1a1a2e;list-style:none;"
+          class="faq-item__question"
         >
-          What is your return policy? <span style="font-size:0.9rem;color:#666;">＋</span>
+          What is your return policy? <span class="faq-item__toggle">＋</span>
         </summary>
         <div
           data-testid={getTestId('faq-answer-2')}
-          style="padding:0 1.2rem 1rem;font-size:0.88rem;color:#666;line-height:1.6;"
+          class="faq-item__answer"
         >
           We offer a 30-day hassle-free return policy. Items must be in original condition.
         </div>
@@ -245,17 +239,17 @@ import { getTestId } from '../utils/testId';
 
       <details
         data-testid={getTestId('faq-3')}
-        style="background:#fff;border:1px solid #e0e0e0;border-radius:10px;overflow:hidden;"
+        class="faq-item"
       >
         <summary
           data-testid={getTestId('faq-question-3')}
-          style="width:100%;text-align:left;padding:1rem 1.2rem;background:none;border:none;font-size:0.95rem;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:#1a1a2e;list-style:none;"
+          class="faq-item__question"
         >
-          How do I track my order? <span style="font-size:0.9rem;color:#666;">＋</span>
+          How do I track my order? <span class="faq-item__toggle">＋</span>
         </summary>
         <div
           data-testid={getTestId('faq-answer-3')}
-          style="padding:0 1.2rem 1rem;font-size:0.88rem;color:#666;line-height:1.6;"
+          class="faq-item__answer"
         >
           After your order ships, you'll receive an email with a tracking number. Visit the carrier's site to track.
         </div>
@@ -263,17 +257,17 @@ import { getTestId } from '../utils/testId';
 
       <details
         data-testid={getTestId('faq-4')}
-        style="background:#fff;border:1px solid #e0e0e0;border-radius:10px;overflow:hidden;"
+        class="faq-item"
       >
         <summary
           data-testid={getTestId('faq-question-4')}
-          style="width:100%;text-align:left;padding:1rem 1.2rem;background:none;border:none;font-size:0.95rem;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:#1a1a2e;list-style:none;"
+          class="faq-item__question"
         >
-          Do you ship internationally? <span style="font-size:0.9rem;color:#666;">＋</span>
+          Do you ship internationally? <span class="faq-item__toggle">＋</span>
         </summary>
         <div
           data-testid={getTestId('faq-answer-4')}
-          style="padding:0 1.2rem 1rem;font-size:0.88rem;color:#666;line-height:1.6;"
+          class="faq-item__answer"
         >
           Yes! We ship to 50+ countries. International shipping rates and times vary by location.
         </div>
@@ -285,72 +279,70 @@ import { getTestId } from '../utils/testId';
   <!-- FOOTER -->
   <footer
     data-testid={getTestId('footer')}
-    style="background:#1a1a2e;color:#b0b8d0;padding:3rem 2rem 1.5rem;"
+    class="footer"
   >
-    <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem;margin-bottom:2rem;">
+    <div class="footer__grid">
       <div>
-        <h3 style="color:#fff;font-size:1.4rem;margin:0 0 0.8rem;">
-          Test Automation Practice <span style="color:#e94560;">Shop</span>
+        <h3 class="footer__brand-title">
+          Test Automation Practice <span class="footer__brand-accent">Shop</span>
         </h3>
-        <p style="font-size:0.85rem;line-height:1.6;margin:0;">
+        <p class="footer__brand-desc">
           Your one-stop destination for quality products at unbeatable prices.
         </p>
       </div>
       <div>
-        <h4 style="color:#fff;margin:0 0 1rem;font-size:0.95rem;">Shop</h4>
-        <ul style="list-style:none;padding:0;margin:0;">
-          <li style="margin-bottom:0.5rem;">
-            <a href="/shop" data-testid={getTestId('footer-shop-all-products')} style="color:#b0b8d0;text-decoration:none;font-size:0.85rem;">All Products</a>
+        <h4 class="footer__column-title">Shop</h4>
+        <ul class="footer__list">
+          <li class="footer__list-item">
+            <a href="/shop" data-testid={getTestId('footer-shop-all-products')} class="footer__link">All Products</a>
           </li>
-          <li style="margin-bottom:0.5rem;">
-            <a href="#" data-testid={getTestId('footer-shop-electronics')} style="color:#b0b8d0;text-decoration:none;font-size:0.85rem;">Electronics</a>
+          <li class="footer__list-item">
+            <a href="#" data-testid={getTestId('footer-shop-electronics')} class="footer__link">Electronics</a>
           </li>
-          <li style="margin-bottom:0.5rem;">
-            <a href="#" data-testid={getTestId('footer-shop-fashion')} style="color:#b0b8d0;text-decoration:none;font-size:0.85rem;">Fashion</a>
+          <li class="footer__list-item">
+            <a href="#" data-testid={getTestId('footer-shop-fashion')} class="footer__link">Fashion</a>
           </li>
-          <li style="margin-bottom:0.5rem;">
-            <a href="#" data-testid={getTestId('footer-shop-sale')} style="color:#b0b8d0;text-decoration:none;font-size:0.85rem;">Sale</a>
-          </li>
-        </ul>
-      </div>
-      <div>
-        <h4 style="color:#fff;margin:0 0 1rem;font-size:0.95rem;">Support</h4>
-        <ul style="list-style:none;padding:0;margin:0;">
-          <li style="margin-bottom:0.5rem;">
-            <a href="/contact" data-testid={getTestId('footer-support-contact-us')} style="color:#b0b8d0;text-decoration:none;font-size:0.85rem;">Contact Us</a>
-          </li>
-          <li style="margin-bottom:0.5rem;">
-            <a href="#" data-testid={getTestId('footer-support-faq')} style="color:#b0b8d0;text-decoration:none;font-size:0.85rem;">FAQ</a>
-          </li>
-          <li style="margin-bottom:0.5rem;">
-            <a href="#" data-testid={getTestId('footer-support-returns')} style="color:#b0b8d0;text-decoration:none;font-size:0.85rem;">Returns</a>
-          </li>
-          <li style="margin-bottom:0.5rem;">
-            <a href="#" data-testid={getTestId('footer-support-shipping')} style="color:#b0b8d0;text-decoration:none;font-size:0.85rem;">Shipping</a>
+          <li class="footer__list-item">
+            <a href="#" data-testid={getTestId('footer-shop-sale')} class="footer__link">Sale</a>
           </li>
         </ul>
       </div>
       <div>
-        <h4 style="color:#fff;margin:0 0 1rem;font-size:0.95rem;">Account</h4>
-        <ul style="list-style:none;padding:0;margin:0;">
-          <li style="margin-bottom:0.5rem;">
-            <a href="#" id="footer-login-link" data-testid={getTestId('footer-account-login')} style="color:#b0b8d0;text-decoration:none;font-size:0.85rem;">Login</a>
+        <h4 class="footer__column-title">Support</h4>
+        <ul class="footer__list">
+          <li class="footer__list-item">
+            <a href="/contact" data-testid={getTestId('footer-support-contact-us')} class="footer__link">Contact Us</a>
           </li>
-          <li style="margin-bottom:0.5rem;">
-            <a href="#" data-testid={getTestId('footer-account-register')} style="color:#b0b8d0;text-decoration:none;font-size:0.85rem;">Register</a>
+          <li class="footer__list-item">
+            <a href="#" data-testid={getTestId('footer-support-faq')} class="footer__link">FAQ</a>
           </li>
-          <li style="margin-bottom:0.5rem;">
-            <a href="#" data-testid={getTestId('footer-account-my-orders')} style="color:#b0b8d0;text-decoration:none;font-size:0.85rem;">My Orders</a>
+          <li class="footer__list-item">
+            <a href="#" data-testid={getTestId('footer-support-returns')} class="footer__link">Returns</a>
           </li>
-          <li style="margin-bottom:0.5rem;">
-            <a href="#" data-testid={getTestId('footer-account-wishlist')} style="color:#b0b8d0;text-decoration:none;font-size:0.85rem;">Wishlist</a>
+          <li class="footer__list-item">
+            <a href="#" data-testid={getTestId('footer-support-shipping')} class="footer__link">Shipping</a>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer__column-title">Account</h4>
+        <ul class="footer__list">
+          <li class="footer__list-item">
+            <a href="#" id="footer-login-link" data-testid={getTestId('footer-account-login')} class="footer__link">Login</a>
+          </li>
+          <li class="footer__list-item">
+            <a href="#" data-testid={getTestId('footer-account-register')} class="footer__link">Register</a>
+          </li>
+          <li class="footer__list-item">
+            <a href="#" data-testid={getTestId('footer-account-my-orders')} class="footer__link">My Orders</a>
+          </li>
+          <li class="footer__list-item">
+            <a href="#" data-testid={getTestId('footer-account-wishlist')} class="footer__link">Wishlist</a>
           </li>
         </ul>
       </div>
     </div>
-    <div
-      style="border-top:1px solid rgba(255,255,255,0.1);padding-top:1.5rem;display:flex;justify-content:space-between;font-size:0.82rem;align-items:center;"
-    >
+    <div class="footer__bottom">
       <span>© 2026 Test Automation Practice Shop. All rights reserved.</span>
       <span>Privacy Policy · Terms of Service</span>
     </div>

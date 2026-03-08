@@ -61,149 +61,67 @@ export default function LoginModal() {
     <div
       data-testid={getTestId('login-modal')}
       onClick={(e) => { if (e.target === e.currentTarget) handleClose(); }}
-      style={{
-        position: 'fixed',
-        inset: 0,
-        background: 'rgba(0,0,0,0.5)',
-        zIndex: 1000,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
+      className="login-modal"
     >
       <div
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"
-        style={{
-          background: '#fff',
-          borderRadius: '16px',
-          padding: '2.5rem',
-          width: '100%',
-          maxWidth: '420px',
-          position: 'relative',
-          boxShadow: '0 20px 60px rgba(0,0,0,0.2)',
-        }}
+        className="login-modal__dialog"
       >
         <button
           data-testid={getTestId('modal-close')}
           onClick={handleClose}
           aria-label="Close"
-          style={{
-            position: 'absolute',
-            top: '1rem',
-            right: '1rem',
-            background: 'none',
-            border: 'none',
-            fontSize: '1.4rem',
-            cursor: 'pointer',
-            color: '#666',
-          }}
+          className="login-modal__close"
         >
           ✕
         </button>
 
-        <h2 id="modal-title" style={{ fontSize: '1.6rem', fontWeight: 700, marginBottom: '0.4rem' }}>
+        <h2 id="modal-title" className="login-modal__title">
           Welcome back
         </h2>
-        <p style={{ color: '#666', fontSize: '0.9rem', marginBottom: '1.8rem' }}>
+        <p className="login-modal__subtitle">
           Sign in to your Test Automation Practice Shop account
         </p>
 
         <button
           data-testid={getTestId('google-login-btn')}
-          style={{
-            width: '100%',
-            padding: '0.75rem',
-            border: '1.5px solid #e0e0e0',
-            borderRadius: '8px',
-            background: '#fff',
-            fontSize: '0.9rem',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '0.6rem',
-            fontWeight: 600,
-            marginBottom: '0.6rem',
-          }}
+          className="login-modal__social-btn"
         >
           🔵 Continue with Google
         </button>
 
         <button
           data-testid={getTestId('facebook-login-btn')}
-          style={{
-            width: '100%',
-            padding: '0.75rem',
-            border: '1.5px solid #e0e0e0',
-            borderRadius: '8px',
-            background: '#fff',
-            fontSize: '0.9rem',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '0.6rem',
-            fontWeight: 600,
-            marginBottom: '0.6rem',
-          }}
+          className="login-modal__social-btn"
         >
           🔷 Continue with Facebook
         </button>
 
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '1rem',
-            margin: '1.2rem 0',
-            color: '#666',
-            fontSize: '0.85rem',
-          }}
-        >
-          <span style={{ flex: 1, height: '1px', background: '#e0e0e0', display: 'block' }} />
+        <div className="login-modal__divider">
+          <span className="login-modal__divider-line" />
           or
-          <span style={{ flex: 1, height: '1px', background: '#e0e0e0', display: 'block' }} />
+          <span className="login-modal__divider-line" />
         </div>
 
         {error && (
-          <div
-            style={{
-              background: '#fef2f2',
-              border: '1px solid #fecaca',
-              borderRadius: '8px',
-              padding: '0.75rem',
-              marginBottom: '1rem',
-              color: '#dc2626',
-              fontSize: '0.9rem',
-            }}
-          >
+          <div className="login-modal__alert login-modal__alert--error">
             {error}
           </div>
         )}
 
         {success && (
-          <div
-            style={{
-              background: '#f0fdf4',
-              border: '1px solid #bbf7d0',
-              borderRadius: '8px',
-              padding: '0.75rem',
-              marginBottom: '1rem',
-              color: '#16a34a',
-              fontSize: '0.9rem',
-            }}
-          >
+          <div className="login-modal__alert login-modal__alert--success">
             {success}
           </div>
         )}
 
         <form data-testid={getTestId('login-form')} onSubmit={handleSubmit}>
-          <div style={{ marginBottom: '1.2rem' }}>
+          <div className="login-modal__form-group">
             <label
               htmlFor="login-email"
-              style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem' }}
+              className="login-modal__label"
             >
               Email address
             </label>
@@ -215,21 +133,14 @@ export default function LoginModal() {
               data-testid={getTestId('login-email')}
               autoComplete="email"
               required
-              style={{
-                width: '100%',
-                padding: '0.7rem 1rem',
-                border: '1.5px solid #e0e0e0',
-                borderRadius: '8px',
-                fontSize: '0.95rem',
-                outline: 'none',
-              }}
+              className="login-modal__input"
             />
           </div>
 
-          <div style={{ marginBottom: '1.2rem' }}>
+          <div className="login-modal__form-group">
             <label
               htmlFor="login-password"
-              style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: '0.4rem' }}
+              className="login-modal__label"
             >
               Password
             </label>
@@ -241,34 +152,19 @@ export default function LoginModal() {
               data-testid={getTestId('login-password')}
               autoComplete="current-password"
               required
-              style={{
-                width: '100%',
-                padding: '0.7rem 1rem',
-                border: '1.5px solid #e0e0e0',
-                borderRadius: '8px',
-                fontSize: '0.95rem',
-                outline: 'none',
-              }}
+              className="login-modal__input"
             />
           </div>
 
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginBottom: '1.5rem',
-              fontSize: '0.85rem',
-            }}
-          >
-            <label style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', cursor: 'pointer' }}>
+          <div className="login-modal__options">
+            <label className="login-modal__remember">
               <input type="checkbox" data-testid={getTestId('remember-me')} />
               Remember me
             </label>
             <a
               href="#"
               data-testid={getTestId('forgot-password')}
-              style={{ color: '#e94560', textDecoration: 'none' }}
+              className="login-modal__forgot-link"
             >
               Forgot password?
             </a>
@@ -278,29 +174,18 @@ export default function LoginModal() {
             type="submit"
             data-testid={getTestId('login-submit')}
             disabled={isLoading}
-            style={{
-              width: '100%',
-              padding: '0.85rem',
-              fontSize: '1rem',
-              fontWeight: 600,
-              background: '#e94560',
-              color: '#fff',
-              border: 'none',
-              borderRadius: '6px',
-              cursor: isLoading ? 'not-allowed' : 'pointer',
-              opacity: isLoading ? 0.7 : 1,
-            }}
+            className={`login-modal__submit ${isLoading ? 'login-modal__submit--loading' : ''}`}
           >
             {isLoading ? 'Signing in…' : 'Sign In'}
           </button>
         </form>
 
-        <div style={{ textAlign: 'center', marginTop: '1.2rem', fontSize: '0.88rem', color: '#666' }}>
+        <div className="login-modal__footer">
           Don&apos;t have an account?{' '}
           <a
             href="#"
             data-testid={getTestId('signup-link')}
-            style={{ color: '#e94560', textDecoration: 'none', fontWeight: 600 }}
+            className="login-modal__signup-link"
           >
             Sign up for free
           </a>

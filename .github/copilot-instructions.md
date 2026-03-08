@@ -21,11 +21,13 @@ This site is a **practice target** for automation testing workshops. Its primary
 |---|---|
 | Framework | [Astro 5](https://astro.build) — SSG (`output: 'static'`) |
 | UI Components | React 19 (interactive islands only) |
-| Styling | Tailwind CSS v4 via `@tailwindcss/vite` |
+| Styling | CSS Stylesheets + Tailwind CSS v4 via `@tailwindcss/vite` |
 | State Management | Nano Stores (`nanostores` + `@nanostores/react`) |
 | Network Mocking | Mock Service Worker 2 (browser `setupWorker`) |
 | Hosting | Cloudflare Pages (`wrangler.toml`) |
 | Language | TypeScript (strict mode) |
+
+> **📄 CSS Best Practices**: See [`.github/instructions/css.instructions.md`](./instructions/css.instructions.md) for detailed CSS stylesheet guidelines and class naming conventions.
 
 ---
 
@@ -154,6 +156,22 @@ if (!res.ok) throw new Error(`Cart add failed: ${res.status}`);
 addToCart(item); // only called on success
 ```
 
+### 11. Use CSS stylesheets instead of inline styles
+
+**Never use inline `style` attributes.** All styling must be done through CSS classes defined in external stylesheets located in `src/styles/`. See the detailed [CSS instructions](./instructions/css.instructions.md) for class naming conventions and best practices.
+
+```tsx
+// ❌ Bad: Inline styles
+<button style={{ padding: '0.5rem', background: '#e94560' }}>Click</button>
+
+// ✅ Good: CSS classes
+<button className="btn btn--primary">Click</button>
+```
+
+- Component styles → `src/styles/components/<component-name>.css`
+- Page styles → `src/styles/pages/<page-name>.css`
+- All CSS files are imported in `Layout.astro`
+
 ---
 
 ## MSW API Contract
@@ -185,7 +203,10 @@ src/
   mocks/            # MSW handlers.ts and browser.ts
   pages/            # Astro pages (index.astro, future: shop, cart, checkout, contact)
   stores/           # Nano Stores (cart.ts)
-  styles/           # global.css (Tailwind import + CSS variables)
+  styles/           # CSS stylesheets
+    global.css      # Tailwind import + CSS variables
+    components/     # Component-specific CSS
+    pages/          # Page-specific CSS
   utils/            # testId.ts (getTestId utility)
 public/
   mockServiceWorker.js   # MSW service worker (generated, do not edit)
@@ -199,7 +220,10 @@ public/
 When adding a new page:
 
 1. Create `src/pages/<name>.astro` and wrap content in `<Layout>`.
-2. Add a nav link in `src/components/NavBar.astro` with `data-testid={getTestId('nav-<name>')}`.
-3. Apply `getTestId()` to every interactive element on the page.
-4. Add any new MSW intercepts to `src/mocks/handlers.ts` with appropriate delays.
-5. Match the design system (colors, spacing, border-radius) defined above.
+2. Create `src/styles/pages/<name>.css` for page-specific styles.
+3. Import the new CSS file in `Layout.astro`.
+4. Add a nav link in `src/components/NavBar.astro` with `data-testid={getTestId('nav-<name>')}`.
+5. Apply `getTestId()` to every interactive element on the page.
+6. Use CSS classes instead of inline styles (see [CSS instructions](./instructions/css.instructions.md)).
+7. Add any new MSW intercepts to `src/mocks/handlers.ts` with appropriate delays.
+8. Match the design system (colors, spacing, border-radius) defined above.
