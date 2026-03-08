@@ -41,14 +41,11 @@ const {
     <slot />
     <LoginModal client:load />
 
-    <script type="module">
-      // Initialize MSW only in the browser (never in SSR/build)
-      if (typeof window !== 'undefined') {
-        const { worker } = await import('../mocks/browser');
-        await worker.start({
-          onUnhandledRequest: 'bypass',
-        });
-      }
+    <script>
+      import { worker } from '../mocks/browser';
+      await worker.start({
+        onUnhandledRequest: 'bypass',
+      });
     </script>
   </body>
 </html>

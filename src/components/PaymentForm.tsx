@@ -121,6 +121,21 @@ export default function PaymentForm() {
     { id: 'zip', icon: '⚡', label: 'Zip' },
   ];
 
+  if (items.length === 0) {
+    return (
+      <div className="payment-layout">
+        <div className="cart-empty" data-testid={getTestId('payment-empty')}>
+          <div className="cart-empty__icon">🛒</div>
+          <h2 className="cart-empty__title">Your cart is empty</h2>
+          <p className="cart-empty__subtitle">Add some items before proceeding to payment.</p>
+          <a href="/" className="cart-empty__btn" data-testid={getTestId('payment-empty-shop-btn')}>
+            Start Shopping
+          </a>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="payment-layout">
       {/* Left: Payment Form */}

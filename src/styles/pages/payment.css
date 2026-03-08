@@ -65,7 +65,7 @@
 
 .payment-tab--selected {
   border-color: var(--coral);
-  background: #fff5f6;
+  background: var(--coral-light);
 }
 
 .payment-tab__icon {
@@ -161,25 +161,6 @@
   margin-bottom: 1.5rem;
 }
 
-.payment-alt-panel__btn {
-  display: inline-block;
-  padding: 0.85rem 2.5rem;
-  background: var(--navy);
-  color: var(--white);
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 700;
-  cursor: pointer;
-  font-family: inherit;
-  text-decoration: none;
-  transition: opacity 0.2s ease;
-}
-
-.payment-alt-panel__btn:hover {
-  opacity: 0.85;
-}
-
 /* --------------------------------------------------------------------------
    Error / Alert
    -------------------------------------------------------------------------- */
@@ -192,8 +173,8 @@
 }
 
 .payment-alert--error {
-  background: #fef2f2;
-  border: 1px solid #fecaca;
+  background: var(--error-bg);
+  border: 1px solid var(--error-border);
   color: var(--error);
 }
 

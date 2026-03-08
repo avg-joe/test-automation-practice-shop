@@ -59,6 +59,7 @@ export default function ShippingForm() {
   });
   const [errors, setErrors] = useState<FieldErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [serverError, setServerError] = useState('');
 
   const subtotal = items.reduce((t, i) => t + i.price * i.quantity, 0);
   const discountAmount = coupon ? (subtotal * coupon.discountPercent) / 100 : 0;
@@ -84,6 +85,7 @@ export default function ShippingForm() {
       return;
     }
     setIsSubmitting(true);
+    setServerError('');
     try {
       const res = await fetch('/api/shipping', {
         method: 'POST',
@@ -94,8 +96,24 @@ export default function ShippingForm() {
       shippingInfo.set(form);
       window.location.href = '/payment';
     } catch {
+      setServerError('Failed to save shipping details. Please try again.');
       setIsSubmitting(false);
     }
+  }
+
+  if (items.length === 0) {
+    return (
+      <div className="shipping-layout">
+        <div className="cart-empty" data-testid={getTestId('shipping-empty')}>
+          <div className="cart-empty__icon">🛒</div>
+          <h2 className="cart-empty__title">Your cart is empty</h2>
+          <p className="cart-empty__subtitle">Add some items before proceeding to shipping.</p>
+          <a href="/" className="cart-empty__btn" data-testid={getTestId('shipping-empty-shop-btn')}>
+            Start Shopping
+          </a>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -104,6 +122,12 @@ export default function ShippingForm() {
       <form onSubmit={handleSubmit} noValidate data-testid={getTestId('shipping-form')}>
         <div className="shipping-form-card">
           <h2 className="shipping-form-card__title">Shipping Information</h2>
+
+          {serverError && (
+            <div className="shipping-form__server-error" data-testid={getTestId('shipping-server-error')}>
+              {serverError}
+            </div>
+          )}
 
           <div className="shipping-form__row">
             <div className="shipping-form__group">

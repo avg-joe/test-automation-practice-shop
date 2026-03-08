@@ -34,6 +34,16 @@
   border-bottom: 1px solid var(--border);
 }
 
+.shipping-form__server-error {
+  background: var(--error-bg);
+  border: 1px solid var(--error-border);
+  color: var(--error);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.2rem;
+  font-size: 0.9rem;
+}
+
 /* --------------------------------------------------------------------------
    Form Elements
    -------------------------------------------------------------------------- */
@@ -125,7 +135,7 @@
 
 .shipping-method--selected {
   border-color: var(--coral);
-  background: #fff5f6;
+  background: var(--coral-light);
 }
 
 .shipping-method__left {

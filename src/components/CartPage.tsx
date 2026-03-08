@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useStore } from '@nanostores/react';
-import { cartItems, appliedCoupon, updateQuantity, removeFromCart, clearCart } from '../stores/cart';
+import { cartItems, appliedCoupon, addToCart, updateQuantity, removeFromCart, clearCart } from '../stores/cart';
 import type { CouponInfo } from '../stores/cart';
 import { getTestId } from '../utils/testId';
 
@@ -11,8 +11,6 @@ const RECOMMENDED_PRODUCTS = [
   { id: 'rec-4', emoji: '🎵', name: 'BT Speaker', price: 79 },
 ];
 
-const SHIPPING_THRESHOLD = 50;
-const SHIPPING_COST = 4.99;
 const TAX_RATE = 0.08;
 
 export default function CartPage() {
@@ -23,18 +21,20 @@ export default function CartPage() {
   const [couponLoading, setCouponLoading] = useState(false);
   const [couponError, setCouponError] = useState('');
   const [updatingId, setUpdatingId] = useState<string | null>(null);
+  const [actionError, setActionError] = useState('');
 
   const subtotal = items.reduce((t, i) => t + i.price * i.quantity, 0);
   const discountAmount = coupon ? (subtotal * coupon.discountPercent) / 100 : 0;
   const afterDiscount = subtotal - discountAmount;
-  const shippingFree = subtotal >= SHIPPING_THRESHOLD || (coupon?.freeShipping ?? false);
-  const shippingCost = shippingFree ? 0 : SHIPPING_COST;
+  const shippingFree = coupon?.freeShipping ?? false;
+  const shippingCost = 0;
   const tax = (afterDiscount + shippingCost) * TAX_RATE;
   const total = afterDiscount + shippingCost + tax;
 
   async function handleUpdateQty(id: string, qty: number) {
     if (qty < 1) return;
     setUpdatingId(id);
+    setActionError('');
     try {
       const res = await fetch('/api/cart/update', {
         method: 'POST',
@@ -43,6 +43,8 @@ export default function CartPage() {
       });
       if (!res.ok) throw new Error('Update failed');
       updateQuantity(id, qty);
+    } catch {
+      setActionError('Failed to update quantity. Please try again.');
     } finally {
       setUpdatingId(null);
     }
@@ -50,6 +52,7 @@ export default function CartPage() {
 
   async function handleRemove(id: string) {
     setUpdatingId(id);
+    setActionError('');
     try {
       const res = await fetch('/api/cart/remove', {
         method: 'POST',
@@ -58,6 +61,8 @@ export default function CartPage() {
       });
       if (!res.ok) throw new Error('Remove failed');
       removeFromCart(id);
+    } catch {
+      setActionError('Failed to remove item. Please try again.');
     } finally {
       setUpdatingId(null);
     }
@@ -119,7 +124,6 @@ export default function CartPage() {
         body: JSON.stringify({ id: product.id, name: product.name, price: product.price, emoji: product.emoji }),
       });
       if (!res.ok) throw new Error('Add failed');
-      const { addToCart } = await import('../stores/cart');
       addToCart({ id: product.id, name: product.name, price: product.price, emoji: product.emoji });
     } catch {
       // best-effort
@@ -159,6 +163,12 @@ export default function CartPage() {
               Clear Cart
             </button>
           </div>
+
+          {actionError && (
+            <div className="cart-section__error" data-testid={getTestId('cart-action-error')}>
+              {actionError}
+            </div>
+          )}
 
           {items.map((item, idx) => {
             const itemNum = idx + 1;
@@ -299,13 +309,11 @@ export default function CartPage() {
           )}
 
           <div
-            className={`cart-summary__row${shippingFree ? ' cart-summary__row--free' : ''}`}
+            className="cart-summary__row cart-summary__row--free"
             data-testid={getTestId('summary-shipping')}
           >
             <span className="cart-summary__row-label">Shipping</span>
-            <span className="cart-summary__row-value">
-              {shippingFree ? 'Free 🎉' : `$${shippingCost.toFixed(2)}`}
-            </span>
+            <span className="cart-summary__row-value">Free 🎉</span>
           </div>
 
           <div className="cart-summary__row" data-testid={getTestId('summary-tax')}>
