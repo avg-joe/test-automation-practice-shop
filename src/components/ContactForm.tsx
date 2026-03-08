@@ -337,7 +337,11 @@ export default function ContactForm() {
               style={{ cursor: 'pointer' }}
             />
             I agree to the{' '}
-            <a href="#" style={{ color: '#e94560', textDecoration: 'none' }}>
+            <a
+              href="#"
+              data-testid={getTestId('contact-privacy-policy-link')}
+              style={{ color: '#e94560', textDecoration: 'none' }}
+            >
               Privacy Policy
             </a>
           </label>
