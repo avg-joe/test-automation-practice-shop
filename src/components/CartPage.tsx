@@ -26,10 +26,8 @@ export default function CartPage() {
   const subtotal = items.reduce((t, i) => t + i.price * i.quantity, 0);
   const discountAmount = coupon ? (subtotal * coupon.discountPercent) / 100 : 0;
   const afterDiscount = subtotal - discountAmount;
-  const shippingFree = coupon?.freeShipping ?? false;
-  const shippingCost = 0;
-  const tax = (afterDiscount + shippingCost) * TAX_RATE;
-  const total = afterDiscount + shippingCost + tax;
+  const tax = afterDiscount * TAX_RATE;
+  const total = afterDiscount + tax;
 
   async function handleUpdateQty(id: string, qty: number) {
     if (qty < 1) return;
