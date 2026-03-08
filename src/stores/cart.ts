@@ -14,8 +14,24 @@ export interface CouponInfo {
   freeShipping: boolean;
 }
 
-export const cartItems = atom<CartItem[]>([]);
+function loadCartFromStorage(): CartItem[] {
+  if (typeof localStorage === 'undefined') return [];
+  try {
+    const saved = localStorage.getItem('cart');
+    return saved ? (JSON.parse(saved) as CartItem[]) : [];
+  } catch {
+    return [];
+  }
+}
+
+export const cartItems = atom<CartItem[]>(loadCartFromStorage());
 export const appliedCoupon = atom<CouponInfo | null>(null);
+
+if (typeof localStorage !== 'undefined') {
+  cartItems.subscribe((items) => {
+    localStorage.setItem('cart', JSON.stringify(items));
+  });
+}
 
 export const cartCount = computed(cartItems, (items) =>
   items.reduce((total, item) => total + item.quantity, 0)
