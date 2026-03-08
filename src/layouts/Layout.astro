@@ -6,8 +6,13 @@ import '../styles/components/add-to-cart.css';
 import '../styles/components/login-modal.css';
 import '../styles/components/contact-form.css';
 import '../styles/components/footer.css';
+import '../styles/components/checkout-steps.css';
 import '../styles/pages/index.css';
 import '../styles/pages/contact.css';
+import '../styles/pages/cart.css';
+import '../styles/pages/shipping.css';
+import '../styles/pages/payment.css';
+import '../styles/pages/confirm.css';
 import NavBar from '../components/NavBar.astro';
 import LoginModal from '../components/LoginModal';
 
@@ -36,14 +41,11 @@ const {
     <slot />
     <LoginModal client:load />
 
-    <script type="module">
-      // Initialize MSW only in the browser (never in SSR/build)
-      if (typeof window !== 'undefined') {
-        const { worker } = await import('../mocks/browser');
-        await worker.start({
-          onUnhandledRequest: 'bypass',
-        });
-      }
+    <script>
+      import { worker } from '../mocks/browser';
+      await worker.start({
+        onUnhandledRequest: 'bypass',
+      });
     </script>
   </body>
 </html>

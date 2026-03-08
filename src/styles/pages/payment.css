@@ -1,0 +1,312 @@
+/* ==========================================================================
+   Page: Payment
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Layout
+   -------------------------------------------------------------------------- */
+
+.payment-layout {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* --------------------------------------------------------------------------
+   Payment Card
+   -------------------------------------------------------------------------- */
+
+.payment-card {
+  background: var(--white);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  padding: 2rem;
+}
+
+.payment-card__title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0 0 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+/* --------------------------------------------------------------------------
+   Payment Method Tabs
+   -------------------------------------------------------------------------- */
+
+.payment-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.8rem;
+  margin-bottom: 2rem;
+}
+
+.payment-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 1rem 0.5rem;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  background: var(--white);
+  font-family: inherit;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.payment-tab:hover {
+  border-color: var(--navy);
+}
+
+.payment-tab--selected {
+  border-color: var(--coral);
+  background: var(--coral-light);
+}
+
+.payment-tab__icon {
+  font-size: 1.6rem;
+}
+
+.payment-tab__label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+/* --------------------------------------------------------------------------
+   Credit Card Form
+   -------------------------------------------------------------------------- */
+
+.payment-form__group {
+  margin-bottom: 1.2rem;
+}
+
+.payment-form__label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: var(--navy);
+}
+
+.payment-form__required {
+  color: var(--coral);
+  margin-left: 2px;
+}
+
+.payment-form__input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  outline: none;
+  background: var(--white);
+  color: var(--navy);
+  transition: border-color 0.2s ease;
+}
+
+.payment-form__input:focus {
+  border-color: var(--coral);
+}
+
+.payment-form__input--error {
+  border-color: var(--error);
+}
+
+.payment-form__error {
+  color: var(--error);
+  font-size: 0.8rem;
+  margin-top: 0.3rem;
+}
+
+.payment-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+/* --------------------------------------------------------------------------
+   PayPal / AfterPay / Zip panels
+   -------------------------------------------------------------------------- */
+
+.payment-alt-panel {
+  text-align: center;
+  padding: 2.5rem 2rem;
+  border: 1.5px dashed var(--border);
+  border-radius: 12px;
+}
+
+.payment-alt-panel__icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.payment-alt-panel__title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.payment-alt-panel__desc {
+  color: var(--gray);
+  font-size: 0.88rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   Error / Alert
+   -------------------------------------------------------------------------- */
+
+.payment-alert {
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.2rem;
+  font-size: 0.9rem;
+}
+
+.payment-alert--error {
+  background: var(--error-bg);
+  border: 1px solid var(--error-border);
+  color: var(--error);
+}
+
+/* --------------------------------------------------------------------------
+   Submit Button
+   -------------------------------------------------------------------------- */
+
+.payment-submit {
+  width: 100%;
+  padding: 1rem;
+  background: var(--coral);
+  color: var(--white);
+  border: none;
+  border-radius: 10px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  margin-top: 0.5rem;
+  transition: opacity 0.2s ease;
+}
+
+.payment-submit:hover {
+  opacity: 0.9;
+}
+
+.payment-submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.payment-back {
+  display: block;
+  text-align: center;
+  margin-top: 0.8rem;
+  padding: 0.75rem;
+  background: transparent;
+  border: 2px solid var(--border);
+  color: var(--navy);
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: inherit;
+}
+
+.payment-back:hover {
+  border-color: var(--navy);
+}
+
+/* --------------------------------------------------------------------------
+   Order Summary Sidebar
+   -------------------------------------------------------------------------- */
+
+.payment-summary__card {
+  background: var(--white);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+  position: sticky;
+  top: 80px;
+}
+
+.payment-summary__title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 1.2rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.payment-summary__shipping {
+  background: var(--light);
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.payment-summary__shipping-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.4rem;
+}
+
+.payment-summary__shipping-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.payment-summary__shipping-addr {
+  font-size: 0.82rem;
+  color: var(--gray);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.payment-summary__row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  margin-bottom: 0.6rem;
+}
+
+.payment-summary__row-label {
+  color: var(--gray);
+}
+
+.payment-summary__row--total {
+  font-weight: 700;
+  font-size: 1rem;
+  padding-top: 0.5rem;
+  border-top: 1.5px solid var(--border);
+  margin-top: 0.3rem;
+  margin-bottom: 0;
+}
+
+.payment-summary__secure {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.2rem;
+  font-size: 0.78rem;
+  color: var(--gray);
+}
+
+.payment-summary__secure-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}

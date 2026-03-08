@@ -3,11 +3,17 @@
 :root {
   --navy: #1a1a2e;
   --coral: #e94560;
+  --coral-light: #fff5f6;
   --light: #f8f8f8;
   --gray: #666;
   --border: #e0e0e0;
   --white: #fff;
   --muted: #b0b8d0;
+  --green: #22c55e;
+  --success: #16a34a;
+  --error: #dc2626;
+  --error-bg: #fef2f2;
+  --error-border: #fecaca;
 }
 
 *, *::before, *::after {

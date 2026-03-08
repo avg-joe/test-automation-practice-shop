@@ -1,0 +1,37 @@
+---
+import { getTestId } from '../utils/testId';
+
+interface Props {
+  activeStep: 'cart' | 'shipping' | 'payment' | 'confirm';
+}
+
+const { activeStep } = Astro.props;
+
+const steps = [
+  { id: 'cart', label: 'Cart', num: 1 },
+  { id: 'shipping', label: 'Shipping', num: 2 },
+  { id: 'payment', label: 'Payment', num: 3 },
+  { id: 'confirm', label: 'Confirm', num: 4 },
+];
+
+const activeIndex = steps.findIndex((s) => s.id === activeStep);
+---
+
+<div class="checkout-steps" data-testid={getTestId('checkout-steps')}>
+  {steps.map((step, index) => {
+    const isDone = index < activeIndex;
+    const isActive = index === activeIndex;
+    const stepClass = `checkout-steps__step${isActive ? ' checkout-steps__step--active' : ''}${isDone ? ' checkout-steps__step--done' : ''}`;
+    return (
+      <div class={stepClass} data-testid={getTestId(`step-${step.id}`)}>
+        <div class="checkout-steps__num">
+          {isDone ? '✓' : step.num}
+        </div>
+        <span>{step.label}</span>
+        {index < steps.length - 1 && (
+          <div class={`checkout-steps__divider${isDone ? ' checkout-steps__divider--done' : ''}`}></div>
+        )}
+      </div>
+    );
+  })}
+</div>
