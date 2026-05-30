@@ -1,7 +1,16 @@
 import { useState } from 'react';
 import { useStore } from '@nanostores/react';
-import { cartItems, appliedCoupon, addToCart, updateQuantity, removeFromCart, clearCart } from '../stores/cart';
-import type { CouponInfo } from '../stores/cart';
+import {
+  cartItems,
+  appliedCoupon,
+  subtotal,
+  discount,
+  shippingCost,
+  tax,
+  grandTotal,
+} from '../stores/cart';
+import { apiAddToCart, apiApplyCoupon, apiClearCart, apiRemoveFromCart, apiUpdateQuantity } from '../api/cart';
+import { TAX_RATE } from '../utils/totals';
 import { getTestId } from '../utils/testId';
 
 const RECOMMENDED_PRODUCTS = [
@@ -11,11 +20,14 @@ const RECOMMENDED_PRODUCTS = [
   { id: 'rec-4', emoji: '🎵', name: 'BT Speaker', price: 79 },
 ];
 
-const TAX_RATE = 0.08;
-
 export default function CartPage() {
   const items = useStore(cartItems);
   const coupon = useStore(appliedCoupon);
+  const subtotalAmount = useStore(subtotal);
+  const discountAmount = useStore(discount);
+  const shippingAmount = useStore(shippingCost);
+  const taxAmount = useStore(tax);
+  const total = useStore(grandTotal);
 
   const [couponCode, setCouponCode] = useState('');
   const [couponLoading, setCouponLoading] = useState(false);
@@ -23,56 +35,40 @@ export default function CartPage() {
   const [updatingId, setUpdatingId] = useState<string | null>(null);
   const [actionError, setActionError] = useState('');
 
-  const subtotal = items.reduce((t, i) => t + i.price * i.quantity, 0);
-  const discountAmount = coupon ? (subtotal * coupon.discountPercent) / 100 : 0;
-  const afterDiscount = subtotal - discountAmount;
-  const tax = afterDiscount * TAX_RATE;
-  const total = afterDiscount + tax;
-
   async function handleUpdateQty(id: string, qty: number) {
     if (qty < 1) return;
     setUpdatingId(id);
     setActionError('');
-    try {
-      const res = await fetch('/api/cart/update', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id, quantity: qty }),
-      });
-      if (!res.ok) throw new Error('Update failed');
-      updateQuantity(id, qty);
-    } catch {
-      setActionError('Failed to update quantity. Please try again.');
-    } finally {
-      setUpdatingId(null);
+
+    const result = await apiUpdateQuantity(id, qty);
+
+    if (!result.ok) {
+      setActionError(result.message);
     }
+
+    setUpdatingId(null);
   }
 
   async function handleRemove(id: string) {
     setUpdatingId(id);
     setActionError('');
-    try {
-      const res = await fetch('/api/cart/remove', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id }),
-      });
-      if (!res.ok) throw new Error('Remove failed');
-      removeFromCart(id);
-    } catch {
-      setActionError('Failed to remove item. Please try again.');
-    } finally {
-      setUpdatingId(null);
+
+    const result = await apiRemoveFromCart(id);
+
+    if (!result.ok) {
+      setActionError(result.message);
     }
+
+    setUpdatingId(null);
   }
 
   async function handleClearCart() {
-    try {
-      const res = await fetch('/api/cart/clear', { method: 'POST' });
-      if (!res.ok) throw new Error('Clear failed');
-      clearCart();
-    } catch {
-      // best-effort
+    setActionError('');
+
+    const result = await apiClearCart();
+
+    if (!result.ok) {
+      setActionError(result.message);
     }
   }
 
@@ -81,50 +77,26 @@ export default function CartPage() {
     if (!trimmed) return;
     setCouponLoading(true);
     setCouponError('');
-    try {
-      const res = await fetch('/api/coupon/apply', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ code: trimmed }),
-      });
-      const data = await res.json() as {
-        success: boolean;
-        message?: string;
-        code?: string;
-        discountPercent?: number;
-        freeShipping?: boolean;
-      };
-      if (!res.ok || !data.success) {
-        setCouponError(data.message ?? 'Invalid coupon code');
-        appliedCoupon.set(null);
-      } else {
-        const info: CouponInfo = {
-          code: data.code!,
-          discountPercent: data.discountPercent ?? 0,
-          freeShipping: data.freeShipping ?? false,
-        };
-        appliedCoupon.set(info);
-        setCouponCode('');
-        setCouponError('');
-      }
-    } catch {
-      setCouponError('Failed to apply coupon. Please try again.');
-    } finally {
-      setCouponLoading(false);
+
+    const result = await apiApplyCoupon(trimmed);
+
+    if (!result.ok) {
+      setCouponError(result.message);
+    } else {
+      setCouponCode('');
+      setCouponError('');
     }
+
+    setCouponLoading(false);
   }
 
   async function handleAddRecommended(product: { id: string; emoji: string; name: string; price: number }) {
-    try {
-      const res = await fetch('/api/cart/add', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: product.id, name: product.name, price: product.price, emoji: product.emoji }),
-      });
-      if (!res.ok) throw new Error('Add failed');
-      addToCart({ id: product.id, name: product.name, price: product.price, emoji: product.emoji });
-    } catch {
-      // best-effort
+    setActionError('');
+
+    const result = await apiAddToCart(product);
+
+    if (!result.ok) {
+      setActionError(result.message);
     }
   }
 
@@ -296,7 +268,7 @@ export default function CartPage() {
             <span className="cart-summary__row-label">
               Subtotal ({items.reduce((t, i) => t + i.quantity, 0)} items)
             </span>
-            <span>${subtotal.toFixed(2)}</span>
+            <span>${subtotalAmount.toFixed(2)}</span>
           </div>
 
           {discountAmount > 0 && (
@@ -307,16 +279,18 @@ export default function CartPage() {
           )}
 
           <div
-            className="cart-summary__row cart-summary__row--free"
+            className={`cart-summary__row${shippingAmount === 0 ? ' cart-summary__row--free' : ''}`}
             data-testid={getTestId('summary-shipping')}
           >
             <span className="cart-summary__row-label">Shipping</span>
-            <span className="cart-summary__row-value">Free 🎉</span>
+            <span className="cart-summary__row-value">
+              {shippingAmount === 0 ? 'Free 🎉' : `$${shippingAmount.toFixed(2)}`}
+            </span>
           </div>
 
           <div className="cart-summary__row" data-testid={getTestId('summary-tax')}>
-            <span className="cart-summary__row-label">Tax (8%)</span>
-            <span>${tax.toFixed(2)}</span>
+            <span className="cart-summary__row-label">Tax ({(TAX_RATE * 100).toFixed(0)}%)</span>
+            <span>${taxAmount.toFixed(2)}</span>
           </div>
 
           <div className="cart-summary__row cart-summary__row--total" data-testid={getTestId('summary-total')}>

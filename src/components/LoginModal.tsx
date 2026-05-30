@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { apiLogin } from '../api/checkout';
 import { getTestId } from '../utils/testId';
 
 export default function LoginModal() {
@@ -33,26 +34,16 @@ export default function LoginModal() {
     const username = (formData.get('username') ?? formData.get('email') ?? '') as string;
     const password = (formData.get('password') ?? '') as string;
 
-    try {
-      const res = await fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
-      });
+    const result = await apiLogin({ username, password });
 
-      const data = await res.json() as { success: boolean; message?: string; user?: { name: string } };
-
-      if (res.ok && data.success) {
-        setSuccess(`Welcome back, ${data.user?.name ?? username}!`);
-        setTimeout(() => handleClose(), 1500);
-      } else {
-        setError(data.message ?? 'Invalid credentials. Try username: student');
-      }
-    } catch {
-      setError('Network error. Please try again.');
-    } finally {
-      setIsLoading(false);
+    if (result.ok) {
+      setSuccess(`Welcome back, ${result.data.user?.name ?? username}!`);
+      setTimeout(() => handleClose(), 1500);
+    } else {
+      setError(result.message);
     }
+
+    setIsLoading(false);
   };
 
   if (!isOpen) return null;

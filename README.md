@@ -42,6 +42,16 @@ npm run dev
 
 The dev server starts at `http://localhost:4321` (Astro default). Mock Service Worker registers automatically — no backend required.
 
+### Available Scripts
+
+| Command | Description |
+|---|---|
+| `npm run dev` | Start the Astro development server |
+| `npm run build` | Create the production build |
+| `npm run preview` | Preview the production build locally |
+| `npm run typecheck` | Run Astro and TypeScript checks |
+| `npm run lint` | Lint `.ts`, `.tsx`, and `.astro` files |
+
 ---
 
 ## Technology Stack
