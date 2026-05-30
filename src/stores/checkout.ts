@@ -1,4 +1,6 @@
-import { atom } from 'nanostores';
+import { persistedAtom } from '../utils/persistedAtom';
+// cart.ts does not import from this module, so this is a safe one-way dependency.
+import { clearCart } from './cart';
 
 export interface ShippingInfo {
   firstName: string;
@@ -20,5 +22,12 @@ export interface OrderInfo {
   total: number;
 }
 
-export const shippingInfo = atom<ShippingInfo | null>(null);
-export const orderInfo = atom<OrderInfo | null>(null);
+export const shippingInfo = persistedAtom<ShippingInfo | null>('checkout-shipping', null);
+export const orderInfo = persistedAtom<OrderInfo | null>('checkout-order', null);
+
+export function resetCheckout(): void {
+  // clearCart() also resets appliedCoupon and selectedShippingMethod.
+  clearCart();
+  shippingInfo.set(null);
+  orderInfo.set(null);
+}

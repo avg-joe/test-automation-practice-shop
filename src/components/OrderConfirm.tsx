@@ -1,5 +1,5 @@
 import { useStore } from '@nanostores/react';
-import { orderInfo, shippingInfo } from '../stores/checkout';
+import { orderInfo, shippingInfo, resetCheckout } from '../stores/checkout';
 import { getTestId } from '../utils/testId';
 
 export default function OrderConfirm() {
@@ -72,7 +72,7 @@ export default function OrderConfirm() {
 
       {/* Actions */}
       <div className="confirm-actions" data-testid={getTestId('confirm-actions')}>
-        <a href="/" className="confirm-actions__primary" data-testid={getTestId('confirm-continue-btn')}>
+        <a href="/" className="confirm-actions__primary" data-testid={getTestId('confirm-continue-btn')} onClick={() => resetCheckout()}>
           Continue Shopping
         </a>
         <a href="/contact" className="confirm-actions__secondary" data-testid={getTestId('confirm-contact-btn')}>
