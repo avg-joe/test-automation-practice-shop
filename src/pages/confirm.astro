@@ -4,6 +4,7 @@ import CheckoutSteps from '../components/CheckoutSteps.astro';
 import OrderConfirm from '../components/OrderConfirm';
 import Footer from '../components/Footer.astro';
 import { getTestId } from '../utils/testId';
+import MswGate from '../components/MswGate';
 ---
 
 <Layout title="Order Confirmed – Test Automation Practice Shop">
@@ -16,7 +17,9 @@ import { getTestId } from '../utils/testId';
 
   <CheckoutSteps activeStep="confirm" />
 
-  <OrderConfirm client:only="react" />
+  <MswGate client:only="react">
+    <OrderConfirm client:only="react" />
+  </MswGate>
 
   <Footer />
 </Layout>

@@ -1,6 +1,6 @@
 ---
 import CartIcon from './CartIcon';
-import LoginButton from './LoginButton';
+import NavLoginButton from './NavLoginButton';
 import { getTestId } from '../utils/testId';
 ---
 
@@ -47,8 +47,8 @@ import { getTestId } from '../utils/testId';
   </ul>
 
   <div class="navbar__actions">
-    <CartIcon client:load />
-    <LoginButton client:load />
+    <CartIcon client:only="react" />
+    <NavLoginButton client:load />
     <a
       href="/signup"
       data-testid={getTestId('nav-signup-btn')}

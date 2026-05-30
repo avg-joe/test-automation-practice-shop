@@ -4,6 +4,7 @@ import CheckoutSteps from '../components/CheckoutSteps.astro';
 import CartPage from '../components/CartPage';
 import Footer from '../components/Footer.astro';
 import { getTestId } from '../utils/testId';
+import MswGate from '../components/MswGate';
 ---
 
 <Layout title="Your Cart – Test Automation Practice Shop">
@@ -16,7 +17,9 @@ import { getTestId } from '../utils/testId';
 
   <CheckoutSteps activeStep="cart" />
 
-  <CartPage client:only="react" />
+  <MswGate client:only="react">
+    <CartPage client:only="react" />
+  </MswGate>
 
   <Footer />
 </Layout>

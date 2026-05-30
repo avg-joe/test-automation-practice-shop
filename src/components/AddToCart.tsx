@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { useStore } from '@nanostores/react';
 import { apiAddToCart } from '../api/cart';
+import { mswReady } from '../stores/msw';
 import { getTestId } from '../utils/testId';
 
 interface AddToCartProps {
@@ -17,6 +19,7 @@ export default function AddToCart({
   emoji,
   testIdSuffix,
 }: AddToCartProps) {
+  const ready = useStore(mswReady);
   const [isLoading, setIsLoading] = useState(false);
   const [added, setAdded] = useState(false);
 
@@ -45,7 +48,7 @@ export default function AddToCart({
     <button
       data-testid={getTestId(`add-to-cart-${testIdSuffix}`)}
       onClick={handleAddToCart}
-      disabled={isLoading}
+      disabled={!ready || isLoading}
       className={buttonClasses}
     >
       {isLoading ? '…' : added ? '✓ Added!' : 'Add to Cart'}
