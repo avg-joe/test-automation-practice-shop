@@ -1,108 +1,28 @@
-import { useState } from 'react';
 import { useStore } from '@nanostores/react';
 import {
   cartItems,
   appliedCoupon,
-  selectedShippingMethod,
   subtotal,
   discount,
   shippingCost,
   tax,
   grandTotal,
 } from '../stores/cart';
-import { apiSaveShipping } from '../api/checkout';
-import { shippingInfo } from '../stores/checkout';
-import type { ShippingInfo } from '../stores/checkout';
-import { SHIPPING_METHODS, TAX_RATE } from '../config/pricing';
-import type { ShippingMethodId } from '../config/pricing';
+import { SHIPPING_METHODS, TAX_RATE } from '../utils/totals';
 import { getTestId } from '../utils/testId';
-
-type FieldErrors = Partial<Record<keyof Omit<ShippingInfo, 'apartment' | 'phone'>, string>>;
-
-function validate(form: ShippingInfo): FieldErrors {
-  const errors: FieldErrors = {};
-  if (!form.firstName.trim()) errors.firstName = 'First name is required';
-  if (!form.lastName.trim()) errors.lastName = 'Last name is required';
-  if (!form.email.trim()) {
-    errors.email = 'Email is required';
-  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-    errors.email = 'Please enter a valid email address';
-  }
-  if (!form.address.trim()) errors.address = 'Address is required';
-  if (!form.city.trim()) errors.city = 'City is required';
-  if (!form.state.trim()) errors.state = 'State / province is required';
-  if (!form.zip.trim()) errors.zip = 'ZIP / postal code is required';
-  if (!form.country) errors.country = 'Country is required';
-  return errors;
-}
+import { useShippingForm } from '../hooks/useShippingForm';
 
 export default function ShippingForm() {
   const items = useStore(cartItems);
   const coupon = useStore(appliedCoupon);
-  const currentShippingMethod = useStore(selectedShippingMethod);
-  const savedShippingInfo = useStore(shippingInfo);
   const subtotalAmount = useStore(subtotal);
   const discountAmount = useStore(discount);
   const shippingAmount = useStore(shippingCost);
   const taxAmount = useStore(tax);
   const total = useStore(grandTotal);
 
-  const [form, setForm] = useState<ShippingInfo>(() => {
-    const baseForm: ShippingInfo = {
-      firstName: '',
-      lastName: '',
-      email: '',
-      address: '',
-      apartment: '',
-      city: '',
-      state: '',
-      zip: '',
-      country: '',
-      phone: '',
-      method: currentShippingMethod,
-    };
-    if (savedShippingInfo) {
-      selectedShippingMethod.set(savedShippingInfo.method);
-      return { ...baseForm, ...savedShippingInfo };
-    }
-    return baseForm;
-  });
-  const [errors, setErrors] = useState<FieldErrors>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [serverError, setServerError] = useState('');
-
-  function updateField(field: keyof ShippingInfo, value: string) {
-    setForm((prev) => ({ ...prev, [field]: value }));
-    if (errors[field as keyof FieldErrors]) {
-      setErrors((prev) => ({ ...prev, [field]: undefined }));
-    }
-  }
-
-  function updateShippingMethod(method: ShippingMethodId) {
-    selectedShippingMethod.set(method);
-    updateField('method', method);
-  }
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    const fieldErrors = validate(form);
-    if (Object.keys(fieldErrors).length > 0) {
-      setErrors(fieldErrors);
-      return;
-    }
-    setIsSubmitting(true);
-    setServerError('');
-
-    const result = await apiSaveShipping(form);
-
-    if (!result.ok) {
-      setServerError(result.message);
-      setIsSubmitting(false);
-      return;
-    }
-
-    window.location.href = '/payment';
-  }
+  const { form, errors, isSubmitting, serverError, updateField, updateShippingMethod, handleSubmit } =
+    useShippingForm();
 
   if (items.length === 0) {
     return (
