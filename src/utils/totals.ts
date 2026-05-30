@@ -11,8 +11,8 @@ export interface TotalsCoupon {
   freeShipping: boolean;
 }
 
-import { TAX_RATE, SHIPPING_METHODS } from '../config/pricing';
 import type { ShippingMethodId } from '../config/pricing';
+import { TAX_RATE, SHIPPING_METHODS } from '../config/pricing';
 
 export function calcSubtotal(items: TotalsLineItem[]): number {
   return items.reduce((total, item) => total + item.price * item.quantity, 0);
