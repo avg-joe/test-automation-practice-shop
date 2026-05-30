@@ -16,7 +16,6 @@ export async function parseApiJson<T>(response: Response): Promise<T | undefined
 }
 
 export function getApiMessage(
-  _response: Response,
   data: ApiResponseBase | undefined,
   fallback: string,
 ): string {

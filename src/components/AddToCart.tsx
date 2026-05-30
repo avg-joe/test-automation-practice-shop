@@ -28,6 +28,8 @@ export default function AddToCart({
     if (result.ok) {
       setAdded(true);
       setTimeout(() => setAdded(false), 1500);
+    } else {
+      console.error('[AddToCart] Failed to add item to cart:', result.message);
     }
 
     setIsLoading(false);

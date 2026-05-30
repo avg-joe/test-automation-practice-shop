@@ -66,7 +66,7 @@ async function postCart<TResponse extends ApiResponseBase>(
     if (!response.ok || !data?.success) {
       return {
         ok: false,
-        message: getApiMessage(response, data, fallbackMessage),
+        message: getApiMessage(data, fallbackMessage),
       };
     }
 
@@ -122,11 +122,13 @@ export async function apiClearCart(): Promise<ApiResult<CartMutationResponse>> {
 }
 
 export async function apiApplyCoupon(code: string): Promise<ApiResult<CouponResponse>> {
+  const normalizedCode = code.trim().toUpperCase();
+
   try {
     const response = await fetch('/api/coupon/apply', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ code }),
+      body: JSON.stringify({ code: normalizedCode }),
     });
     const data = await parseApiJson<CouponResponse>(response);
 
@@ -134,12 +136,12 @@ export async function apiApplyCoupon(code: string): Promise<ApiResult<CouponResp
       appliedCoupon.set(null);
       return {
         ok: false,
-        message: getApiMessage(response, data, 'Failed to apply coupon. Please try again.'),
+        message: getApiMessage(data, 'Failed to apply coupon. Please try again.'),
       };
     }
 
     const coupon: CouponInfo = {
-      code: data.code ?? code.trim().toUpperCase(),
+      code: data.code ?? normalizedCode,
       discountPercent: data.discountPercent ?? 0,
       freeShipping: data.freeShipping ?? false,
     };

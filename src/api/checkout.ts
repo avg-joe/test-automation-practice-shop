@@ -62,7 +62,7 @@ async function postJson<TResponse extends ApiResponseBase>(
     if (!response.ok || !data?.success) {
       return {
         ok: false,
-        message: getApiMessage(response, data, fallbackMessage),
+        message: getApiMessage(data, fallbackMessage),
       };
     }
 
