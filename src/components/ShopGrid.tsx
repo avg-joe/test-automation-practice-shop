@@ -2,8 +2,15 @@ import { useState, useMemo } from 'react';
 import AddToCart from './AddToCart';
 import { getTestId } from '../utils/testId';
 import type { Product, Category, CategorySlug } from '../config/products';
+import { CATEGORIES } from '../config/products';
 
 type SortOption = 'featured' | 'price-asc' | 'price-desc' | 'name-asc';
+
+const validSlugs = new Set<string>(CATEGORIES.map((c) => c.slug));
+
+function isValidCategory(value: string | undefined): value is CategorySlug {
+  return value !== undefined && validSlugs.has(value);
+}
 
 interface ShopGridProps {
   products: Product[];
@@ -13,7 +20,7 @@ interface ShopGridProps {
 
 export default function ShopGrid({ products, categories, initialCategory }: ShopGridProps) {
   const [activeCategory, setActiveCategory] = useState<CategorySlug | 'all'>(
-    (initialCategory as CategorySlug) || 'all',
+    isValidCategory(initialCategory) ? initialCategory : 'all',
   );
   const [sort, setSort] = useState<SortOption>('featured');
 
