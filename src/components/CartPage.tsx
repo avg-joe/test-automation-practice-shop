@@ -140,14 +140,13 @@ export default function CartPage() {
             </div>
           )}
 
-          {items.map((item, idx) => {
-            const itemNum = idx + 1;
+          {items.map((item) => {
             const isUpdating = updatingId === item.id;
             return (
-              <div className="cart-item" key={item.id} data-testid={getTestId(`cart-item-${itemNum}`)}>
+              <div className="cart-item" key={item.id} data-testid={getTestId(`cart-item-${item.id}`)}>
                 <div className="cart-item__image">{item.emoji}</div>
                 <div>
-                  <h3 className="cart-item__name" data-testid={getTestId(`item-name-${itemNum}`)}>
+                  <h3 className="cart-item__name" data-testid={getTestId(`item-name-${item.id}`)}>
                     {item.name}
                   </h3>
                   <p className="cart-item__meta">Unit price: ${item.price.toFixed(2)}</p>
@@ -155,7 +154,7 @@ export default function CartPage() {
                     <button
                       className="cart-item__qty-btn"
                       aria-label="Decrease quantity"
-                      data-testid={getTestId(`qty-decrease-${itemNum}`)}
+                      data-testid={getTestId(`qty-decrease-${item.id}`)}
                       disabled={item.quantity <= 1 || isUpdating}
                       onClick={() => handleUpdateQty(item.id, item.quantity - 1)}
                     >
@@ -168,13 +167,13 @@ export default function CartPage() {
                       min={1}
                       max={99}
                       aria-label="Quantity"
-                      data-testid={getTestId(`qty-input-${itemNum}`)}
+                      data-testid={getTestId(`qty-input-${item.id}`)}
                       readOnly
                     />
                     <button
                       className="cart-item__qty-btn"
                       aria-label="Increase quantity"
-                      data-testid={getTestId(`qty-increase-${itemNum}`)}
+                      data-testid={getTestId(`qty-increase-${item.id}`)}
                       disabled={isUpdating}
                       onClick={() => handleUpdateQty(item.id, item.quantity + 1)}
                     >
@@ -183,12 +182,12 @@ export default function CartPage() {
                   </div>
                 </div>
                 <div className="cart-item__price-col">
-                  <span className="cart-item__price" data-testid={getTestId(`item-price-${itemNum}`)}>
+                  <span className="cart-item__price" data-testid={getTestId(`item-price-${item.id}`)}>
                     ${(item.price * item.quantity).toFixed(2)}
                   </span>
                   <button
                     className="cart-item__remove"
-                    data-testid={getTestId(`remove-item-${itemNum}`)}
+                    data-testid={getTestId(`remove-item-${item.id}`)}
                     onClick={() => handleRemove(item.id)}
                     disabled={isUpdating}
                   >
