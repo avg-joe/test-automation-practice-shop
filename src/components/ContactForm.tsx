@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react';
+import { apiContact } from '../api/checkout';
 import { getTestId } from '../utils/testId';
 
 export default function ContactForm() {
@@ -8,14 +9,14 @@ export default function ContactForm() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     // Clear previous errors and success
     setErrors({});
     setSuccess('');
 
     const form = e.currentTarget;
     const formData = new FormData(form);
-    
+
     // Get form values
     const firstName = formData.get('firstName') as string;
     const lastName = formData.get('lastName') as string;
@@ -27,29 +28,29 @@ export default function ContactForm() {
 
     // Client-side validation
     const newErrors: Record<string, string> = {};
-    
+
     if (!firstName || firstName.trim() === '') {
       newErrors.firstName = 'First Name is required';
     }
-    
+
     if (!lastName || lastName.trim() === '') {
       newErrors.lastName = 'Last Name is required';
     }
-    
+
     if (!email || email.trim() === '') {
       newErrors.email = 'Email Address is required';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       newErrors.email = 'Please enter a valid email address';
     }
-    
+
     if (!subject || subject === '') {
       newErrors.subject = 'Subject is required';
     }
-    
+
     if (!message || message.trim() === '') {
       newErrors.message = 'Message is required';
     }
-    
+
     if (!consent) {
       newErrors.consent = 'You must agree to the Privacy Policy';
     }
@@ -63,33 +64,23 @@ export default function ContactForm() {
     // Submit the form
     setIsLoading(true);
 
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          firstName,
-          lastName,
-          email,
-          phone,
-          subject,
-          message,
-        }),
-      });
+    const result = await apiContact({
+      firstName,
+      lastName,
+      email,
+      phone,
+      subject,
+      message,
+    });
 
-      const data = await res.json();
-
-      if (res.ok) {
-        setSuccess(data.message ?? 'Message sent successfully! We\'ll be in touch within 24 hours.');
-        form.reset();
-      } else {
-        setErrors({ form: data.message ?? 'Failed to send message. Please try again.' });
-      }
-    } catch {
-      setErrors({ form: 'Network error. Please check your connection and try again.' });
-    } finally {
-      setIsLoading(false);
+    if (result.ok) {
+      setSuccess(result.data.message ?? 'Message sent successfully! We\'ll be in touch within 24 hours.');
+      form.reset();
+    } else {
+      setErrors({ form: result.message });
     }
+
+    setIsLoading(false);
   };
 
   return (
