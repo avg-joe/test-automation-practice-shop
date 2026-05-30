@@ -1,4 +1,5 @@
 import { persistedAtom } from '../utils/persistedAtom';
+// cart.ts does not import from this module, so this is a safe one-way dependency.
 import { clearCart } from './cart';
 
 export interface ShippingInfo {
@@ -25,6 +26,7 @@ export const shippingInfo = persistedAtom<ShippingInfo | null>('checkout-shippin
 export const orderInfo = persistedAtom<OrderInfo | null>('checkout-order', null);
 
 export function resetCheckout(): void {
+  // clearCart() also resets appliedCoupon and selectedShippingMethod.
   clearCart();
   shippingInfo.set(null);
   orderInfo.set(null);
