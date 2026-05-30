@@ -2,15 +2,8 @@ import { useState, useMemo } from 'react';
 import AddToCart from './AddToCart';
 import { getTestId } from '../utils/testId';
 import type { Product, Category, CategorySlug } from '../config/products';
-import { CATEGORIES } from '../config/products';
 
 type SortOption = 'featured' | 'price-asc' | 'price-desc' | 'name-asc';
-
-const validSlugs = new Set<string>(CATEGORIES.map((c) => c.slug));
-
-function isValidCategory(value: string | undefined): value is CategorySlug {
-  return value !== undefined && validSlugs.has(value);
-}
 
 interface ShopGridProps {
   products: Product[];
@@ -19,8 +12,10 @@ interface ShopGridProps {
 }
 
 export default function ShopGrid({ products, categories, initialCategory }: ShopGridProps) {
-  const [activeCategory, setActiveCategory] = useState<CategorySlug | 'all'>(
-    isValidCategory(initialCategory) ? initialCategory : 'all',
+  const validSlugs = useMemo(() => new Set<string>(categories.map((c) => c.slug)), [categories]);
+
+  const [activeCategory, setActiveCategory] = useState<CategorySlug | 'all'>(() =>
+    initialCategory && validSlugs.has(initialCategory) ? (initialCategory as CategorySlug) : 'all',
   );
   const [sort, setSort] = useState<SortOption>('featured');
 
@@ -47,7 +42,7 @@ export default function ShopGrid({ products, categories, initialCategory }: Shop
   }, [products, activeCategory, sort]);
 
   const categoryCounts = useMemo(() => {
-    const counts: Record<string, number> = {};
+    const counts: Partial<Record<CategorySlug, number>> = {};
     for (const p of products) {
       counts[p.category] = (counts[p.category] || 0) + 1;
     }

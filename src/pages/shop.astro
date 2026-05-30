@@ -19,7 +19,7 @@ const initialCategory = Astro.url.searchParams.get('category') || undefined;
       data-testid={getTestId('shop-breadcrumb')}
       class="shop-breadcrumb"
     >
-      <a href="/">Home</a> › Shop
+      <a href="/" data-testid={getTestId('shop-breadcrumb-home-link')}>Home</a> › Shop
     </p>
     <h1
       data-testid={getTestId('shop-title')}

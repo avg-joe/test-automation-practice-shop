@@ -267,6 +267,7 @@ Add the request header `X-Force-Failure: true` to `POST /api/checkout` to guaran
 |---|---|
 | `shop-page-header` | Page header block |
 | `shop-breadcrumb` | Breadcrumb navigation |
+| `shop-breadcrumb-home-link` | Breadcrumb "Home" link |
 | `shop-title` | Page heading |
 | `shop-subtitle` | Page subtitle text |
 | `shop-toolbar` | Toolbar (result count + sort) |

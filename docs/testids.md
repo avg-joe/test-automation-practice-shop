@@ -109,6 +109,7 @@ File: `src/pages/shop.astro` + `src/components/ShopGrid.tsx`
 |---|---|---|
 | `shop-page-header` | `shop.astro` | Page header `<div>` |
 | `shop-breadcrumb` | `shop.astro` | Breadcrumb `<p>` |
+| `shop-breadcrumb-home-link` | `shop.astro` | Breadcrumb "Home" `<a>` |
 | `shop-title` | `shop.astro` | Page `<h1>` |
 | `shop-subtitle` | `shop.astro` | Subtitle `<p>` |
 | `shop-toolbar` | `ShopGrid.tsx` | Toolbar bar (result count + sort) |
