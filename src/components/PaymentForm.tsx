@@ -3,14 +3,14 @@ import { useStore } from '@nanostores/react';
 import {
   cartItems,
   appliedCoupon,
-  clearCart,
   subtotal,
   discount,
   shippingCost,
   tax,
   grandTotal,
 } from '../stores/cart';
-import { shippingInfo, orderInfo } from '../stores/checkout';
+import { apiCheckout } from '../api/checkout';
+import { shippingInfo } from '../stores/checkout';
 import { TAX_RATE } from '../utils/totals';
 import { getTestId } from '../utils/testId';
 
@@ -86,36 +86,27 @@ export default function PaymentForm() {
     }
 
     setIsSubmitting(true);
-    try {
-      const name = shipping
-        ? `${shipping.firstName} ${shipping.lastName}`
-        : 'Customer';
-      const res = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name,
-          email: shipping?.email ?? '',
-          address: shipping
-            ? `${shipping.address}, ${shipping.city}, ${shipping.state} ${shipping.zip}, ${shipping.country}`
-            : '',
-          paymentMethod: method,
-          total,
-        }),
-      });
-      const data = await res.json() as { success: boolean; message?: string; orderId?: string };
-      if (!res.ok || !data.success) {
-        setServerError(data.message ?? 'Payment failed. Please try again.');
-        setIsSubmitting(false);
-        return;
-      }
-      orderInfo.set({ orderId: data.orderId!, message: data.message ?? '', total });
-      clearCart();
-      window.location.href = '/confirm';
-    } catch {
-      setServerError('Payment failed. Please try again.');
+
+    const name = shipping
+      ? `${shipping.firstName} ${shipping.lastName}`
+      : 'Customer';
+    const result = await apiCheckout({
+      name,
+      email: shipping?.email ?? '',
+      address: shipping
+        ? `${shipping.address}, ${shipping.city}, ${shipping.state} ${shipping.zip}, ${shipping.country}`
+        : '',
+      paymentMethod: method,
+      total,
+    });
+
+    if (!result.ok) {
+      setServerError(result.message);
       setIsSubmitting(false);
+      return;
     }
+
+    window.location.href = '/confirm';
   }
 
   const paymentTabs: { id: PaymentMethod; icon: string; label: string }[] = [
