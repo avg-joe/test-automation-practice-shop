@@ -337,7 +337,7 @@ export default function PaymentForm() {
           </div>
           {discountAmount > 0 && (
             <div className="payment-summary__row">
-              <span className="payment-summary__row-label">Discount</span>
+              <span className="payment-summary__row-label">Discount ({coupon?.discountPercent}%)</span>
               <span>−${discountAmount.toFixed(2)}</span>
             </div>
           )}
