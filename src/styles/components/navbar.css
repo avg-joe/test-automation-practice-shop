@@ -84,3 +84,9 @@
 .navbar__signup-btn:hover {
   opacity: 0.9;
 }
+
+.navbar__actions .cart-icon {
+  margin-left: 0.5rem;
+  padding-left: 1rem;
+  border-left: 1px solid var(--border);
+}
