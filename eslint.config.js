@@ -3,11 +3,19 @@ import tsParser from '@typescript-eslint/parser';
 import tsPlugin from '@typescript-eslint/eslint-plugin';
 import reactHooks from 'eslint-plugin-react-hooks';
 
+const astroRecommended = astro.configs['flat/recommended'];
+const astroConfig = Array.isArray(astroRecommended)
+  ? astroRecommended
+  : [astroRecommended].filter(Boolean);
+const reactHooksRules =
+  reactHooks.configs.flat?.recommended?.rules ??
+  reactHooks.configs.recommended.rules;
+
 export default [
   {
     ignores: ['dist/', '.astro/', 'node_modules/', 'public/'],
   },
-  ...astro.configs['flat/recommended'],
+  ...astroConfig,
   {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
@@ -32,7 +40,7 @@ export default [
           varsIgnorePattern: '^_',
         },
       ],
-      ...reactHooks.configs.flat.recommended.rules,
+      ...reactHooksRules,
     },
   },
 ];
