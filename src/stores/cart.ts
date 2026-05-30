@@ -26,12 +26,11 @@ export interface CouponInfo {
 
 export const cartItems = persistedAtom<CartItem[]>('cart', []);
 export const appliedCoupon = persistedAtom<CouponInfo | null>('coupon', null);
-export const selectedShippingMethod = persistedAtom<ShippingMethodId>('selectedShippingMethod', 'standard');
-
-// Ensure the persisted shipping method is still a valid option (client-side only)
-if (typeof localStorage !== 'undefined' && !SHIPPING_METHODS.some((m) => m.id === selectedShippingMethod.get())) {
-  selectedShippingMethod.set('standard');
-}
+export const selectedShippingMethod = persistedAtom<ShippingMethodId>(
+  'selectedShippingMethod',
+  'standard',
+  (val) => (SHIPPING_METHODS.some((m) => m.id === val) ? val : 'standard'),
+);
 
 export const cartCount = computed(cartItems, (items) =>
   items.reduce((total, item) => total + item.quantity, 0)
