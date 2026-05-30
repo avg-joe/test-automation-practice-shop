@@ -21,8 +21,8 @@ export interface OrderInfo {
   total: number;
 }
 
-export const shippingInfo = persistedAtom<ShippingInfo | null>('shipping', null);
-export const orderInfo = persistedAtom<OrderInfo | null>('order', null);
+export const shippingInfo = persistedAtom<ShippingInfo | null>('checkout-shipping', null);
+export const orderInfo = persistedAtom<OrderInfo | null>('checkout-order', null);
 
 export function resetCheckout(): void {
   clearCart();
