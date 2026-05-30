@@ -1,4 +1,13 @@
 import { atom, computed } from 'nanostores';
+import {
+  SHIPPING_METHODS,
+  calcDiscount,
+  calcGrandTotal,
+  calcShippingCost,
+  calcSubtotal,
+  calcTax,
+} from '../utils/totals';
+import type { ShippingMethodId } from '../utils/totals';
 
 export interface CartItem {
   id: string;
@@ -24,12 +33,22 @@ function loadCartFromStorage(): CartItem[] {
   }
 }
 
+function loadShippingMethodFromStorage(): ShippingMethodId {
+  if (typeof localStorage === 'undefined') return 'standard';
+  const saved = localStorage.getItem('selectedShippingMethod');
+  return SHIPPING_METHODS.some((method) => method.id === saved) ? (saved as ShippingMethodId) : 'standard';
+}
+
 export const cartItems = atom<CartItem[]>(loadCartFromStorage());
 export const appliedCoupon = atom<CouponInfo | null>(null);
+export const selectedShippingMethod = atom<ShippingMethodId>(loadShippingMethodFromStorage());
 
 if (typeof localStorage !== 'undefined') {
   cartItems.subscribe((items) => {
     localStorage.setItem('cart', JSON.stringify(items));
+  });
+  selectedShippingMethod.subscribe((method) => {
+    localStorage.setItem('selectedShippingMethod', method);
   });
 }
 
@@ -39,6 +58,27 @@ export const cartCount = computed(cartItems, (items) =>
 
 export const cartTotal = computed(cartItems, (items) =>
   items.reduce((total, item) => total + item.price * item.quantity, 0)
+);
+
+export const subtotal = computed(cartItems, (items) => calcSubtotal(items));
+
+export const discount = computed([subtotal, appliedCoupon], (nextSubtotal, coupon) =>
+  calcDiscount(nextSubtotal, coupon)
+);
+
+export const shippingCost = computed(
+  [selectedShippingMethod, appliedCoupon],
+  (method, coupon) => calcShippingCost(method, coupon)
+);
+
+export const tax = computed([subtotal, discount, shippingCost], (nextSubtotal, nextDiscount, nextShipping) =>
+  calcTax(nextSubtotal, nextDiscount, nextShipping)
+);
+
+export const grandTotal = computed(
+  [subtotal, discount, shippingCost, tax],
+  (nextSubtotal, nextDiscount, nextShipping, nextTax) =>
+    calcGrandTotal(nextSubtotal, nextDiscount, nextShipping, nextTax)
 );
 
 export function addToCart(item: Omit<CartItem, 'quantity'>): void {
@@ -70,4 +110,5 @@ export function removeFromCart(id: string): void {
 export function clearCart(): void {
   cartItems.set([]);
   appliedCoupon.set(null);
+  selectedShippingMethod.set('standard');
 }
