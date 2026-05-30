@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useStore } from '@nanostores/react';
+import { apiSaveShipping } from '../api/checkout';
 import { cartItems, appliedCoupon } from '../stores/cart';
-import { shippingInfo } from '../stores/checkout';
 import type { ShippingInfo } from '../stores/checkout';
 import { getTestId } from '../utils/testId';
 
@@ -86,19 +86,16 @@ export default function ShippingForm() {
     }
     setIsSubmitting(true);
     setServerError('');
-    try {
-      const res = await fetch('/api/shipping', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      });
-      if (!res.ok) throw new Error('Shipping submission failed');
-      shippingInfo.set(form);
-      window.location.href = '/payment';
-    } catch {
-      setServerError('Failed to save shipping details. Please try again.');
+
+    const result = await apiSaveShipping(form);
+
+    if (!result.ok) {
+      setServerError(result.message);
       setIsSubmitting(false);
+      return;
     }
+
+    window.location.href = '/payment';
   }
 
   if (items.length === 0) {
