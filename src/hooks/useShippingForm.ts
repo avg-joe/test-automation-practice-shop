@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import { useStore } from '@nanostores/react';
 import { selectedShippingMethod } from '../stores/cart';
 import { shippingInfo } from '../stores/checkout';
@@ -41,11 +41,11 @@ export function useShippingForm(): UseShippingFormResult {
     return baseForm;
   });
 
-  useEffect(() => {
-    if (savedShippingInfo) {
+  useLayoutEffect(() => {
+    if (savedShippingInfo?.method) {
       selectedShippingMethod.set(savedShippingInfo.method);
     }
-  }, []);
+  }, [savedShippingInfo?.method]);
   const [errors, setErrors] = useState<ShippingFieldErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [serverError, setServerError] = useState('');
