@@ -207,8 +207,8 @@ Add the request header `X-Force-Failure: true` to `POST /api/checkout` to guaran
 | `nav-shop` | Shop nav link |
 | `nav-contact` | Contact nav link |
 | `nav-login-btn` | Login button |
-| `nav-signup-btn` | Sign-up button |
-| `nav-cart` | Cart icon button |
+| `nav-signup-btn` | Sign-up link |
+| `nav-cart` | Cart icon link |
 | `cart-count` | Cart item count badge |
 | `login-modal` | Login modal overlay |
 | `login-form` | Login `<form>` |
@@ -254,7 +254,7 @@ Add the request header `X-Force-Failure: true` to `POST /api/checkout` to guaran
 | `category-home` | Home & Living category card |
 | `category-sports` | Sports category card |
 | `promo-banner` | Promotional banner |
-| `banner-shop-btn` | "Shop the Sale" button |
+| `banner-shop-btn` | "Shop the Sale" link |
 | `testimonials-section` | Testimonials section |
 | `testimonial-grid` | Testimonials grid |
 | `testimonial-1` | First testimonial card |
@@ -292,7 +292,7 @@ Add the request header `X-Force-Failure: true` to `POST /api/checkout` to guaran
 | `summary-shipping` | Shipping row |
 | `summary-tax` | Tax row |
 | `summary-total` | Total row |
-| `checkout-btn` | "Proceed to Checkout" button |
+| `checkout-btn` | "Proceed to Checkout" link |
 | `continue-shopping-btn` | "Continue Shopping" link |
 
 ### Shipping (`/shipping`)

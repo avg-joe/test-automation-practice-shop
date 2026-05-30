@@ -20,8 +20,8 @@ These elements appear on every page (via `Layout.astro`, `NavBar.astro`, `Footer
 | `nav-shop` | `NavBar.astro` | Shop nav `<a>` |
 | `nav-contact` | `NavBar.astro` | Contact nav `<a>` |
 | `nav-login-btn` | `NavBar.astro` | Login `<button>` |
-| `nav-signup-btn` | `NavBar.astro` | Sign-up `<button>` |
-| `nav-cart` | `CartIcon.tsx` | Cart icon `<button>` |
+| `nav-signup-btn` | `NavBar.astro` | Sign-up `<a>` |
+| `nav-cart` | `CartIcon.tsx` | Cart icon `<a>` |
 | `cart-count` | `CartIcon.tsx` | Cart count badge `<span>` (hidden when 0) |
 | `login-modal` | `LoginModal.tsx` | Modal overlay `<div>` |
 | `login-form` | `LoginModal.tsx` | Login `<form>` |
@@ -173,6 +173,9 @@ File: `src/components/ShippingForm.tsx`
 | `shipping-country` | Country `<select>` |
 | `shipping-country-error` | Country validation error |
 | `shipping-methods` | Shipping method selector |
+| `shipping-method-standard` | Standard shipping option `<label>` |
+| `shipping-method-express` | Express shipping option `<label>` |
+| `shipping-method-overnight` | Overnight shipping option `<label>` |
 | `shipping-order-summary` | Order summary sidebar |
 | `shipping-submit-btn` | "Continue to Payment" `<button>` |
 | `shipping-back-btn` | "← Back to Cart" `<a>` |
