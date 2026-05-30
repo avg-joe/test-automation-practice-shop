@@ -7,7 +7,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "typecheck": "astro check && tsc --noEmit",
-    "lint": "eslint . --ext .ts,.tsx,.astro"
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
