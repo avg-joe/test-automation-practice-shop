@@ -43,9 +43,11 @@ import { getTestId } from '../utils/testId';
 </footer>
 
 <script>
+  import { openLogin } from '../stores/ui';
+
   // Allow footer login link to open the login modal
   document.getElementById('footer-login-link')?.addEventListener('click', (e) => {
     e.preventDefault();
-    document.getElementById('open-login-modal')?.click();
+    openLogin();
   });
 </script>

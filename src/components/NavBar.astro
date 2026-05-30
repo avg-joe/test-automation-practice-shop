@@ -1,5 +1,6 @@
 ---
 import CartIcon from './CartIcon';
+import LoginButton from './LoginButton';
 import { getTestId } from '../utils/testId';
 ---
 
@@ -47,13 +48,7 @@ import { getTestId } from '../utils/testId';
 
   <div class="navbar__actions">
     <CartIcon client:load />
-    <button
-      id="open-login-modal"
-      data-testid={getTestId('nav-login-btn')}
-      class="navbar__login-btn"
-    >
-      Login
-    </button>
+    <LoginButton client:load />
     <a
       href="/signup"
       data-testid={getTestId('nav-signup-btn')}
