@@ -9,7 +9,8 @@ const astroConfig = Array.isArray(astroRecommended)
   : [astroRecommended].filter(Boolean);
 const reactHooksRules =
   reactHooks.configs.flat?.recommended?.rules ??
-  reactHooks.configs.recommended.rules;
+  reactHooks.configs.recommended?.rules ??
+  {};
 
 export default [
   {
