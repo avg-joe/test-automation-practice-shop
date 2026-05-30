@@ -1,7 +1,20 @@
 import { useState } from 'react';
 import { useStore } from '@nanostores/react';
-import { cartItems, appliedCoupon, addToCart, updateQuantity, removeFromCart, clearCart } from '../stores/cart';
+import {
+  cartItems,
+  appliedCoupon,
+  addToCart,
+  updateQuantity,
+  removeFromCart,
+  clearCart,
+  subtotal,
+  discount,
+  shippingCost,
+  tax,
+  grandTotal,
+} from '../stores/cart';
 import type { CouponInfo } from '../stores/cart';
+import { TAX_RATE } from '../utils/totals';
 import { getTestId } from '../utils/testId';
 
 const RECOMMENDED_PRODUCTS = [
@@ -11,23 +24,20 @@ const RECOMMENDED_PRODUCTS = [
   { id: 'rec-4', emoji: '🎵', name: 'BT Speaker', price: 79 },
 ];
 
-const TAX_RATE = 0.08;
-
 export default function CartPage() {
   const items = useStore(cartItems);
   const coupon = useStore(appliedCoupon);
+  const subtotalAmount = useStore(subtotal);
+  const discountAmount = useStore(discount);
+  const shippingAmount = useStore(shippingCost);
+  const taxAmount = useStore(tax);
+  const total = useStore(grandTotal);
 
   const [couponCode, setCouponCode] = useState('');
   const [couponLoading, setCouponLoading] = useState(false);
   const [couponError, setCouponError] = useState('');
   const [updatingId, setUpdatingId] = useState<string | null>(null);
   const [actionError, setActionError] = useState('');
-
-  const subtotal = items.reduce((t, i) => t + i.price * i.quantity, 0);
-  const discountAmount = coupon ? (subtotal * coupon.discountPercent) / 100 : 0;
-  const afterDiscount = subtotal - discountAmount;
-  const tax = afterDiscount * TAX_RATE;
-  const total = afterDiscount + tax;
 
   async function handleUpdateQty(id: string, qty: number) {
     if (qty < 1) return;
@@ -296,7 +306,7 @@ export default function CartPage() {
             <span className="cart-summary__row-label">
               Subtotal ({items.reduce((t, i) => t + i.quantity, 0)} items)
             </span>
-            <span>${subtotal.toFixed(2)}</span>
+            <span>${subtotalAmount.toFixed(2)}</span>
           </div>
 
           {discountAmount > 0 && (
@@ -307,16 +317,18 @@ export default function CartPage() {
           )}
 
           <div
-            className="cart-summary__row cart-summary__row--free"
+            className={`cart-summary__row${shippingAmount === 0 ? ' cart-summary__row--free' : ''}`}
             data-testid={getTestId('summary-shipping')}
           >
             <span className="cart-summary__row-label">Shipping</span>
-            <span className="cart-summary__row-value">Free 🎉</span>
+            <span className="cart-summary__row-value">
+              {shippingAmount === 0 ? 'Free 🎉' : `$${shippingAmount.toFixed(2)}`}
+            </span>
           </div>
 
           <div className="cart-summary__row" data-testid={getTestId('summary-tax')}>
-            <span className="cart-summary__row-label">Tax (8%)</span>
-            <span>${tax.toFixed(2)}</span>
+            <span className="cart-summary__row-label">Tax ({(TAX_RATE * 100).toFixed(0)}%)</span>
+            <span>${taxAmount.toFixed(2)}</span>
           </div>
 
           <div className="cart-summary__row cart-summary__row--total" data-testid={getTestId('summary-total')}>
