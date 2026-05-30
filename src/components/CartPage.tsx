@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useStore } from '@nanostores/react';
-import { cartItems, appliedCoupon, addToCart, updateQuantity, removeFromCart, clearCart } from '../stores/cart';
-import type { CouponInfo } from '../stores/cart';
+import { appliedCoupon, cartItems } from '../stores/cart';
+import { apiAddToCart, apiApplyCoupon, apiClearCart, apiRemoveFromCart, apiUpdateQuantity } from '../api/cart';
 import { getTestId } from '../utils/testId';
 
 const RECOMMENDED_PRODUCTS = [
@@ -33,46 +33,36 @@ export default function CartPage() {
     if (qty < 1) return;
     setUpdatingId(id);
     setActionError('');
-    try {
-      const res = await fetch('/api/cart/update', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id, quantity: qty }),
-      });
-      if (!res.ok) throw new Error('Update failed');
-      updateQuantity(id, qty);
-    } catch {
-      setActionError('Failed to update quantity. Please try again.');
-    } finally {
-      setUpdatingId(null);
+
+    const result = await apiUpdateQuantity(id, qty);
+
+    if (!result.ok) {
+      setActionError(result.message);
     }
+
+    setUpdatingId(null);
   }
 
   async function handleRemove(id: string) {
     setUpdatingId(id);
     setActionError('');
-    try {
-      const res = await fetch('/api/cart/remove', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id }),
-      });
-      if (!res.ok) throw new Error('Remove failed');
-      removeFromCart(id);
-    } catch {
-      setActionError('Failed to remove item. Please try again.');
-    } finally {
-      setUpdatingId(null);
+
+    const result = await apiRemoveFromCart(id);
+
+    if (!result.ok) {
+      setActionError(result.message);
     }
+
+    setUpdatingId(null);
   }
 
   async function handleClearCart() {
-    try {
-      const res = await fetch('/api/cart/clear', { method: 'POST' });
-      if (!res.ok) throw new Error('Clear failed');
-      clearCart();
-    } catch {
-      // best-effort
+    setActionError('');
+
+    const result = await apiClearCart();
+
+    if (!result.ok) {
+      setActionError(result.message);
     }
   }
 
@@ -81,50 +71,26 @@ export default function CartPage() {
     if (!trimmed) return;
     setCouponLoading(true);
     setCouponError('');
-    try {
-      const res = await fetch('/api/coupon/apply', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ code: trimmed }),
-      });
-      const data = await res.json() as {
-        success: boolean;
-        message?: string;
-        code?: string;
-        discountPercent?: number;
-        freeShipping?: boolean;
-      };
-      if (!res.ok || !data.success) {
-        setCouponError(data.message ?? 'Invalid coupon code');
-        appliedCoupon.set(null);
-      } else {
-        const info: CouponInfo = {
-          code: data.code!,
-          discountPercent: data.discountPercent ?? 0,
-          freeShipping: data.freeShipping ?? false,
-        };
-        appliedCoupon.set(info);
-        setCouponCode('');
-        setCouponError('');
-      }
-    } catch {
-      setCouponError('Failed to apply coupon. Please try again.');
-    } finally {
-      setCouponLoading(false);
+
+    const result = await apiApplyCoupon(trimmed);
+
+    if (!result.ok) {
+      setCouponError(result.message);
+    } else {
+      setCouponCode('');
+      setCouponError('');
     }
+
+    setCouponLoading(false);
   }
 
   async function handleAddRecommended(product: { id: string; emoji: string; name: string; price: number }) {
-    try {
-      const res = await fetch('/api/cart/add', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: product.id, name: product.name, price: product.price, emoji: product.emoji }),
-      });
-      if (!res.ok) throw new Error('Add failed');
-      addToCart({ id: product.id, name: product.name, price: product.price, emoji: product.emoji });
-    } catch {
-      // best-effort
+    setActionError('');
+
+    const result = await apiAddToCart(product);
+
+    if (!result.ok) {
+      setActionError(result.message);
     }
   }
 
