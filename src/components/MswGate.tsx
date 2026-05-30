@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
 import { useStore } from '@nanostores/react';
-import { atom } from 'nanostores';
 import type { PropsWithChildren } from 'react';
 import { startWorker } from '../mocks/browser';
+import { mswReady } from '../stores/msw';
+import { getTestId } from '../utils/testId';
 
-export const mswReady = atom(false);
+export { mswReady } from '../stores/msw';
 
 export default function MswGate({ children }: PropsWithChildren) {
   const ready = useStore(mswReady);
@@ -23,7 +24,7 @@ export default function MswGate({ children }: PropsWithChildren) {
   }, [ready]);
 
   if (!ready) {
-    return <div data-testid="msw-gate" style={{ height: 0 }} aria-hidden="true" />;
+    return <div className="msw-gate__placeholder" data-testid={getTestId('msw-gate')} aria-hidden="true" />;
   }
 
   return <>{children}</>;

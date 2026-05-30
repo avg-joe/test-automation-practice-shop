@@ -13,6 +13,7 @@ import '../styles/pages/cart.css';
 import '../styles/pages/shipping.css';
 import '../styles/pages/payment.css';
 import '../styles/pages/confirm.css';
+import '../styles/components/msw-gate.css';
 import NavBar from '../components/NavBar.astro';
 import MswGate from '../components/MswGate';
 import LoginModal from '../components/LoginModal';
@@ -39,8 +40,8 @@ const {
   </head>
   <body>
     <NavBar />
+    <slot />
     <MswGate client:only="react">
-      <slot />
       <LoginModal client:only="react" />
     </MswGate>
   </body>
