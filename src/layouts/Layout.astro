@@ -41,7 +41,7 @@ const {
     <NavBar />
     <MswGate client:only="react">
       <slot />
-      <LoginModal />
+      <LoginModal client:only="react" />
     </MswGate>
   </body>
 </html>
