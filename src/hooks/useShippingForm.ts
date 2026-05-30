@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useStore } from '@nanostores/react';
 import { selectedShippingMethod } from '../stores/cart';
 import { shippingInfo } from '../stores/checkout';
@@ -36,11 +36,16 @@ export function useShippingForm(): UseShippingFormResult {
       method: currentShippingMethod,
     };
     if (savedShippingInfo) {
-      selectedShippingMethod.set(savedShippingInfo.method);
       return { ...baseForm, ...savedShippingInfo };
     }
     return baseForm;
   });
+
+  useEffect(() => {
+    if (savedShippingInfo) {
+      selectedShippingMethod.set(savedShippingInfo.method);
+    }
+  }, []);
   const [errors, setErrors] = useState<ShippingFieldErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [serverError, setServerError] = useState('');

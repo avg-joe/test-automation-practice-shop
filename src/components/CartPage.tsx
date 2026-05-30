@@ -1,21 +1,5 @@
-<<<<<<< HEAD
 import { TAX_RATE } from '../utils/totals';
-=======
-import { useState } from 'react';
-import { useStore } from '@nanostores/react';
-import {
-  cartItems,
-  appliedCoupon,
-  subtotal,
-  discount,
-  shippingCost,
-  tax,
-  grandTotal,
-} from '../stores/cart';
-import { apiAddToCart, apiApplyCoupon, apiClearCart, apiRemoveFromCart, apiUpdateQuantity } from '../api/cart';
-import { TAX_RATE } from '../config/pricing';
 import { RECOMMENDED_PRODUCTS } from '../config/products';
->>>>>>> origin/main
 import { getTestId } from '../utils/testId';
 import { useCartActions } from '../hooks/useCartActions';
 
