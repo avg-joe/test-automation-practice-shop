@@ -11,7 +11,7 @@ import {
 } from '../stores/cart';
 import { apiCheckout } from '../api/checkout';
 import { shippingInfo } from '../stores/checkout';
-import { TAX_RATE } from '../utils/totals';
+import { TAX_RATE } from '../config/pricing';
 import { getTestId } from '../utils/testId';
 
 type PaymentMethod = 'credit-card' | 'paypal' | 'afterpay' | 'zip';
