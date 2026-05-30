@@ -132,6 +132,8 @@ The utility checks `PUBLIC_BREAKING_CHANGE`:
 | Utility files | `camelCase.ts` | `testId.ts` |
 | Mock files | `camelCase.ts` | `handlers.ts`, `browser.ts` |
 
+> **List-row testids must include the item's stable id, not its index** (e.g. `cart-item-${item.id}`, not `cart-item-${idx+1}`). This ensures testids remain stable when items are reordered or removed.
+
 ### 8. No nested interactive elements
 
 Never nest a `<button>` inside an `<a>` (or vice versa). This is invalid HTML5 and can cause unpredictable browser behaviour that breaks test locators. Use a single `<a>` styled as a button, or a single `<button>` with programmatic navigation.

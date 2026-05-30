@@ -271,13 +271,13 @@ Add the request header `X-Force-Failure: true` to `POST /api/checkout` to guaran
 | `cart-item-count` | Item count heading |
 | `clear-cart-btn` | Clear cart button |
 | `cart-action-error` | Error message on action failure |
-| `cart-item-{n}` | Cart item row (1-based index) |
-| `item-name-{n}` | Item name (1-based) |
-| `item-price-{n}` | Item total price (1-based) |
-| `qty-decrease-{n}` | Decrease qty button (1-based) |
-| `qty-input-{n}` | Qty input (1-based) |
-| `qty-increase-{n}` | Increase qty button (1-based) |
-| `remove-item-{n}` | Remove item button (1-based) |
+| `cart-item-{id}` | Cart item row (product id) |
+| `item-name-{id}` | Item name (product id) |
+| `item-price-{id}` | Item total price (product id) |
+| `qty-decrease-{id}` | Decrease qty button (product id) |
+| `qty-input-{id}` | Qty input (product id) |
+| `qty-increase-{id}` | Increase qty button (product id) |
+| `remove-item-{id}` | Remove item button (product id) |
 | `coupon-section` | Coupon section |
 | `coupon-input` | Coupon code text input |
 | `apply-coupon-btn` | Apply coupon button |
