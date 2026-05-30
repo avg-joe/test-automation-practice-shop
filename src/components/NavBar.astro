@@ -48,7 +48,7 @@ import { getTestId } from '../utils/testId';
 
   <div class="navbar__actions">
     <CartIcon client:only="react" />
-    <NavLoginButton client:only="react" />
+    <NavLoginButton client:load />
     <a
       href="/signup"
       data-testid={getTestId('nav-signup-btn')}
