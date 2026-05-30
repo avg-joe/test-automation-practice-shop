@@ -12,9 +12,14 @@ export default function MswGate({ children }: PropsWithChildren) {
   useEffect(() => {
     if (ready) return;
 
-    void startWorker().then(() => {
-      mswReady.set(true);
-    });
+    void startWorker()
+      .then(() => {
+        mswReady.set(true);
+      })
+      .catch((error) => {
+        console.error('Failed to start MSW worker', error);
+        mswReady.set(true);
+      });
   }, [ready]);
 
   if (!ready) {
