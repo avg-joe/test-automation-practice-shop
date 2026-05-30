@@ -1,113 +1,26 @@
-import { useState } from 'react';
-import { useStore } from '@nanostores/react';
-import {
-  cartItems,
-  appliedCoupon,
-  subtotal,
-  discount,
-  shippingCost,
-  tax,
-  grandTotal,
-} from '../stores/cart';
-import { apiCheckout } from '../api/checkout';
-import { shippingInfo } from '../stores/checkout';
-import { TAX_RATE } from '../utils/totals';
 import { getTestId } from '../utils/testId';
-
-type PaymentMethod = 'credit-card' | 'paypal' | 'afterpay' | 'zip';
-
-interface CardForm {
-  cardName: string;
-  cardNumber: string;
-  expiry: string;
-  cvv: string;
-}
-
-type CardErrors = Partial<Record<keyof CardForm, string>>;
-
-function formatCardNumber(value: string): string {
-  return value.replace(/\D/g, '').slice(0, 16).replace(/(.{4})/g, '$1 ').trim();
-}
-
-function formatExpiry(value: string): string {
-  const digits = value.replace(/\D/g, '').slice(0, 4);
-  if (digits.length >= 3) return `${digits.slice(0, 2)}/${digits.slice(2)}`;
-  return digits;
-}
-
-function validateCard(form: CardForm): CardErrors {
-  const errors: CardErrors = {};
-  if (!form.cardName.trim()) errors.cardName = 'Cardholder name is required';
-  const digits = form.cardNumber.replace(/\s/g, '');
-  if (!digits) errors.cardNumber = 'Card number is required';
-  else if (digits.length < 16) errors.cardNumber = 'Enter a valid 16-digit card number';
-  if (!form.expiry) errors.expiry = 'Expiry date is required';
-  else if (!/^\d{2}\/\d{2}$/.test(form.expiry)) errors.expiry = 'Use MM/YY format';
-  if (!form.cvv) errors.cvv = 'CVV is required';
-  else if (form.cvv.length < 3) errors.cvv = 'CVV must be 3–4 digits';
-  return errors;
-}
+import { TAX_RATE } from '../utils/totals';
+import { usePaymentForm, type PaymentMethod } from '../hooks/usePaymentForm';
 
 export default function PaymentForm() {
-  const items = useStore(cartItems);
-  const coupon = useStore(appliedCoupon);
-  const shipping = useStore(shippingInfo);
-  const subtotalAmount = useStore(subtotal);
-  const discountAmount = useStore(discount);
-  const shippingAmount = useStore(shippingCost);
-  const taxAmount = useStore(tax);
-  const total = useStore(grandTotal);
-
-  const [method, setMethod] = useState<PaymentMethod>('credit-card');
-  const [card, setCard] = useState<CardForm>({ cardName: '', cardNumber: '', expiry: '', cvv: '' });
-  const [cardErrors, setCardErrors] = useState<CardErrors>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [serverError, setServerError] = useState('');
-
-  function updateCard(field: keyof CardForm, rawValue: string) {
-    let value = rawValue;
-    if (field === 'cardNumber') value = formatCardNumber(rawValue);
-    if (field === 'expiry') value = formatExpiry(rawValue);
-    if (field === 'cvv') value = rawValue.replace(/\D/g, '').slice(0, 4);
-    setCard((prev) => ({ ...prev, [field]: value }));
-    if (cardErrors[field]) setCardErrors((prev) => ({ ...prev, [field]: undefined }));
-  }
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setServerError('');
-
-    if (method === 'credit-card') {
-      const errs = validateCard(card);
-      if (Object.keys(errs).length > 0) {
-        setCardErrors(errs);
-        return;
-      }
-    }
-
-    setIsSubmitting(true);
-
-    const name = shipping
-      ? `${shipping.firstName} ${shipping.lastName}`
-      : 'Customer';
-    const result = await apiCheckout({
-      name,
-      email: shipping?.email ?? '',
-      address: shipping
-        ? `${shipping.address}, ${shipping.city}, ${shipping.state} ${shipping.zip}, ${shipping.country}`
-        : '',
-      paymentMethod: method,
-      total,
-    });
-
-    if (!result.ok) {
-      setServerError(result.message);
-      setIsSubmitting(false);
-      return;
-    }
-
-    window.location.href = '/confirm';
-  }
+  const {
+    items,
+    coupon,
+    shipping,
+    subtotalAmount,
+    discountAmount,
+    shippingAmount,
+    taxAmount,
+    total,
+    method,
+    card,
+    cardErrors,
+    isSubmitting,
+    serverError,
+    setMethod,
+    updateCard,
+    handleSubmit,
+  } = usePaymentForm();
 
   const paymentTabs: { id: PaymentMethod; icon: string; label: string }[] = [
     { id: 'credit-card', icon: '💳', label: 'Credit Card' },
