@@ -1,26 +1,35 @@
-import { useState, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { useStore } from '@nanostores/react';
+import { closeLogin, isLoginOpen } from '../stores/ui';
+import { apiLogin } from '../api/checkout';
 import { getTestId } from '../utils/testId';
 
 export default function LoginModal() {
-  const [isOpen, setIsOpen] = useState(false);
+  const isOpen = useStore(isLoginOpen);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
-  useEffect(() => {
-    const openBtn = document.getElementById('open-login-modal');
-    if (openBtn) {
-      const handler = () => setIsOpen(true);
-      openBtn.addEventListener('click', handler);
-      return () => openBtn.removeEventListener('click', handler);
-    }
-  }, []);
-
-  const handleClose = () => {
-    setIsOpen(false);
+  const handleClose = useCallback(() => {
+    closeLogin();
     setError('');
     setSuccess('');
-  };
+  }, []);
+
+  useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        handleClose();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [handleClose, isOpen]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -33,26 +42,16 @@ export default function LoginModal() {
     const username = (formData.get('username') ?? formData.get('email') ?? '') as string;
     const password = (formData.get('password') ?? '') as string;
 
-    try {
-      const res = await fetch('/api/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password }),
-      });
+    const result = await apiLogin({ username, password });
 
-      const data = await res.json() as { success: boolean; message?: string; user?: { name: string } };
-
-      if (res.ok && data.success) {
-        setSuccess(`Welcome back, ${data.user?.name ?? username}!`);
-        setTimeout(() => handleClose(), 1500);
-      } else {
-        setError(data.message ?? 'Invalid credentials. Try username: student');
-      }
-    } catch {
-      setError('Network error. Please try again.');
-    } finally {
-      setIsLoading(false);
+    if (result.ok) {
+      setSuccess(`Welcome back, ${result.data.user?.name ?? username}!`);
+      setTimeout(() => handleClose(), 1500);
+    } else {
+      setError(result.message);
     }
+
+    setIsLoading(false);
   };
 
   if (!isOpen) return null;

@@ -1,12 +1,20 @@
 import { useState } from 'react';
 import { useStore } from '@nanostores/react';
-import { cartItems, appliedCoupon, clearCart } from '../stores/cart';
-import { shippingInfo, orderInfo } from '../stores/checkout';
+import {
+  cartItems,
+  appliedCoupon,
+  subtotal,
+  discount,
+  shippingCost,
+  tax,
+  grandTotal,
+} from '../stores/cart';
+import { apiCheckout } from '../api/checkout';
+import { shippingInfo } from '../stores/checkout';
+import { TAX_RATE } from '../utils/totals';
 import { getTestId } from '../utils/testId';
 
 type PaymentMethod = 'credit-card' | 'paypal' | 'afterpay' | 'zip';
-
-const TAX_RATE = 0.08;
 
 interface CardForm {
   cardName: string;
@@ -44,21 +52,17 @@ export default function PaymentForm() {
   const items = useStore(cartItems);
   const coupon = useStore(appliedCoupon);
   const shipping = useStore(shippingInfo);
+  const subtotalAmount = useStore(subtotal);
+  const discountAmount = useStore(discount);
+  const shippingAmount = useStore(shippingCost);
+  const taxAmount = useStore(tax);
+  const total = useStore(grandTotal);
 
   const [method, setMethod] = useState<PaymentMethod>('credit-card');
   const [card, setCard] = useState<CardForm>({ cardName: '', cardNumber: '', expiry: '', cvv: '' });
   const [cardErrors, setCardErrors] = useState<CardErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [serverError, setServerError] = useState('');
-
-  const subtotal = items.reduce((t, i) => t + i.price * i.quantity, 0);
-  const discountAmount = coupon ? (subtotal * coupon.discountPercent) / 100 : 0;
-  const afterDiscount = subtotal - discountAmount;
-  const shippingMethodCost =
-    shipping?.method === 'express' ? 9.99 : shipping?.method === 'overnight' ? 24.99 : 0;
-  const shippingCost = coupon?.freeShipping ? 0 : shippingMethodCost;
-  const tax = (afterDiscount + shippingCost) * TAX_RATE;
-  const total = afterDiscount + shippingCost + tax;
 
   function updateCard(field: keyof CardForm, rawValue: string) {
     let value = rawValue;
@@ -82,36 +86,27 @@ export default function PaymentForm() {
     }
 
     setIsSubmitting(true);
-    try {
-      const name = shipping
-        ? `${shipping.firstName} ${shipping.lastName}`
-        : 'Customer';
-      const res = await fetch('/api/checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name,
-          email: shipping?.email ?? '',
-          address: shipping
-            ? `${shipping.address}, ${shipping.city}, ${shipping.state} ${shipping.zip}, ${shipping.country}`
-            : '',
-          paymentMethod: method,
-          total,
-        }),
-      });
-      const data = await res.json() as { success: boolean; message?: string; orderId?: string };
-      if (!res.ok || !data.success) {
-        setServerError(data.message ?? 'Payment failed. Please try again.');
-        setIsSubmitting(false);
-        return;
-      }
-      orderInfo.set({ orderId: data.orderId!, message: data.message ?? '', total });
-      clearCart();
-      window.location.href = '/confirm';
-    } catch {
-      setServerError('Payment failed. Please try again.');
+
+    const name = shipping
+      ? `${shipping.firstName} ${shipping.lastName}`
+      : 'Customer';
+    const result = await apiCheckout({
+      name,
+      email: shipping?.email ?? '',
+      address: shipping
+        ? `${shipping.address}, ${shipping.city}, ${shipping.state} ${shipping.zip}, ${shipping.country}`
+        : '',
+      paymentMethod: method,
+      total,
+    });
+
+    if (!result.ok) {
+      setServerError(result.message);
       setIsSubmitting(false);
+      return;
     }
+
+    window.location.href = '/confirm';
   }
 
   const paymentTabs: { id: PaymentMethod; icon: string; label: string }[] = [
@@ -338,21 +333,21 @@ export default function PaymentForm() {
 
           <div className="payment-summary__row">
             <span className="payment-summary__row-label">Subtotal</span>
-            <span>${subtotal.toFixed(2)}</span>
+            <span>${subtotalAmount.toFixed(2)}</span>
           </div>
           {discountAmount > 0 && (
             <div className="payment-summary__row">
-              <span className="payment-summary__row-label">Discount</span>
+              <span className="payment-summary__row-label">Discount ({coupon?.discountPercent}%)</span>
               <span>−${discountAmount.toFixed(2)}</span>
             </div>
           )}
           <div className="payment-summary__row">
             <span className="payment-summary__row-label">Shipping</span>
-            <span>{shippingCost === 0 ? 'Free' : `$${shippingCost.toFixed(2)}`}</span>
+            <span>{shippingAmount === 0 ? 'Free' : `$${shippingAmount.toFixed(2)}`}</span>
           </div>
           <div className="payment-summary__row">
-            <span className="payment-summary__row-label">Tax (8%)</span>
-            <span>${tax.toFixed(2)}</span>
+            <span className="payment-summary__row-label">Tax ({(TAX_RATE * 100).toFixed(0)}%)</span>
+            <span>${taxAmount.toFixed(2)}</span>
           </div>
           <div className="payment-summary__row payment-summary__row--total">
             <span>Total</span>

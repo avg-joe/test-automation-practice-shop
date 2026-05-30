@@ -1,25 +1,21 @@
 import { useState } from 'react';
 import { useStore } from '@nanostores/react';
-import { cartItems, appliedCoupon } from '../stores/cart';
+import {
+  cartItems,
+  appliedCoupon,
+  selectedShippingMethod,
+  subtotal,
+  discount,
+  shippingCost,
+  tax,
+  grandTotal,
+} from '../stores/cart';
+import { apiSaveShipping } from '../api/checkout';
 import { shippingInfo } from '../stores/checkout';
 import type { ShippingInfo } from '../stores/checkout';
+import { SHIPPING_METHODS, TAX_RATE } from '../utils/totals';
+import type { ShippingMethodId } from '../utils/totals';
 import { getTestId } from '../utils/testId';
-
-type ShippingMethod = 'standard' | 'express' | 'overnight';
-
-const SHIPPING_METHODS: {
-  id: ShippingMethod;
-  icon: string;
-  name: string;
-  desc: string;
-  price: number;
-}[] = [
-  { id: 'standard', icon: '📦', name: 'Standard Shipping', desc: '5–7 business days', price: 0 },
-  { id: 'express', icon: '🚚', name: 'Express Shipping', desc: '2–3 business days', price: 9.99 },
-  { id: 'overnight', icon: '✈️', name: 'Overnight Shipping', desc: 'Next business day', price: 24.99 },
-];
-
-const TAX_RATE = 0.08;
 
 type FieldErrors = Partial<Record<keyof Omit<ShippingInfo, 'apartment' | 'phone'>, string>>;
 
@@ -43,38 +39,48 @@ function validate(form: ShippingInfo): FieldErrors {
 export default function ShippingForm() {
   const items = useStore(cartItems);
   const coupon = useStore(appliedCoupon);
+  const currentShippingMethod = useStore(selectedShippingMethod);
+  const savedShippingInfo = useStore(shippingInfo);
+  const subtotalAmount = useStore(subtotal);
+  const discountAmount = useStore(discount);
+  const shippingAmount = useStore(shippingCost);
+  const taxAmount = useStore(tax);
+  const total = useStore(grandTotal);
 
-  const [form, setForm] = useState<ShippingInfo>({
-    firstName: '',
-    lastName: '',
-    email: '',
-    address: '',
-    apartment: '',
-    city: '',
-    state: '',
-    zip: '',
-    country: '',
-    phone: '',
-    method: 'standard',
+  const [form, setForm] = useState<ShippingInfo>(() => {
+    const baseForm: ShippingInfo = {
+      firstName: '',
+      lastName: '',
+      email: '',
+      address: '',
+      apartment: '',
+      city: '',
+      state: '',
+      zip: '',
+      country: '',
+      phone: '',
+      method: currentShippingMethod,
+    };
+    if (savedShippingInfo) {
+      selectedShippingMethod.set(savedShippingInfo.method);
+      return { ...baseForm, ...savedShippingInfo };
+    }
+    return baseForm;
   });
   const [errors, setErrors] = useState<FieldErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [serverError, setServerError] = useState('');
-
-  const subtotal = items.reduce((t, i) => t + i.price * i.quantity, 0);
-  const discountAmount = coupon ? (subtotal * coupon.discountPercent) / 100 : 0;
-  const afterDiscount = subtotal - discountAmount;
-
-  const selectedMethod = SHIPPING_METHODS.find((m) => m.id === form.method)!;
-  const shippingCost = coupon?.freeShipping ? 0 : selectedMethod.price;
-  const tax = (afterDiscount + shippingCost) * TAX_RATE;
-  const total = afterDiscount + shippingCost + tax;
 
   function updateField(field: keyof ShippingInfo, value: string) {
     setForm((prev) => ({ ...prev, [field]: value }));
     if (errors[field as keyof FieldErrors]) {
       setErrors((prev) => ({ ...prev, [field]: undefined }));
     }
+  }
+
+  function updateShippingMethod(method: ShippingMethodId) {
+    selectedShippingMethod.set(method);
+    updateField('method', method);
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -86,19 +92,16 @@ export default function ShippingForm() {
     }
     setIsSubmitting(true);
     setServerError('');
-    try {
-      const res = await fetch('/api/shipping', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      });
-      if (!res.ok) throw new Error('Shipping submission failed');
-      shippingInfo.set(form);
-      window.location.href = '/payment';
-    } catch {
-      setServerError('Failed to save shipping details. Please try again.');
+
+    const result = await apiSaveShipping(form);
+
+    if (!result.ok) {
+      setServerError(result.message);
       setIsSubmitting(false);
+      return;
     }
+
+    window.location.href = '/payment';
   }
 
   if (items.length === 0) {
@@ -354,12 +357,12 @@ export default function ShippingForm() {
                     className="shipping-method__radio"
                     value={method.id}
                     checked={form.method === method.id}
-                    onChange={() => updateField('method', method.id)}
+                    onChange={() => updateShippingMethod(method.id)}
                   />
                   <span className="shipping-method__icon">{method.icon}</span>
                   <div>
-                    <p className="shipping-method__name">{method.name}</p>
-                    <p className="shipping-method__desc">{method.desc}</p>
+                    <p className="shipping-method__name">{method.label}</p>
+                    <p className="shipping-method__desc">{method.description}</p>
                   </div>
                 </div>
                 <span
@@ -407,7 +410,7 @@ export default function ShippingForm() {
           <div className="shipping-summary__totals">
             <div className="shipping-summary__row">
               <span className="shipping-summary__row-label">Subtotal</span>
-              <span>${subtotal.toFixed(2)}</span>
+              <span>${subtotalAmount.toFixed(2)}</span>
             </div>
             {discountAmount > 0 && (
               <div className="shipping-summary__row">
@@ -418,12 +421,12 @@ export default function ShippingForm() {
             <div className="shipping-summary__row">
               <span className="shipping-summary__row-label">Shipping</span>
               <span>
-                {shippingCost === 0 ? 'Free' : `$${shippingCost.toFixed(2)}`}
+                {shippingAmount === 0 ? 'Free' : `$${shippingAmount.toFixed(2)}`}
               </span>
             </div>
             <div className="shipping-summary__row">
-              <span className="shipping-summary__row-label">Tax (8%)</span>
-              <span>${tax.toFixed(2)}</span>
+              <span className="shipping-summary__row-label">Tax ({(TAX_RATE * 100).toFixed(0)}%)</span>
+              <span>${taxAmount.toFixed(2)}</span>
             </div>
             <div className="shipping-summary__row shipping-summary__row--total">
               <span>Total</span>
