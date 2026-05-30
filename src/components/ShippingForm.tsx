@@ -60,7 +60,11 @@ export default function ShippingForm() {
       phone: '',
       method: currentShippingMethod,
     };
-    return savedShippingInfo ? { ...baseForm, ...savedShippingInfo } : baseForm;
+    if (savedShippingInfo) {
+      selectedShippingMethod.set(savedShippingInfo.method);
+      return { ...baseForm, ...savedShippingInfo };
+    }
+    return baseForm;
   });
   const [errors, setErrors] = useState<FieldErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
