@@ -10,15 +10,9 @@ import {
   grandTotal,
 } from '../stores/cart';
 import { apiAddToCart, apiApplyCoupon, apiClearCart, apiRemoveFromCart, apiUpdateQuantity } from '../api/cart';
-import { TAX_RATE } from '../utils/totals';
+import { TAX_RATE } from '../config/pricing';
+import { RECOMMENDED_PRODUCTS } from '../config/products';
 import { getTestId } from '../utils/testId';
-
-const RECOMMENDED_PRODUCTS = [
-  { id: 'rec-1', emoji: '🎮', name: 'GamePad Pro', price: 59 },
-  { id: 'rec-2', emoji: '📱', name: 'Phone Case', price: 19 },
-  { id: 'rec-3', emoji: '🔋', name: 'Power Bank', price: 45 },
-  { id: 'rec-4', emoji: '🎵', name: 'BT Speaker', price: 79 },
-];
 
 export default function CartPage() {
   const items = useStore(cartItems);

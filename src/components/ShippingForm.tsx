@@ -13,8 +13,8 @@ import {
 import { apiSaveShipping } from '../api/checkout';
 import { shippingInfo } from '../stores/checkout';
 import type { ShippingInfo } from '../stores/checkout';
-import { SHIPPING_METHODS, TAX_RATE } from '../utils/totals';
-import type { ShippingMethodId } from '../utils/totals';
+import { SHIPPING_METHODS, TAX_RATE } from '../config/pricing';
+import type { ShippingMethodId } from '../config/pricing';
 import { getTestId } from '../utils/testId';
 
 type FieldErrors = Partial<Record<keyof Omit<ShippingInfo, 'apartment' | 'phone'>, string>>;

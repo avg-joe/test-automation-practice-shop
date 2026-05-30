@@ -3,13 +3,10 @@ import Layout from '../layouts/Layout.astro';
 import AddToCart from '../components/AddToCart';
 import Footer from '../components/Footer.astro';
 import { getTestId } from '../utils/testId';
+import { FEATURED_PRODUCTS } from '../config/products';
+import { FREE_SHIPPING_THRESHOLD } from '../config/pricing';
 
-const products = [
-  { id: '1', name: 'Air Runner Pro', price: 89, emoji: '👟', category: 'Footwear', badge: 'Sale', originalPrice: 120 },
-  { id: '2', name: 'SoundMax Headphones', price: 149, emoji: '🎧', category: 'Electronics', badge: null, originalPrice: null },
-  { id: '3', name: 'Urban Tote Bag', price: 65, emoji: '👜', category: 'Accessories', badge: 'New', originalPrice: null },
-  { id: '4', name: 'SmartWatch Series 5', price: 199, emoji: '⌚', category: 'Electronics', badge: null, originalPrice: null },
-];
+const products = FEATURED_PRODUCTS;
 ---
 
 <Layout title="Test Automation Practice Shop – Home">
@@ -75,7 +72,7 @@ const products = [
       <span class="feature__icon">🚚</span>
       <div>
         <h4 class="feature__title">Free Shipping</h4>
-        <p class="feature__desc">On orders over $50</p>
+        <p class="feature__desc">On orders over ${FREE_SHIPPING_THRESHOLD}</p>
       </div>
     </div>
     <div
