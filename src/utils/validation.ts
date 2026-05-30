@@ -8,9 +8,10 @@ export function validateShipping(form: ShippingInfo): ShippingFieldErrors {
   const errors: ShippingFieldErrors = {};
   if (!form.firstName.trim()) errors.firstName = 'First name is required';
   if (!form.lastName.trim()) errors.lastName = 'Last name is required';
-  if (!form.email.trim()) {
+  const email = form.email.trim();
+  if (!email) {
     errors.email = 'Email is required';
-  } else if (!EMAIL_REGEX.test(form.email)) {
+  } else if (!EMAIL_REGEX.test(email)) {
     errors.email = 'Please enter a valid email address';
   }
   if (!form.address.trim()) errors.address = 'Address is required';
@@ -33,12 +34,13 @@ export type CardErrors = Partial<Record<keyof CardForm, string>>;
 export function validateCard(form: CardForm): CardErrors {
   const errors: CardErrors = {};
   if (!form.cardName.trim()) errors.cardName = 'Cardholder name is required';
-  const digits = form.cardNumber.replace(/\s/g, '');
+  const digits = form.cardNumber.replace(/\D/g, '');
   if (!digits) errors.cardNumber = 'Card number is required';
-  else if (digits.length < 16) errors.cardNumber = 'Enter a valid 16-digit card number';
+  else if (digits.length !== 16) errors.cardNumber = 'Enter a valid 16-digit card number';
   if (!form.expiry) errors.expiry = 'Expiry date is required';
   else if (!/^\d{2}\/\d{2}$/.test(form.expiry)) errors.expiry = 'Use MM/YY format';
-  if (!form.cvv) errors.cvv = 'CVV is required';
-  else if (form.cvv.length < 3) errors.cvv = 'CVV must be 3–4 digits';
+  const cvvDigits = form.cvv.replace(/\D/g, '');
+  if (!cvvDigits) errors.cvv = 'CVV is required';
+  else if (!/^\d{3,4}$/.test(cvvDigits)) errors.cvv = 'CVV must be 3–4 digits';
   return errors;
 }
