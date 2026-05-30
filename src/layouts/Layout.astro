@@ -14,6 +14,7 @@ import '../styles/pages/shipping.css';
 import '../styles/pages/payment.css';
 import '../styles/pages/confirm.css';
 import NavBar from '../components/NavBar.astro';
+import MswGate from '../components/MswGate';
 import LoginModal from '../components/LoginModal';
 
 interface Props {
@@ -38,14 +39,9 @@ const {
   </head>
   <body>
     <NavBar />
-    <slot />
-    <LoginModal client:load />
-
-    <script>
-      import { worker } from '../mocks/browser';
-      await worker.start({
-        onUnhandledRequest: 'bypass',
-      });
-    </script>
+    <MswGate client:only="react">
+      <slot />
+      <LoginModal />
+    </MswGate>
   </body>
 </html>

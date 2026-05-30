@@ -46,7 +46,7 @@ import { getTestId } from '../utils/testId';
   </ul>
 
   <div class="navbar__actions">
-    <CartIcon client:load />
+    <CartIcon client:only="react" />
     <button
       id="open-login-modal"
       data-testid={getTestId('nav-login-btn')}
