@@ -4,6 +4,7 @@ import CheckoutSteps from '../components/CheckoutSteps.astro';
 import PaymentForm from '../components/PaymentForm';
 import Footer from '../components/Footer.astro';
 import { getTestId } from '../utils/testId';
+import MswGate from '../components/MswGate';
 ---
 
 <Layout title="Payment – Test Automation Practice Shop">
@@ -16,7 +17,9 @@ import { getTestId } from '../utils/testId';
 
   <CheckoutSteps activeStep="payment" />
 
-  <PaymentForm client:only="react" />
+  <MswGate client:only="react">
+    <PaymentForm client:only="react" />
+  </MswGate>
 
   <Footer />
 </Layout>
