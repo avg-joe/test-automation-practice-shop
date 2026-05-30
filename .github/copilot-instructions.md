@@ -1,5 +1,7 @@
 # Copilot Instructions — Test Automation Practice Shop
 
+> **📖 Human contributor?** The full project guide — Quick Start, environment flags, API contract, test credentials, and the testid cheat sheet — lives in [`README.md`](../README.md). The exhaustive testid reference is at [`docs/testids.md`](../docs/testids.md). Keep both documents in sync whenever you add new pages or `data-testid` values.
+
 This file captures the site design system and coding principles for the **Test Automation Practice Shop** — an Astro-based e-commerce site built for test automation workshops.
 
 ---
