@@ -1,3 +1,20 @@
+<<<<<<< HEAD
+=======
+import { useState } from 'react';
+import { useStore } from '@nanostores/react';
+import {
+  cartItems,
+  appliedCoupon,
+  subtotal,
+  discount,
+  shippingCost,
+  tax,
+  grandTotal,
+} from '../stores/cart';
+import { apiCheckout } from '../api/checkout';
+import { shippingInfo } from '../stores/checkout';
+import { TAX_RATE } from '../config/pricing';
+>>>>>>> origin/main
 import { getTestId } from '../utils/testId';
 import { TAX_RATE } from '../utils/totals';
 import { usePaymentForm, type PaymentMethod } from '../hooks/usePaymentForm';

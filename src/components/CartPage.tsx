@@ -1,13 +1,23 @@
+<<<<<<< HEAD
 import { TAX_RATE } from '../utils/totals';
+=======
+import { useState } from 'react';
+import { useStore } from '@nanostores/react';
+import {
+  cartItems,
+  appliedCoupon,
+  subtotal,
+  discount,
+  shippingCost,
+  tax,
+  grandTotal,
+} from '../stores/cart';
+import { apiAddToCart, apiApplyCoupon, apiClearCart, apiRemoveFromCart, apiUpdateQuantity } from '../api/cart';
+import { TAX_RATE } from '../config/pricing';
+import { RECOMMENDED_PRODUCTS } from '../config/products';
+>>>>>>> origin/main
 import { getTestId } from '../utils/testId';
 import { useCartActions } from '../hooks/useCartActions';
-
-const RECOMMENDED_PRODUCTS = [
-  { id: 'rec-1', emoji: '🎮', name: 'GamePad Pro', price: 59 },
-  { id: 'rec-2', emoji: '📱', name: 'Phone Case', price: 19 },
-  { id: 'rec-3', emoji: '🔋', name: 'Power Bank', price: 45 },
-  { id: 'rec-4', emoji: '🎵', name: 'BT Speaker', price: 79 },
-];
 
 export default function CartPage() {
   const {
@@ -71,14 +81,13 @@ export default function CartPage() {
             </div>
           )}
 
-          {items.map((item, idx) => {
-            const itemNum = idx + 1;
+          {items.map((item) => {
             const isUpdating = updatingId === item.id;
             return (
-              <div className="cart-item" key={item.id} data-testid={getTestId(`cart-item-${itemNum}`)}>
+              <div className="cart-item" key={item.id} data-testid={getTestId(`cart-item-${item.id}`)}>
                 <div className="cart-item__image">{item.emoji}</div>
                 <div>
-                  <h3 className="cart-item__name" data-testid={getTestId(`item-name-${itemNum}`)}>
+                  <h3 className="cart-item__name" data-testid={getTestId(`item-name-${item.id}`)}>
                     {item.name}
                   </h3>
                   <p className="cart-item__meta">Unit price: ${item.price.toFixed(2)}</p>
@@ -86,7 +95,7 @@ export default function CartPage() {
                     <button
                       className="cart-item__qty-btn"
                       aria-label="Decrease quantity"
-                      data-testid={getTestId(`qty-decrease-${itemNum}`)}
+                      data-testid={getTestId(`qty-decrease-${item.id}`)}
                       disabled={item.quantity <= 1 || isUpdating}
                       onClick={() => handleUpdateQty(item.id, item.quantity - 1)}
                     >
@@ -99,13 +108,13 @@ export default function CartPage() {
                       min={1}
                       max={99}
                       aria-label="Quantity"
-                      data-testid={getTestId(`qty-input-${itemNum}`)}
+                      data-testid={getTestId(`qty-input-${item.id}`)}
                       readOnly
                     />
                     <button
                       className="cart-item__qty-btn"
                       aria-label="Increase quantity"
-                      data-testid={getTestId(`qty-increase-${itemNum}`)}
+                      data-testid={getTestId(`qty-increase-${item.id}`)}
                       disabled={isUpdating}
                       onClick={() => handleUpdateQty(item.id, item.quantity + 1)}
                     >
@@ -114,12 +123,12 @@ export default function CartPage() {
                   </div>
                 </div>
                 <div className="cart-item__price-col">
-                  <span className="cart-item__price" data-testid={getTestId(`item-price-${itemNum}`)}>
+                  <span className="cart-item__price" data-testid={getTestId(`item-price-${item.id}`)}>
                     ${(item.price * item.quantity).toFixed(2)}
                   </span>
                   <button
                     className="cart-item__remove"
-                    data-testid={getTestId(`remove-item-${itemNum}`)}
+                    data-testid={getTestId(`remove-item-${item.id}`)}
                     onClick={() => handleRemove(item.id)}
                     disabled={isUpdating}
                   >

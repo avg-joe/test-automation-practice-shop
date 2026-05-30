@@ -8,7 +8,15 @@ import {
   tax,
   grandTotal,
 } from '../stores/cart';
+<<<<<<< HEAD
 import { SHIPPING_METHODS, TAX_RATE } from '../utils/totals';
+=======
+import { apiSaveShipping } from '../api/checkout';
+import { shippingInfo } from '../stores/checkout';
+import type { ShippingInfo } from '../stores/checkout';
+import { SHIPPING_METHODS, TAX_RATE } from '../config/pricing';
+import type { ShippingMethodId } from '../config/pricing';
+>>>>>>> origin/main
 import { getTestId } from '../utils/testId';
 import { useShippingForm } from '../hooks/useShippingForm';
 

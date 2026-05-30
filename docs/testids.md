@@ -113,13 +113,13 @@ File: `src/components/CartPage.tsx`
 | `cart-item-count` | Item count `<h2>` |
 | `clear-cart-btn` | "Clear Cart" `<button>` |
 | `cart-action-error` | Error banner for failed actions |
-| `cart-item-{n}` | Individual cart item row (1-based) |
-| `item-name-{n}` | Item name `<h3>` (1-based) |
-| `item-price-{n}` | Item total `<span>` (1-based) |
-| `qty-decrease-{n}` | Decrease quantity `<button>` (1-based) |
-| `qty-input-{n}` | Quantity `<input>` (1-based) |
-| `qty-increase-{n}` | Increase quantity `<button>` (1-based) |
-| `remove-item-{n}` | "✕ Remove" `<button>` (1-based) |
+| `cart-item-{id}` | Individual cart item row (product id) |
+| `item-name-{id}` | Item name `<h3>` (product id) |
+| `item-price-{id}` | Item total `<span>` (product id) |
+| `qty-decrease-{id}` | Decrease quantity `<button>` (product id) |
+| `qty-input-{id}` | Quantity `<input>` (product id) |
+| `qty-increase-{id}` | Increase quantity `<button>` (product id) |
+| `remove-item-{id}` | "✕ Remove" `<button>` (product id) |
 | `coupon-section` | Coupon section `<div>` |
 | `coupon-input` | Coupon code `<input>` |
 | `apply-coupon-btn` | "Apply" `<button>` |
