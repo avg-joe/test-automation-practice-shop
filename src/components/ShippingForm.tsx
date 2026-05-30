@@ -39,24 +39,28 @@ export default function ShippingForm() {
   const items = useStore(cartItems);
   const coupon = useStore(appliedCoupon);
   const currentShippingMethod = useStore(selectedShippingMethod);
+  const savedShippingInfo = useStore(shippingInfo);
   const subtotalAmount = useStore(subtotal);
   const discountAmount = useStore(discount);
   const shippingAmount = useStore(shippingCost);
   const taxAmount = useStore(tax);
   const total = useStore(grandTotal);
 
-  const [form, setForm] = useState<ShippingInfo>({
-    firstName: '',
-    lastName: '',
-    email: '',
-    address: '',
-    apartment: '',
-    city: '',
-    state: '',
-    zip: '',
-    country: '',
-    phone: '',
-    method: currentShippingMethod,
+  const [form, setForm] = useState<ShippingInfo>(() => {
+    const baseForm: ShippingInfo = {
+      firstName: '',
+      lastName: '',
+      email: '',
+      address: '',
+      apartment: '',
+      city: '',
+      state: '',
+      zip: '',
+      country: '',
+      phone: '',
+      method: currentShippingMethod,
+    };
+    return savedShippingInfo ? { ...baseForm, ...savedShippingInfo } : baseForm;
   });
   const [errors, setErrors] = useState<FieldErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -353,18 +357,10 @@ export default function ShippingForm() {
                     checked={form.method === method.id}
                     onChange={() => updateShippingMethod(method.id)}
                   />
-                  <span className="shipping-method__icon">
-                    {method.id === 'standard' ? '📦' : method.id === 'express' ? '🚚' : '✈️'}
-                  </span>
+                  <span className="shipping-method__icon">{method.icon}</span>
                   <div>
                     <p className="shipping-method__name">{method.label}</p>
-                    <p className="shipping-method__desc">
-                      {method.id === 'standard'
-                        ? '5–7 business days'
-                        : method.id === 'express'
-                          ? '2–3 business days'
-                          : 'Next business day'}
-                    </p>
+                    <p className="shipping-method__desc">{method.description}</p>
                   </div>
                 </div>
                 <span

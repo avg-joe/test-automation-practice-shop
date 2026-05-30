@@ -1,5 +1,6 @@
 import { atom, computed } from 'nanostores';
 import {
+  SHIPPING_METHODS,
   calcDiscount,
   calcGrandTotal,
   calcShippingCost,
@@ -35,7 +36,7 @@ function loadCartFromStorage(): CartItem[] {
 function loadShippingMethodFromStorage(): ShippingMethodId {
   if (typeof localStorage === 'undefined') return 'standard';
   const saved = localStorage.getItem('selectedShippingMethod');
-  return saved === 'express' || saved === 'overnight' || saved === 'standard' ? saved : 'standard';
+  return SHIPPING_METHODS.some((method) => method.id === saved) ? (saved as ShippingMethodId) : 'standard';
 }
 
 export const cartItems = atom<CartItem[]>(loadCartFromStorage());
