@@ -47,7 +47,6 @@ import { getTestId } from '../utils/testId';
   </ul>
 
   <div class="navbar__actions">
-    <CartIcon client:only="react" />
     <NavLoginButton client:load />
     <a
       href="/signup"
@@ -56,5 +55,6 @@ import { getTestId } from '../utils/testId';
     >
       Sign Up
     </a>
+    <CartIcon client:only="react" />
   </div>
 </nav>

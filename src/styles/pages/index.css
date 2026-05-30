@@ -270,6 +270,8 @@
   background: var(--white);
   border: 1px solid var(--border);
   transition: box-shadow 0.2s, transform 0.2s;
+  text-decoration: none;
+  color: inherit;
 }
 
 .category-card:hover {

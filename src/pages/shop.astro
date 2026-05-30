@@ -1,0 +1,48 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Footer from '../components/Footer.astro';
+import ShopGrid from '../components/ShopGrid';
+import { getTestId } from '../utils/testId';
+import { ALL_PRODUCTS, CATEGORIES } from '../config/products';
+
+const initialCategory = Astro.url.searchParams.get('category') || undefined;
+---
+
+<Layout title="Shop – Test Automation Practice Shop">
+
+  <!-- Page Header -->
+  <div
+    data-testid={getTestId('shop-page-header')}
+    class="shop-header"
+  >
+    <p
+      data-testid={getTestId('shop-breadcrumb')}
+      class="shop-breadcrumb"
+    >
+      <a href="/" data-testid={getTestId('shop-breadcrumb-home-link')}>Home</a> › Shop
+    </p>
+    <h1
+      data-testid={getTestId('shop-title')}
+      class="shop-title"
+    >
+      Shop All Products
+    </h1>
+    <p
+      data-testid={getTestId('shop-subtitle')}
+      class="shop-subtitle"
+    >
+      Browse our curated collection of top-quality items across every category.
+    </p>
+  </div>
+
+  <!-- Shop Grid (interactive React island) -->
+  <ShopGrid
+    client:load
+    products={ALL_PRODUCTS}
+    categories={CATEGORIES}
+    initialCategory={initialCategory}
+  />
+
+  <Footer />
+
+</Layout>

@@ -205,7 +205,7 @@ src/
   components/       # Astro + React components
   layouts/          # Base Layout.astro (MSW init, NavBar, LoginModal)
   mocks/            # MSW handlers.ts and browser.ts
-  pages/            # Astro pages (index.astro, future: shop, cart, checkout, contact)
+  pages/            # Astro pages (index, shop, cart, shipping, payment, confirm, contact)
   stores/           # Nano Stores (cart.ts)
   styles/           # CSS stylesheets
     global.css      # Tailwind import + CSS variables

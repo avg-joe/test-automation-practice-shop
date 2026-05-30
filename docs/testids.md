@@ -101,6 +101,35 @@ File: `src/pages/index.astro`
 
 ---
 
+## Shop Page (`/shop`)
+
+File: `src/pages/shop.astro` + `src/components/ShopGrid.tsx`
+
+| `data-testid` | Component | Element description |
+|---|---|---|
+| `shop-page-header` | `shop.astro` | Page header `<div>` |
+| `shop-breadcrumb` | `shop.astro` | Breadcrumb `<p>` |
+| `shop-breadcrumb-home-link` | `shop.astro` | Breadcrumb "Home" `<a>` |
+| `shop-title` | `shop.astro` | Page `<h1>` |
+| `shop-subtitle` | `shop.astro` | Subtitle `<p>` |
+| `shop-toolbar` | `ShopGrid.tsx` | Toolbar bar (result count + sort) |
+| `shop-result-count` | `ShopGrid.tsx` | Result count `<span>` |
+| `shop-sort-select` | `ShopGrid.tsx` | Sort `<select>` |
+| `shop-filter` | `ShopGrid.tsx` | Category filter sidebar `<aside>` |
+| `shop-filter-all` | `ShopGrid.tsx` | "All Products" filter `<button>` |
+| `shop-filter-electronics` | `ShopGrid.tsx` | Electronics filter `<button>` |
+| `shop-filter-fashion` | `ShopGrid.tsx` | Fashion filter `<button>` |
+| `shop-filter-home` | `ShopGrid.tsx` | Home & Living filter `<button>` |
+| `shop-filter-sports` | `ShopGrid.tsx` | Sports filter `<button>` |
+| `shop-grid` | `ShopGrid.tsx` | Product cards grid `<div>` |
+| `shop-product-card-{id}` | `ShopGrid.tsx` | Product card (product id) |
+| `shop-product-price-{id}` | `ShopGrid.tsx` | Product price `<span>` (product id) |
+| `add-to-cart-shop-{id}` | `ShopGrid.tsx` | Add to cart `<button>` (product id) |
+| `shop-empty` | `ShopGrid.tsx` | Empty state `<div>` (no filter results) |
+| `shop-empty-clear-btn` | `ShopGrid.tsx` | "View All Products" `<button>` (empty state) |
+
+---
+
 ## Cart Page (`/cart`)
 
 File: `src/components/CartPage.tsx`

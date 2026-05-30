@@ -261,6 +261,28 @@ Add the request header `X-Force-Failure: true` to `POST /api/checkout` to guaran
 | `testimonial-2` | Second testimonial card |
 | `testimonial-3` | Third testimonial card |
 
+### Shop (`/shop`)
+
+| `data-testid` | Element |
+|---|---|
+| `shop-page-header` | Page header block |
+| `shop-breadcrumb` | Breadcrumb navigation |
+| `shop-breadcrumb-home-link` | Breadcrumb "Home" link |
+| `shop-title` | Page heading |
+| `shop-subtitle` | Page subtitle text |
+| `shop-toolbar` | Toolbar (result count + sort) |
+| `shop-result-count` | Product result count |
+| `shop-sort-select` | Sort dropdown |
+| `shop-filter` | Category filter sidebar |
+| `shop-filter-all` | "All Products" filter button |
+| `shop-filter-{slug}` | Category filter button (e.g. `shop-filter-electronics`) |
+| `shop-grid` | Product cards grid |
+| `shop-product-card-{id}` | Product card (product id) |
+| `shop-product-price-{id}` | Product price (product id) |
+| `add-to-cart-shop-{id}` | Add-to-cart button (product id) |
+| `shop-empty` | Empty filter results message |
+| `shop-empty-clear-btn` | "View All Products" button (empty state) |
+
 ### Cart (`/cart`)
 
 | `data-testid` | Element |
@@ -451,7 +473,7 @@ src/
   components/       # Astro + React components
   layouts/          # Base Layout.astro (MSW init, NavBar, LoginModal)
   mocks/            # MSW handlers.ts and browser.ts
-  pages/            # Astro pages (index, cart, shipping, payment, confirm, contact)
+  pages/            # Astro pages (index, shop, cart, shipping, payment, confirm, contact)
   stores/           # Nano Stores (cart.ts, checkout.ts)
   styles/           # CSS stylesheets
     global.css      # Tailwind import + CSS variables
