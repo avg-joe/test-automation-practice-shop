@@ -1,9 +1,38 @@
-import { useStore } from '@nanostores/react';
-import { cartCount } from '../stores/cart';
+import { useEffect, useState } from 'react';
 import { getTestId } from '../utils/testId';
 
+function readCartCountFromStorage(): number {
+  if (typeof window === 'undefined') return 0;
+
+  try {
+    const raw = localStorage.getItem('cart');
+    if (!raw) return 0;
+
+    const parsed = JSON.parse(raw) as Array<{ quantity?: number }>;
+    if (!Array.isArray(parsed)) return 0;
+
+    return parsed.reduce((total, item) => total + (Number(item.quantity) || 0), 0);
+  } catch {
+    return 0;
+  }
+}
+
 export default function CartIcon() {
-  const count = useStore(cartCount);
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const syncCount = () => setCount(readCartCountFromStorage());
+
+    syncCount();
+
+    window.addEventListener('storage', syncCount);
+    window.addEventListener('cart:updated', syncCount);
+
+    return () => {
+      window.removeEventListener('storage', syncCount);
+      window.removeEventListener('cart:updated', syncCount);
+    };
+  }, []);
 
   return (
     <a
@@ -13,14 +42,14 @@ export default function CartIcon() {
       className="cart-icon"
     >
       🛒
-      {count > 0 && (
-        <span
-          data-testid={getTestId('cart-count')}
-          className="cart-icon__badge"
-        >
-          {count}
-        </span>
-      )}
+      <span
+        data-testid={getTestId('cart-count')}
+        className="cart-icon__badge"
+        hidden={count < 1}
+        suppressHydrationWarning
+      >
+        {count}
+      </span>
     </a>
   );
 }
