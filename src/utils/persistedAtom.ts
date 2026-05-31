@@ -2,7 +2,7 @@ import { atom } from 'nanostores';
 import type { WritableAtom } from 'nanostores';
 
 function canUseLocalStorage(): boolean {
-  if (typeof localStorage === 'undefined') return false;
+  if (typeof window === 'undefined') return false;
   try {
     const testKey = '__persistedAtom_test__';
     localStorage.setItem(testKey, '1');
