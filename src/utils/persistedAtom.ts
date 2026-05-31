@@ -2,6 +2,7 @@ import { atom } from 'nanostores';
 import type { WritableAtom } from 'nanostores';
 
 function canUseLocalStorage(): boolean {
+  if (typeof localStorage === 'undefined') return false;
   try {
     const testKey = '__persistedAtom_test__';
     localStorage.setItem(testKey, '1');
@@ -12,8 +13,7 @@ function canUseLocalStorage(): boolean {
   }
 }
 
-const hasLocalStorage =
-  typeof localStorage !== 'undefined' && canUseLocalStorage();
+const hasLocalStorage = canUseLocalStorage();
 
 export function persistedAtom<T>(
   key: string,
