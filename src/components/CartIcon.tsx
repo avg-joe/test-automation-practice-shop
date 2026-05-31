@@ -1,36 +1,40 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useStore } from '@nanostores/react';
+import { cartCount, cartItems, type CartItem } from '../stores/cart';
 import { getTestId } from '../utils/testId';
 
-function readCartCountFromStorage(): number {
-  if (typeof window === 'undefined') return 0;
+function readCartItemsFromStorage(): CartItem[] {
+  if (typeof window === 'undefined') return [];
 
   try {
     const raw = localStorage.getItem('cart');
-    if (!raw) return 0;
+    if (!raw) return [];
 
-    const parsed = JSON.parse(raw) as Array<{ quantity?: number }>;
-    if (!Array.isArray(parsed)) return 0;
+    const parsed = JSON.parse(raw) as CartItem[];
+    if (!Array.isArray(parsed)) return [];
 
-    return parsed.reduce((total, item) => total + (Number(item.quantity) || 0), 0);
+    return parsed;
   } catch {
-    return 0;
+    return [];
   }
 }
 
 export default function CartIcon() {
-  const [count, setCount] = useState(0);
+  const count = useStore(cartCount);
 
   useEffect(() => {
-    const syncCount = () => setCount(readCartCountFromStorage());
+    const syncFromStorage = () => {
+      cartItems.set(readCartItemsFromStorage());
+    };
 
-    syncCount();
+    syncFromStorage();
 
-    window.addEventListener('storage', syncCount);
-    window.addEventListener('cart:updated', syncCount);
+    window.addEventListener('storage', syncFromStorage);
+    window.addEventListener('cart:updated', syncFromStorage);
 
     return () => {
-      window.removeEventListener('storage', syncCount);
-      window.removeEventListener('cart:updated', syncCount);
+      window.removeEventListener('storage', syncFromStorage);
+      window.removeEventListener('cart:updated', syncFromStorage);
     };
   }, []);
 
@@ -38,7 +42,7 @@ export default function CartIcon() {
     <a
       href="/cart"
       data-testid={getTestId('nav-cart')}
-      aria-label="Cart"
+      aria-label={count > 0 ? `Cart (${count} items)` : 'Cart'}
       className="cart-icon"
     >
       🛒
