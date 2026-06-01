@@ -2,6 +2,12 @@ import { clearCart } from '../stores/cart';
 import { orderInfo, shippingInfo, type ShippingInfo } from '../stores/checkout';
 import { getApiMessage, parseApiJson, type ApiResult, type ApiResponseBase } from './types';
 
+function emitCartUpdated(): void {
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new Event('cart:updated'));
+  }
+}
+
 interface ShippingResponse extends ApiResponseBase {
   success: boolean;
   method?: ShippingInfo['method'];
@@ -99,6 +105,7 @@ export async function apiCheckout(payload: CheckoutPayload): Promise<ApiResult<C
     total: payload.total,
   });
   clearCart();
+  emitCartUpdated();
 
   return result;
 }

@@ -28,6 +28,12 @@ interface CouponResponse extends ApiResponseBase {
   label?: string;
 }
 
+function emitCartUpdated(): void {
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new Event('cart:updated'));
+  }
+}
+
 function normalizeCartItems(items: CartResponseItem[]): CartItem[] {
   const current = cartItems.get();
 
@@ -81,6 +87,7 @@ export async function apiAddToCart(item: CartPayload): Promise<ApiResult<CartMut
 
   if (result.ok) {
     syncCartResponse(result.data, () => addToCart(item));
+    emitCartUpdated();
   }
 
   return result;
@@ -95,6 +102,7 @@ export async function apiUpdateQuantity(id: string, quantity: number): Promise<A
 
   if (result.ok) {
     syncCartResponse(result.data, () => updateQuantity(id, quantity));
+    emitCartUpdated();
   }
 
   return result;
@@ -105,6 +113,7 @@ export async function apiRemoveFromCart(id: string): Promise<ApiResult<CartMutat
 
   if (result.ok) {
     syncCartResponse(result.data, () => removeFromCart(id));
+    emitCartUpdated();
   }
 
   return result;
@@ -116,6 +125,7 @@ export async function apiClearCart(): Promise<ApiResult<CartMutationResponse>> {
   if (result.ok) {
     syncCartResponse(result.data, clearCart);
     appliedCoupon.set(null);
+    emitCartUpdated();
   }
 
   return result;
