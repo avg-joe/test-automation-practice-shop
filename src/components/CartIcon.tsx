@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { useStore } from '@nanostores/react';
+import { useEffect, useState } from 'react';
 import { cartCount, cartItems, type CartItem } from '../stores/cart';
 import { getTestId } from '../utils/testId';
 
@@ -20,7 +19,7 @@ function readCartItemsFromStorage(): CartItem[] {
 }
 
 export default function CartIcon() {
-  const count = useStore(cartCount);
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
     const syncFromStorage = () => {
@@ -29,10 +28,13 @@ export default function CartIcon() {
 
     syncFromStorage();
 
+    const unsubscribe = cartCount.subscribe(setCount);
+
     window.addEventListener('storage', syncFromStorage);
     window.addEventListener('cart:updated', syncFromStorage);
 
     return () => {
+      unsubscribe();
       window.removeEventListener('storage', syncFromStorage);
       window.removeEventListener('cart:updated', syncFromStorage);
     };
@@ -46,14 +48,14 @@ export default function CartIcon() {
       className="cart-icon"
     >
       🛒
-      <span
-        data-testid={getTestId('cart-count')}
-        className="cart-icon__badge"
-        hidden={count < 1}
-        suppressHydrationWarning
-      >
-        {count}
-      </span>
+      {count > 0 && (
+        <span
+          data-testid={getTestId('cart-count')}
+          className="cart-icon__badge"
+        >
+          {count}
+        </span>
+      )}
     </a>
   );
 }
